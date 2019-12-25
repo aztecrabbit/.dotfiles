@@ -101,7 +101,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 export WORKON_HOME="$HOME/.virtualenvs"
-export PROJECT_HOME="$HOME/virtualenv"
+export PROJECT_HOME="$HOME/Virtual Environment"
 export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3"
 source $HOME/.local/bin/virtualenvwrapper.sh
