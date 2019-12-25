@@ -1,0 +1,193 @@
+##### BSPWM AND SXHKD #####
+
+# make sxhkd reload its configuration files:
+alt + r
+	pkill -USR1 -x sxhkd
+
+# quit/restart bspwm
+alt + shift + {q,r}
+	bspc {quit,wm -r}
+
+#alt + bracketleft
+#	bspc node @/ -R -90
+#
+#alt + bracketright
+#	bspc node @/ -R 90
+
+alt + bracketleft
+	bspc node -f @parent; \
+	bspc node -R -90; \
+	bspc node -f @second
+
+alt + bracketright
+	bspc node -f @parent; \
+	bspc node -R 90; \
+	bspc node -f @second
+
+
+#####
+
+# alternate between the tiled and monocle layout
+alt + m
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+alt + y
+	bspc node newest.marked.local -n newest.!automatic.local
+
+# swap the current node and the biggest node
+alt + g
+	bspc node -s biggest
+
+#
+# state/flags
+#
+
+# set the window state
+alt + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+alt + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+
+#############################################
+# focus the node for the given path jump
+# alt + {p,b,comma,period}
+# 	bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous node in the current desktop
+alt + {_,shift + }c
+	bspc node -f {next,prev}.local
+
+# focus the next/previous desktop in the current monitor
+# alt + bracket{left,right}
+#	bspc desktop -f {prev,next}.local
+
+# focus the last node/desktop
+alt + {grave,Tab}
+	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+alt + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+
+##### WINDOW CLOSE OR KILL #####
+
+alt + {_,shift + }Escape
+	bspc node -{c,k}
+
+alt + q
+	bspc node -c
+
+
+##### WINDOW FOCUS OR SWAP #####
+
+# focus the node in the given direction
+alt + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+alt + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+
+##### WINDOW MOVE OR RESIZE #####
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+super + alt + shift + {Left,Down,Up,Right}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + shift + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+
+##### WINDOW PRESELECT #####
+
+# preselect the direction
+#alt + ctrl + {h,j,k,l}
+#	bspc node -p {west,south,north,east}
+
+# preselect the direction
+alt + ctrl + {Left,Down,Up,Right}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+alt + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+alt + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+alt + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+
+##### WORKSPACE SEND OR FOCUS #####
+
+alt + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+super + {Left,Down,Up,Right}
+	bspc desktop -f {prev,next,prev,next}.local
+
+
+##### MPD MPC #####
+
+alt + {_,shift + }p
+	{mpc toggle,mpc next}
+
+
+# LAUNCHER
+
+alt + Return
+	urxvt
+
+alt + @space
+	rofi -show drun
+
+super + Return
+	xfce4-taskmanager
+
+super + @space
+	rofi -show run
+
+super + {_,shift + }b
+	{chromium-browser, firefox}
+
+super + c
+	code
+
+super + {_,shift + }f
+	{thunar, urxvt -e ranger}
+
+super + e
+	emacs
+
+super + s
+	subl
+
+super + x
+	xdman
+
+super + v
+	vlc
+
+Print
+	xfce4-screenshooter -f -s ~/Pictures/Screenshot
