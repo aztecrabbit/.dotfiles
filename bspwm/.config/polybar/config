@@ -57,7 +57,7 @@ padding-right = 0
 module-margin = 0
 
 modules-left = bspwm separator refresh-playlist mpd mpc-zscroll
-modules-right = network-traffic wireless-network cpu temperature memory pulseaudio date menu-power
+modules-right = wireless-network network-traffic cpu temperature memory pulseaudio date menu-power
 
 tray-maxsize = 14
 tray-padding = 2
