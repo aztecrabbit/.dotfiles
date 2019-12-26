@@ -190,4 +190,4 @@ super + v
 	vlc
 
 Print
-	xfce4-screenshooter -f -s ~/Pictures/Screenshot
+	xfce4-screenshooter -f -s ~/Pictures/Screenshots
