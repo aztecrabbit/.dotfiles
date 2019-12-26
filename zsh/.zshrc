@@ -124,7 +124,7 @@ alias lla='ls -la'
 
 alias tree="tree -a -I '.git|__pycache__'"
 alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias dotfiles="cd ~/.dotfiles"
+alias dotfiles="cd ~/.dotfiles && git status"
 alias check-tether="curl -s $(ip route show | awk '/default/ { print $3 }'):8000 | grep -E '<p>(.+)</p>'"
 alias nmcli-refresh="nmcli net off > /dev/null 2>&1 && nmcli net on > /dev/null 2>&1 && sleep 2 && nmcli -f in-use,ssid,bssid,freq,rate,signal,security,wpa-flags,device,active dev wifi"
 
