@@ -1,4 +1,3 @@
-#script to copy/paste text in URXVT
 #! perl
 
 sub on_sel_grab {

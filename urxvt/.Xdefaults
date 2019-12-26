@@ -1,6 +1,19 @@
-!
-!
+! perl libs folder
+URxvt.perl-lib: /home/aztecrabbit/.config/urxvt/perl-libs
 
+! perl extension (blank: disable)
+URxvt.iso14755: False
+URxvt.perl-ext-common: default,clipboard
+
+! paste
+URxvt.keysym.Shift-Insert: perl:clipboard:paste
+
+
+! font
+URxvt.font: xft:monospace:size=8
+URxvt.letterSpace: -1
+
+! history
 URxvt.saveLines: 4096
 
 ! show scroll bar
@@ -15,37 +28,6 @@ URxvt*scrollWithBuffer: true
 ! scroll back to the bottom on keypress
 URxvt*scrollTtyKeypress: true
 
-! font
-URxvt.font: xft:monospace:size=8
-URxvt.letterSpace: -1
-
-!
-!
-
-! perl libs folder
-URxvt.perl-lib: /home/aztecrabbit/.config/urxvt/perl-libs
-
-! perl extension (blank: disable)
-URxvt.iso14755: False
-! URxvt.perl-ext:
-URxvt.perl-ext-common: default,clipboard
-
-! paste
-URxvt.keysym.Shift-Insert: perl:clipboard:paste
-
-!
-!
-
-! transparent
-!urxvt*depth: 32
-!urxvt*background: rgba:0000/0000/0200/c800
-
-! fake transparent
-!urxvt*transparent: true
-!urxvt*shading: 30
-
-!
-!
  
 *foreground:       #dadada
 *background:       #131926
@@ -72,9 +54,6 @@ URxvt.keysym.Shift-Insert: perl:clipboard:paste
 ! ! color13    purple
 ! ! color14    cyan
 ! ! color15    white
-
-!
-!
 
 *color0:    #0b0b0b
 *color1:    #ac262a
