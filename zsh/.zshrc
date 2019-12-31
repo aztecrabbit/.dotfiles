@@ -19,7 +19,7 @@ ZSH_THEME="aztecrabbit"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -60,7 +60,7 @@ DISABLE_AUTO_TITLE="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -99,13 +99,16 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Virtual Environment Wrapper
-#
-
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/Virtual Environment"
-export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3"
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3.7"
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3.7"
+
 source $HOME/.local/bin/virtualenvwrapper.sh
+
+
+# Repositories
+export repo="$HOME/Repositories"
 
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -122,6 +125,7 @@ alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -la'
 
+alias stow="stow --verbose"
 alias tree="tree -a -I '.git|__pycache__'"
 alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias dotfiles="cd ~/.dotfiles && git status"
@@ -130,10 +134,9 @@ alias nmcli-refresh="nmcli net off > /dev/null 2>&1 && nmcli net on > /dev/null 
 
 alias instaloader="instaloader --no-captions --no-metadata-json --no-compress-json"
 
-### Programs ###
 
-start()
-{
-    $* &> /dev/null &
-}
+# PATH
+#
 
+PATH="${PATH}:."
+PATH="${PATH}:${repo}/brainfuck-psiphon-pro"

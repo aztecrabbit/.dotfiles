@@ -144,6 +144,9 @@ alt + ctrl + shift + space
 alt + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
+super + {h,j,k,l}
+	bspc desktop -f {prev,next,prev,next}.local
+
 super + {Left,Down,Up,Right}
 	bspc desktop -f {prev,next,prev,next}.local
 
