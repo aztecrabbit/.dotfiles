@@ -1,0 +1,27 @@
+<profiles>
+    <lastloaded>0</lastloaded>
+    <useloginscreen>false</useloginscreen>
+    <autologin>-1</autologin>
+    <nextIdProfile>1</nextIdProfile>
+    <profile>
+        <id>0</id>
+        <name>Aztec Rabbit</name>
+        <directory pathversion="1">special://masterprofile/</directory>
+        <thumbnail pathversion="1">/home/aztecrabbit/Pictures/Profile/aztecrabbit.jpg</thumbnail>
+        <hasdatabases>true</hasdatabases>
+        <canwritedatabases>true</canwritedatabases>
+        <hassources>true</hassources>
+        <canwritesources>true</canwritesources>
+        <lockaddonmanager>false</lockaddonmanager>
+        <locksettings>0</locksettings>
+        <lockfiles>false</lockfiles>
+        <lockmusic>false</lockmusic>
+        <lockvideo>false</lockvideo>
+        <lockpictures>false</lockpictures>
+        <lockprograms>false</lockprograms>
+        <lockgames>false</lockgames>
+        <lockmode>0</lockmode>
+        <lockcode>-</lockcode>
+        <lastdate>10/11/2019 - 22:28</lastdate>
+    </profile>
+</profiles>

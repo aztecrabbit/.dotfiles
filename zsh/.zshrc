@@ -101,8 +101,8 @@ source $ZSH/oh-my-zsh.sh
 # Virtual Environment Wrapper
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/Virtual Environment"
-export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3.7"
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3.7"
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3"
 
 source $HOME/.local/bin/virtualenvwrapper.sh
 
@@ -129,6 +129,7 @@ alias stow="stow --verbose"
 alias tree="tree -a -I '.git|__pycache__'"
 alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias dotfiles="cd ~/.dotfiles && git status"
+alias youtube-dl="youtube-dl -v"
 alias check-tether="curl -s $(ip route show | awk '/default/ { print $3 }'):8000 | grep -E '<p>(.+)</p>'"
 alias nmcli-refresh="nmcli net off > /dev/null 2>&1 && nmcli net on > /dev/null 2>&1 && sleep 2 && nmcli -f in-use,ssid,bssid,freq,rate,signal,security,wpa-flags,device,active dev wifi"
 

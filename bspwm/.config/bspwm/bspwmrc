@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# "/opt/xdman/jre/bin/java" -Xmx1024m -jar "/opt/xdman/xdman.jar" -m
-
 sxhkd &
 $HOME/.config/mpd/launch.sh &
 $HOME/.config/polybar/launch.sh &
@@ -31,17 +29,18 @@ bspc config bottom_padding              32
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
 
-bspc rule -a "Code" desktop='^2' follow=on
-bspc rule -a "Sublime_text" desktop='^2' follow=on
-bspc rule -a "Emacs" desktop='^2' follow=on state=tiled
-bspc rule -a "Chromium-browser" desktop='^3' follow=on
-bspc rule -a "qutebrowser" desktop='^3' follow=on
-bspc rule -a "Firefox" desktop='^3' follow=on
-bspc rule -a "Thunar" desktop='^4' follow=on
-bspc rule -a "vlc" desktop='^5' follow=on
-bspc rule -a "Atril" desktop='^5' follow=on
-bspc rule -a "TeamViewer" desktop='^9' follow=on
+bspc rule -a 'Codium' desktop='^2' follow=on
+bspc rule -a 'Sublime_text' desktop='^2' follow=on
+bspc rule -a 'Emacs' desktop='^2' follow=on state=tiled
+bspc rule -a 'Chromium-browser' desktop='^3' follow=on
+bspc rule -a 'Firefox' desktop='^3' follow=on
+bspc rule -a 'Thunar' desktop='^4' follow=on
+bspc rule -a 'Kodi' desktop='^5' follow=on
+bspc rule -a 'vlc' desktop='^5' follow=on
+bspc rule -a 'mpv' desktop='^5' follow=on
+bspc rule -a 'Atril' desktop='^5' follow=on
+bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
-bspc rule -a "com-rarchives-ripme-App" state=floating follow=on
+bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
 
-[[ ! $(pidof zsh) ]] && urxvt -e "$(which zsh)" &
+[[ ! $(pidof urxvt) ]] && urxvt &
