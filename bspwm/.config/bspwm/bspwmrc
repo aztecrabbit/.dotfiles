@@ -43,4 +43,16 @@ bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
 
-[[ ! $(pidof urxvt) ]] && urxvt &
+[[ ! $(pidof urxvt) ]] && {
+    bspc rule -a 'URxvt' desktop='^1'
+    urxvt &
+    sleep 1
+    bspc rule -r 'URxvt'
+}
+
+[[ ! $(bspc query -N -n .hidden) ]] && {
+    bspc rule -a 'URxvt' state=floating hidden=on sticky=on rectangle=$(xrandr | awk '/connected primary/{print $4}')
+    urxvt -e tmux new-session \; split-window -h \; split-window -v \; select-pane -t 1 \; select-pane -t 0 \; attach &
+    sleep 1
+    bspc rule -r 'URxvt'
+}

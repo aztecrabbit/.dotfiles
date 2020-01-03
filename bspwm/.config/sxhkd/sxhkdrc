@@ -139,13 +139,19 @@ alt + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 
-##### WORKSPACE SEND OR FOCUS #####
+#### WORKSPACE ####
 
-alt + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+# -f --focus
+# -d --to-desktop
 
-super + {Left,Down,Up,Right}
-	bspc desktop -f {prev,next,prev,next}.local
+alt + {1-9,0}
+	bspc desktop -f '^{1-9,10}'
+
+alt + shift + {1-9,0}
+	bspc node -d '^{1-9,10}' --follow
+
+super + {Left,Right}
+	bspc desktop -f {prev,next}.local
 
 
 ##### MPD MPC #####
@@ -156,13 +162,26 @@ alt + {_,shift + }p
 
 # LAUNCHER
 
-alt + Return
-	urxvt
-
 alt + @space
 	rofi -show drun
 
+alt + Return
+	urxvt
+
+# bspc node
+#   -g --flag
+#
+# bspc query (command) (options)
+#   (command) -N --nodes
+#   (options) -n --node 	[NODE_SEL]
 super + Return
+	{ 														\
+		node_id=$(bspc query -N -n .hidden | tail -n1); 	\
+		bspc node $node_id -d focused; 						\
+		bspc node $node_id -g hidden --focus; 				\
+	}
+
+super + shift + Return
 	xfce4-taskmanager
 
 super + @space
