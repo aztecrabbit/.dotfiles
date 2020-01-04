@@ -19,7 +19,7 @@ ZSH_THEME="aztecrabbit"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+#CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -125,6 +125,8 @@ alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -la'
 
+alias services="systemctl list-units --type=service --state=running"
+
 alias stow="stow --verbose"
 alias tree="tree -a -I '.git|__pycache__'"
 alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
@@ -140,4 +142,5 @@ alias instaloader="instaloader --no-captions --no-metadata-json --no-compress-js
 #
 
 PATH="${PATH}:."
+PATH="${PATH}:${HOME}/.scripts"
 PATH="${PATH}:${repo}/brainfuck-psiphon-pro"

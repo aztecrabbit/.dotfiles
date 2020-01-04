@@ -4,7 +4,7 @@
   "MAX_RESULTS": 19,
   "CONSOLE_WIDTH": 80,
   "MAX_RES": 2160,
-  "PLAYER": "mpv",
+  "PLAYER": "mpv-stream",
   "PLAYERARGS": "",
   "ENCODER": 0,
   "NOTIFIER": "",

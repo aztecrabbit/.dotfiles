@@ -9,11 +9,11 @@ while IFS='|' read -ra arg; do
         url="$i"
         break
     done
-done <<< "$*"
+done <<< "$1"
 
 if [[ $url == http* ]]; then
-    urxvt -e mpv "$url" --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --keep-open=no --fullscreen=yes \
+    mpv "$url" --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --keep-open=no --fullscreen=yes \
         --script-opts=osc-visibility=always
 else
-    mpv "$*" --keep-open=no --fullscreen=yes
+    mpv $* --keep-open=no --fullscreen=yes
 fi

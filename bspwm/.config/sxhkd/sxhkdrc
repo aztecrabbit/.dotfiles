@@ -148,7 +148,7 @@ alt + {1-9,0}
 	bspc desktop -f '^{1-9,10}'
 
 alt + shift + {1-9,0}
-	bspc node -d '^{1-9,10}' --follow
+	bspc node -d '^{1-9,10}'
 
 super + {Left,Right}
 	bspc desktop -f {prev,next}.local
@@ -168,19 +168,6 @@ alt + @space
 alt + Return
 	urxvt
 
-# bspc node
-#   -g --flag
-#
-# bspc query (command) (options)
-#   (command) -N --nodes
-#   (options) -n --node 	[NODE_SEL]
-super + Return
-	{ 														\
-		node_id=$(bspc query -N -n .hidden | tail -n1); 	\
-		bspc node $node_id -d focused; 						\
-		bspc node $node_id -g hidden --focus; 				\
-	}
-
 super + shift + Return
 	xfce4-taskmanager
 
@@ -194,7 +181,7 @@ super + c
 	code
 
 super + {_,shift + }f
-	{thunar, urxvt -e ranger}
+	{pcmanfm, thunar}
 
 super + e
 	emacs
@@ -213,3 +200,20 @@ super + v
 
 Print
 	xfce4-screenshooter -f -s ~/Pictures/Screenshots
+
+
+# Special
+
+super + Tab
+	$HOME/.scripts/bspwm-toggle-desktop-focus.sh '2'
+
+# bspc node
+#   -g --flag
+#
+# bspc query (command) (options)
+#   (command) -N --nodes
+#   (options) -n --node 	[NODE_SEL]
+super + Return
+	node_id=$(bspc query -N -n .hidden | tail -n1); 	\
+	bspc node $node_id -d focused; 						\
+	bspc node $node_id -g hidden --focus
