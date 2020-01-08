@@ -2,7 +2,6 @@
 margin = 1
 padding = 2
 
-
 [colors]
 red = #ff0000
 
@@ -77,16 +76,20 @@ wm-restack = bspwm
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
+[module/network-traffic]
+type = custom/script
+exec = cat /tmp/network-traffic
+tail = false
+interval = 1
+
+label = %output%
+format = <label>
+
 
 [module/separator]
 type = custom/text
 content = │
 content-margin = 2
-
-[module/dash]
-type = custom/text
-content = -
-content-margin = 1
 
 
 ;; include modules
@@ -103,4 +106,4 @@ include-file = ~/.config/polybar/modules/refresh-playlist.ini
 include-file = ~/.config/polybar/modules/wireless-network.ini
 include-file = ~/.config/polybar/modules/menu-power.ini
 include-file = ~/.config/polybar/modules/ip.ini
-include-file = ~/.config/polybar/modules/network-traffic.ini
+; include-file = ~/.config/polybar/modules/network-traffic.ini

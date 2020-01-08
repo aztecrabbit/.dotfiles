@@ -2,7 +2,8 @@
 
 # make sxhkd reload its configuration files:
 alt + r
-	pkill -USR1 -x sxhkd
+	pkill -USR1 -x sxhkd; \
+	notify-send -t 3000 'sxhkd reloaded'
 
 # quit/restart bspwm
 alt + shift + {q,r}
@@ -151,69 +152,84 @@ alt + shift + {1-9,0}
 	bspc node -d '^{1-9,10}'
 
 super + {Left,Right}
-	bspc desktop -f {prev,next}.local
+	bspc desktop -f {prev, next}.local
 
 
 ##### MPD MPC #####
 
-alt + {_,shift + }p
-	{mpc toggle,mpc next}
+alt + {_,shift + } p
+	{mpc toggle, mpc next}
 
 
 # LAUNCHER
 
 alt + @space
+	dmenu_run
+
+alt + shift + @space
 	rofi -show drun
 
 alt + Return
-	urxvt
+	urxvtc
+
+
 
 super + shift + Return
-	xfce4-taskmanager
+	$HOME/.scripts/bspwm-launch-application.sh \
+		"xfce4-taskmanager" "Task Manager"
 
-super + @space
-	rofi -show run
-
-super + {_,shift + }b
-	{chromium-browser, firefox}
+super + {_, shift + } b
+	$HOME/.scripts/bspwm-launch-application.sh { 	\
+		"chromium-browser" "Chromium", 				\
+		"firefox" "Firefox"							\
+	}
 
 super + c
-	code
+	codium
 
-super + {_,shift + }f
-	{pcmanfm, thunar}
+super + {_, shift + } f
+	$HOME/.scripts/bspwm-launch-application.sh { 	\
+		"thunar" "Thunar", 			\
+		"ranger" "Ranger"				\
+	}
 
 super + e
 	emacs
 
 super + k
-	kodi
+	$HOME/.scripts/bspwm-launch-application.sh \
+		"kodi" "Kodi"
 
 super + s
-	subl
+	$HOME/.scripts/bspwm-launch-application.sh \
+		"subl" "Sublime Text"
 
 super + x
-	xdman
+	$HOME/.scripts/bspwm-launch-application.sh \
+		"xdman" "Xtream Download Manager"
 
-super + v
-	vlc
+super + @space; {_, shift + } {t, b}
+	$HOME/.scripts/bspwm-launch-application.sh { 				\
+		"telegram-desktop" "Telegram Desktop", 					\
+		"teamviewer" "Teamviewer",								\
+		"tabbed -n surf -c -r 2 surf -e ''" "Surf Browser", 	\
+		"" \
+	}
 
 Print
-	xfce4-screenshooter -f -s ~/Pictures/Screenshots
+	scrot --quality 50 --exec \
+		'mv $f ~/Pictures/Screenshots/ && notify-send -t 3000 -i ~/Pictures/Screenshots/$f "Screenshot saved!"'
 
 
 # Special
 
 super + Tab
-	$HOME/.scripts/bspwm-toggle-desktop-focus.sh '2'
+	$HOME/.scripts/bspwm-toggle-desktop-focus.sh '^2'
 
 # bspc node
 #   -g --flag
 #
-# bspc query (command) (options)
-#   (command) -N --nodes
-#   (options) -n --node 	[NODE_SEL]
 super + Return
-	node_id=$(bspc query -N -n .hidden | tail -n1); 	\
-	bspc node $node_id -d focused; 						\
+	node_id=$(xdo id -N tabbed -n urxvt-popup); 	\
+	bspc node $node_id -d focused; 					\
 	bspc node $node_id -g hidden --focus

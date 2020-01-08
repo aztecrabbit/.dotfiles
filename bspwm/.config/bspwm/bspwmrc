@@ -1,15 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 
+# Variables
+screen_size=$(xrandr | awk '/connected primary/{print $4}')
+gray="#353535"
+
+# Autolaunch
 sxhkd &
+play-with-mpv &
+/opt/xdman/jre/bin/java -Xmx1024m -jar /opt/xdman/xdman.jar -m &
+
 $HOME/.config/mpd/launch.sh &
 $HOME/.config/polybar/launch.sh &
 $HOME/.config/compton/launch.sh &
-/opt/xdman/jre/bin/java -Xmx1024m -jar "/opt/xdman/xdman.jar" -m &
 
+# Config
 bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width                2
 bspc config window_gap                  4
+bspc config top_padding                 0
+bspc config bottom_padding              32
 
 bspc config split_ratio                 0
 bspc config borderless_monocle          true
@@ -17,44 +27,48 @@ bspc config gapless_monocle             true
 
 bspc config focus_follows_pointer       true
 
+# mod1 - alt (left)
+# mod4 - super
+bspc config pointer_modifier            mod4
+
 bspc config focused_border_color        "#353535"
 bspc config active_border_color         "#191919"
 bspc config normal_border_color         "#191919"
-bspc config presel_border_color         "#a2a2a2"
+bspc config presel_feedback_color       $gray
 
-bspc config bottom_padding              32
-
-# bspc rule -a Gimp desktop='^8' state=floating follow=on
-# bspc rule -a Chromium desktop='^2'
-# bspc rule -a mplayer2 state=floating
-# bspc rule -a Kupfer.py focus=on
-# bspc rule -a Screenkey manage=off
-
-bspc rule -a 'Codium' desktop='2' follow=on
-bspc rule -a 'Sublime_text' desktop='2' follow=on
-bspc rule -a 'Emacs' desktop='2' follow=on state=tiled
-bspc rule -a 'Chromium-browser' desktop='3' follow=on
-bspc rule -a 'Firefox' desktop='3' follow=on
-bspc rule -a 'Pcmanfm' desktop='4' follow=on
-bspc rule -a 'Thunar' desktop='4' follow=on
-bspc rule -a 'Kodi' desktop='5' follow=on
-bspc rule -a 'vlc' desktop='5' follow=on
-bspc rule -a 'mpv' desktop='5' follow=on
-bspc rule -a 'Atril' desktop='5' follow=on
-bspc rule -a 'TeamViewer' desktop='9' follow=on
+# Rules
+bspc rule -a 'Codium' desktop='^2' follow=on
+bspc rule -a 'Sublime_text' desktop='^2' follow=on
+bspc rule -a 'Emacs' desktop='^2' follow=on state=tiled
+bspc rule -a 'tabbed:surf' desktop='^3' follow=on
+bspc rule -a 'Chromium-browser' desktop='^3' follow=on
+bspc rule -a 'Firefox' desktop='^3' follow=on
+bspc rule -a 'Pcmanfm' desktop='^4' follow=on
+bspc rule -a 'Thunar' desktop='^4' follow=on
+bspc rule -a 'Kodi' desktop='^5' follow=on
+bspc rule -a 'vlc' desktop='^5' follow=on
+bspc rule -a 'mpv' desktop='^5' follow=on
+bspc rule -a 'Atril' desktop='^5' follow=on
+bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
+bspc rule -a 'tabbed:urxvt-popup' follow=on state=floating hidden=on sticky=on rectangle=$screen_size
 
-[[ ! $(pidof urxvt) ]] && {
-    bspc rule -a 'URxvt' desktop='^1'
-    urxvt &
-    sleep 2
-    bspc rule -r 'URxvt'
+# Etc
+# APP_WP_CHANGER="$HOME/.scripts/wallpaper-changer.sh"
+# kill `ps -aux | grep $APP_WP_CHANGER | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
+# $APP_WP_CHANGER $HOME/Pictures/Wallpapers 30 &
+feh --bg-center ~/Pictures/Wallpapers/aztecwarrior.jpg &
+
+[ ! $(pidof urxvtd) ] && {
+    urxvtd -q -o -f
+
+    [ ! $(xdo id -N URxvt -n urxvt) ] && {
+        urxvtc &
+    }
 }
 
-[[ ! $(bspc query -N -n .hidden) ]] && {
-    bspc rule -a 'URxvt' state=floating hidden=on sticky=on rectangle=$(xrandr | awk '/connected primary/{print $4}')
-    urxvt -e tmux new-session \; split-window -h \; split-window -v \; select-pane -t 1 \; select-pane -t 0 \; attach &
-    sleep 1
-    bspc rule -r 'URxvt'
+[ ! $(xdo id -N tabbed -n urxvt-popup) ] && {
+    tabbed -n urxvt-popup -f -r 2 urxvtc -embed '' -e tmux new-session \; split-window -v \; resize-pane -D 30 \; \
+        select-pane -t 0 \; split-window -h \; select-pane -t 0 \; attach > /dev/null 2>&1 &
 }

@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-mkdir ~/.local/share/mpd
-mkdir ~/.local/share/mpd/playlists
+mkdir -p ~/.local/share/mpd/playlists
 
-mpd --kill
+# killall -q -w mpd
 mpd ~/.config/mpd/mpd.conf
 mpc load playlist
