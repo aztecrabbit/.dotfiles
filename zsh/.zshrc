@@ -97,6 +97,8 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# sxhkd
+export SXHKD_SHELL='sh'
 
 # Virtual Environment Wrapper
 export WORKON_HOME="$HOME/.virtualenvs"
@@ -105,7 +107,6 @@ export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3"
 
 source $HOME/.local/bin/virtualenvwrapper.sh
-
 
 # Repositories
 export repo="$HOME/Repositories"

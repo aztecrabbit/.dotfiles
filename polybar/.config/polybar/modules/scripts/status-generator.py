@@ -87,7 +87,7 @@ def main():
         )
 
         with open('/tmp/network-traffic', 'w') as file:
-            data = f"  {'  -  '.join(data)}  -  "
+            data = '  -  '.join(data)
             file.write(data)
             # print(data)
 

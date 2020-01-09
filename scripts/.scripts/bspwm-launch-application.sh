@@ -2,16 +2,21 @@
 
 command="$1"
 application_name="$2"
+notification_timeout="$3"
 
-if [[ "$application_name" ]]; then
+if [[ ! -z "$application_name" ]]; then
     message="Launching $application_name ..."
 else
     message="Launching..."
 fi
 
-if [[ "$command" ]]; then
-    notify-send -t 3000 "$message"
+if [[ -z $notification_timeout ]]; then
+    notification_timeout=3000
+fi
+
+if [[ ! -z "$command" ]]; then
+    notify-send -t $notification_timeout "$message"
     $command &
 else
-    notify-send -t 3000 'Shortcut not set!'
+    notify-send -t $notification_timeout 'Shortcut not set!'
 fi

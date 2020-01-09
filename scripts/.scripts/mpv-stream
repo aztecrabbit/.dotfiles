@@ -12,14 +12,9 @@ while IFS='|' read -ra arg; do
 done <<< "$1"
 
 if [[ $url == http* ]]; then
-    notify-send -t 3000 'Mpv Stream Opened'
+    notify-send -t 5000 'Mpv Stream Opened' "$url"
 
-    if [[ "$2" == 'cli' ]]; then
-        cli="urxvtc -e"
-        cli=""
-    fi
-
-    $cli mpv "$url" -v --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --keep-open=no --fullscreen=yes \
+    mpv "$url" --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --keep-open=no --fullscreen=yes \
         --script-opts=osc-visibility=always
 
     notify-send -t 3000 'Mpv Stream Closed'

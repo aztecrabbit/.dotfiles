@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Killall running proccess
+pkill -USR1 -x sxhkd
+
 # Variables
 screen_size=$(xrandr | awk '/connected primary/{print $4}')
 gray="#353535"
@@ -10,6 +13,7 @@ play-with-mpv &
 /opt/xdman/jre/bin/java -Xmx1024m -jar /opt/xdman/xdman.jar -m &
 
 $HOME/.config/mpd/launch.sh &
+$HOME/.config/dunst/launch.sh &
 $HOME/.config/polybar/launch.sh &
 $HOME/.config/compton/launch.sh &
 
@@ -18,7 +22,7 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width                2
 bspc config window_gap                  4
-bspc config top_padding                 0
+# bspc config top_padding                 0
 bspc config bottom_padding              32
 
 bspc config split_ratio                 0
@@ -43,7 +47,6 @@ bspc rule -a 'Emacs' desktop='^2' follow=on state=tiled
 bspc rule -a 'tabbed:surf' desktop='^3' follow=on
 bspc rule -a 'Chromium-browser' desktop='^3' follow=on
 bspc rule -a 'Firefox' desktop='^3' follow=on
-bspc rule -a 'Pcmanfm' desktop='^4' follow=on
 bspc rule -a 'Thunar' desktop='^4' follow=on
 bspc rule -a 'Kodi' desktop='^5' follow=on
 bspc rule -a 'vlc' desktop='^5' follow=on
@@ -53,22 +56,25 @@ bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
 bspc rule -a 'tabbed:urxvt-popup' follow=on state=floating hidden=on sticky=on rectangle=$screen_size
+bspc rule -a 'tabbed:urxvt-scrot' hidden=off
 
 # Etc
-# APP_WP_CHANGER="$HOME/.scripts/wallpaper-changer.sh"
-# kill `ps -aux | grep $APP_WP_CHANGER | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
-# $APP_WP_CHANGER $HOME/Pictures/Wallpapers 30 &
+# kill `ps -aux | grep SCRIPT | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
 feh --bg-center ~/Pictures/Wallpapers/aztecwarrior.jpg &
 
-[ ! $(pidof urxvtd) ] && {
-    urxvtd -q -o -f
+[ -z "$(pidof urxvtd)" ] && {
+    urxvtd -q &
 
-    [ ! $(xdo id -N URxvt -n urxvt) ] && {
-        urxvtc &
-    }
+    while ! pgrep -x urxvtd > /dev/null; do
+        sleep 1
+    done
 }
 
-[ ! $(xdo id -N tabbed -n urxvt-popup) ] && {
+[ -z "$(xdo id -N URxvt -n urxvt)" ] && {
+    urxvtc &
+}
+
+[ -z "$(xdo id -N tabbed -n urxvt-popup)" ] && {
     tabbed -n urxvt-popup -f -r 2 urxvtc -embed '' -e tmux new-session \; split-window -v \; resize-pane -D 30 \; \
         select-pane -t 0 \; split-window -h \; select-pane -t 0 \; attach > /dev/null 2>&1 &
 }

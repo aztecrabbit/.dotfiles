@@ -157,7 +157,7 @@ super + {Left,Right}
 
 ##### MPD MPC #####
 
-alt + {_,shift + } p
+alt + {_, shift + } p
 	{mpc toggle, mpc next}
 
 
@@ -173,15 +173,14 @@ alt + Return
 	urxvtc
 
 
-
 super + shift + Return
 	$HOME/.scripts/bspwm-launch-application.sh \
-		"xfce4-taskmanager" "Task Manager"
+		'xfce4-taskmanager' 'Task Manager'
 
 super + {_, shift + } b
 	$HOME/.scripts/bspwm-launch-application.sh { 	\
-		"chromium-browser" "Chromium", 				\
-		"firefox" "Firefox"							\
+		'chromium-browser' 'Chromium', 				\
+		'firefox' 'Firefox'							\
 	}
 
 super + c
@@ -189,8 +188,8 @@ super + c
 
 super + {_, shift + } f
 	$HOME/.scripts/bspwm-launch-application.sh { 	\
-		"thunar" "Thunar", 			\
-		"ranger" "Ranger"				\
+		'thunar' 'Thunar', 							\
+		'ranger' 'Ranger'							\
 	}
 
 super + e
@@ -198,28 +197,31 @@ super + e
 
 super + k
 	$HOME/.scripts/bspwm-launch-application.sh \
-		"kodi" "Kodi"
+		'kodi' 'Kodi'
 
 super + s
 	$HOME/.scripts/bspwm-launch-application.sh \
-		"subl" "Sublime Text"
+		'subl' 'Sublime Text'
 
 super + x
 	$HOME/.scripts/bspwm-launch-application.sh \
-		"xdman" "Xtream Download Manager"
+		'xdman' 'Xtream Download Manager'
 
-super + @space; {_, shift + } {t, b}
+super + @space; {_, shift + } {b, m, t}
 	$HOME/.scripts/bspwm-launch-application.sh { 				\
-		"telegram-desktop" "Telegram Desktop", 					\
-		"teamviewer" "Teamviewer",								\
-		"tabbed -n surf -c -r 2 surf -e ''" "Surf Browser", 	\
-		"" \
+		'tabbed -n surf -c -r 2 surf -e ""' 'Surf Browser', 	\
+		'', 													\
+		'urxvtc -e ncmpcpp' 'ncmpcpp', 							\
+		'', 													\
+		'telegram-desktop' 'Telegram', 							\
+		'teamviewer' 'Teamviewer',								\
 	}
 
-Print
-	scrot --quality 50 --exec \
-		'mv $f ~/Pictures/Screenshots/ && notify-send -t 3000 -i ~/Pictures/Screenshots/$f "Screenshot saved!"'
+super + @space; Escape
+	notify-send -i 2000 'super + @space; Escape'
 
+{_, ctrl + } {_, shift + } Print
+	$HOME/.scripts/screenshot.sh {'normal', 'freeze', 'select', 'freeze-now'}
 
 # Special
 
