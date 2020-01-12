@@ -155,22 +155,32 @@ super + {Left,Right}
 	bspc desktop -f {prev, next}.local
 
 
-##### MPD MPC #####
+#
+#
+
+# Music Player Client
 
 alt + {_, shift + } p
 	{mpc toggle, mpc next}
 
+#
+#
 
-# LAUNCHER
+# Launcher
 
 alt + @space
-	dmenu_run
+	dmenu_run -fn "monospace-9" -nb "#101216" -nf "#dadada" -l 24
 
 alt + shift + @space
 	rofi -show drun
 
 alt + Return
 	urxvtc
+
+
+# move to preselect
+alt + shift + Return
+	bspc node -n 'last.!automatic.local'
 
 
 super + shift + Return
@@ -184,16 +194,14 @@ super + {_, shift + } b
 	}
 
 super + c
-	codium
+	$HOME/.scripts/bspwm-launch-application.sh \
+		'codium' 'VS Codium'
 
 super + {_, shift + } f
 	$HOME/.scripts/bspwm-launch-application.sh { 	\
 		'thunar' 'Thunar', 							\
-		'ranger' 'Ranger'							\
+		'urxvtc -e ranger' 'Ranger'							\
 	}
-
-super + e
-	emacs
 
 super + k
 	$HOME/.scripts/bspwm-launch-application.sh \
@@ -212,7 +220,7 @@ super + @space; {_, shift + } {b, m, t}
 		'tabbed -n surf -c -r 2 surf -e ""' 'Surf Browser', 	\
 		'', 													\
 		'urxvtc -e ncmpcpp' 'ncmpcpp', 							\
-		'', 													\
+		'',														\
 		'telegram-desktop' 'Telegram', 							\
 		'teamviewer' 'Teamviewer',								\
 	}

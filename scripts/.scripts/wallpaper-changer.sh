@@ -1,23 +1,26 @@
-#!/bin/bash
+#!/bin/dash
 
-if [[ -z "$1" ]] || [[ -z "$2" ]]; then
-    echo "Usage: $0 ~/path/to/folder delay-in-seconds"
+path="$1"
+delay="$2"
+
+if [ ! "$path" -o ! "$delay" ]; then
+    echo "Usage: \n  wallpaper-changer.sh (path/to/folder) (delay-in-seconds)"
     exit
 fi
 
-if [[ ! -e "$1" ]]; then
-    echo "Directory not exists!"
+if [ ! -d "$path" ]; then
+    echo "Directory not exists! \n  $path"
     exit
 fi
 
-cd "$1"
+cd "$path"
 
 while true; do
-    for x in *; do
-        if [ ! -z $x ]; then
-            echo "${1}/${x}"
-            feh --no-fehbg --bg-center $x
-            sleep $2
+    for filename in *; do
+        if [ -e "$filename" ]; then
+            echo "${path}/${filename}"
+            nitrogen --save --set-zoom-fill "$filename" > /dev/null 2>&1
+            sleep $delay
         fi
     done
 done

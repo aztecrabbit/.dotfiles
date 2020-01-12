@@ -11,7 +11,7 @@ while IFS='|' read -ra arg; do
     done
 done <<< "$1"
 
-if [[ $url == http* ]]; then
+if [[ $url = http* ]]; then
     notify-send -t 5000 'Mpv Stream Opened' "$url"
 
     mpv "$url" --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --keep-open=no --fullscreen=yes \

@@ -1,21 +1,21 @@
-#!/bin/bash
+#!/bin/dash
 
 mode="$1"
 command='scrot --quality 50'
 
 mkdir -p $HOME/Pictures/Screenshots/
 
-if [[ "$mode" == 'select' ]] || [[ "$mode" == 'freeze' ]] || [[ "$mode" == 'freeze-now' ]]; then
+if [ "$mode" = 'select' -o "$mode" = 'freeze' -o "$mode" = 'freeze-now' ]; then
     command="tabbed -n urxvt-scrot -c -r 2 urxvtc -embed '' -e $command --select"
     message='Screenshot select mode'
 fi
 
-if [[ "$mode" == 'freeze-now' ]]; then
+if [ "$mode" = 'freeze-now' ]; then
     command="$command --freeze"
     message=''
 fi
 
-if [[ "$mode" == 'freeze' ]]; then
+if [ "$mode" = 'freeze' ]; then
     command="$command --freeze"
     message=''
 
@@ -28,7 +28,7 @@ if [[ "$mode" == 'freeze' ]]; then
     sleep 1
 fi
 
-if [[ ! -z "$message" ]]; then
+if [ "$message" ]; then
     notify-send -t 2000 "$message"
 fi
 

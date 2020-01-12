@@ -1,22 +1,27 @@
-#!/bin/bash
+#!/bin/dash
 
 command="$1"
 application_name="$2"
 notification_timeout="$3"
 
-if [[ ! -z "$application_name" ]]; then
-    message="Launching $application_name ..."
-else
-    message="Launching..."
+message="Shortcut not set!"
+
+if [ ! "$notification_timeout" ]; then
+    notification_timeout="3000"
 fi
 
-if [[ -z $notification_timeout ]]; then
-    notification_timeout=3000
+if [ "$command" ]; then
+    if [ "$application_name" ]; then
+        message="Launching $application_name ..."
+    else
+        message=''
+    fi
 fi
 
-if [[ ! -z "$command" ]]; then
+if [ "$message" ]; then
     notify-send -t $notification_timeout "$message"
-    $command &
-else
-    notify-send -t $notification_timeout 'Shortcut not set!'
+fi
+
+if [ "$command" ]; then
+    $command > /dev/null 2>&1 &
 fi

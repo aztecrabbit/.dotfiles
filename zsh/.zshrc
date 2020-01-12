@@ -98,7 +98,7 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # sxhkd
-export SXHKD_SHELL='sh'
+export SXHKD_SHELL='/bin/dash'
 
 # Virtual Environment Wrapper
 export WORKON_HOME="$HOME/.virtualenvs"
@@ -116,6 +116,7 @@ export repo="$HOME/Repositories"
 #
 
 PATH="${PATH}:."
+PATH="${PATH}:${HOME}/go/bin"
 PATH="${PATH}:${HOME}/.scripts"
 PATH="${PATH}:${repo}/brainfuck-psiphon-pro"
 
