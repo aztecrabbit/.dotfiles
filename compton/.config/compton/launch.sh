@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 killall -q -e compton
 

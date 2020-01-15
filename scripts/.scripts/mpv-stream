@@ -14,7 +14,7 @@ done <<< "$1"
 if [[ $url = http* ]]; then
     notify-send -t 5000 'Mpv Stream Opened' "$url"
 
-    mpv "$url" --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --keep-open=no --fullscreen=yes \
+    mpv "$url" --stream-record="${HOME}/Downloads/Stream/${datetime}.ts" --osd-level=1 --keep-open=no --fullscreen=yes \
         --script-opts=osc-visibility=always
 
     notify-send -t 3000 'Mpv Stream Closed'

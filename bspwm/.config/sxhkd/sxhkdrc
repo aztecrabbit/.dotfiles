@@ -15,6 +15,16 @@ alt + shift + {q,r}
 #alt + bracketright
 #	bspc node @/ -R 90
 
+#
+#
+
+# Rotate
+
+alt + shift + {braceleft, braceright}
+	bspc node -f @parent; \
+	bspc node @/ -R {-90, 90}; \
+	bspc node -f @second
+
 alt + bracketleft
 	bspc node -f @parent; \
 	bspc node -R -90; \
@@ -29,16 +39,18 @@ alt + bracketright
 #####
 
 # alternate between the tiled and monocle layout
-alt + m
-	bspc desktop -l next
+# alt + m
+# 	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
 alt + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest node
+# alt + g
+# 	bspc node -s biggest
 alt + g
-	bspc node -s biggest
+ 	bspc node -s biggest
 
 #
 # state/flags
@@ -59,8 +71,11 @@ alt + ctrl + {m,x,y,z}
 # 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-alt + {_,shift + }c
-	bspc node -f {next,prev}.local
+# alt + {_,shift + } c
+# 	bspc node -f {next,prev}.local
+
+alt + {KP_Left, KP_Right}
+	bspc node -f {prev, next}.local
 
 # focus the next/previous desktop in the current monitor
 # alt + bracket{left,right}
@@ -187,42 +202,24 @@ super + shift + Return
 	$HOME/.scripts/bspwm-launch-application.sh \
 		'xfce4-taskmanager' 'Task Manager'
 
-super + {_, shift + } b
-	$HOME/.scripts/bspwm-launch-application.sh { 	\
-		'chromium-browser' 'Chromium', 				\
-		'firefox' 'Firefox'							\
-	}
-
-super + c
-	$HOME/.scripts/bspwm-launch-application.sh \
-		'codium' 'VS Codium'
-
-super + {_, shift + } f
-	$HOME/.scripts/bspwm-launch-application.sh { 	\
-		'thunar' 'Thunar', 							\
-		'urxvtc -e ranger' 'Ranger'							\
-	}
-
-super + k
-	$HOME/.scripts/bspwm-launch-application.sh \
-		'kodi' 'Kodi'
-
-super + s
-	$HOME/.scripts/bspwm-launch-application.sh \
-		'subl' 'Sublime Text'
-
-super + x
-	$HOME/.scripts/bspwm-launch-application.sh \
-		'xdman' 'Xtream Download Manager'
-
-super + @space; {_, shift + } {b, m, t}
-	$HOME/.scripts/bspwm-launch-application.sh { 				\
-		'tabbed -n surf -c -r 2 surf -e ""' 'Surf Browser', 	\
-		'', 													\
-		'urxvtc -e ncmpcpp' 'ncmpcpp', 							\
-		'',														\
-		'telegram-desktop' 'Telegram', 							\
-		'teamviewer' 'Teamviewer',								\
+super + space; {_, shift + } {b, c, f, k, m, s, t, x}
+	$HOME/.scripts/bspwm-launch-application.sh { 			\
+		'chromium-browser' 'Chromium', 						\
+		'firefox' 'Firefox',								\
+		'codium' 'VS Codium', 								\
+		'', 												\
+		'thunar' 'Thunar', 									\
+		'urxvtc -name ranger -e ranger' 'Ranger',			\
+		'kodi' 'Kodi', 										\
+		'', 												\
+		'urxvtc -name ncmpcpp -e ncmpcpp' 'ncmpcpp', 		\
+		'megasync' 'Mega',									\
+		'subl' 'Sublime Text', 								\
+		'', 												\
+		'telegram-desktop' 'Telegram', 						\
+		'teamviewer' 'Teamviewer',							\
+		'xdman' 'Xtream Download Manager', 					\
+		'', 												\
 	}
 
 super + @space; Escape
@@ -233,13 +230,24 @@ super + @space; Escape
 
 # Special
 
+super + l
+	$HOME/.scripts/lockscreen.sh
+
 super + Tab
 	$HOME/.scripts/bspwm-toggle-desktop-focus.sh '^2'
 
-# bspc node
-#   -g --flag
-#
+super + {_, ctrl + } Up
+	$HOME/.scripts/bspwm-unhide-application.sh {'', "$(bspc query -D -d .focused)"}
+
+super + Down
+	bspc node -g hidden=on
+
 super + Return
-	node_id=$(xdo id -N tabbed -n urxvt-popup); 	\
-	bspc node $node_id -d focused; 					\
-	bspc node $node_id -g hidden --focus
+	node_id=$(xdo id -N URxvt -n popup); 				\
+	if [ ! $node_id ]; then 							\
+		$HOME/.scripts/urxvt-popup.sh; 					\
+		node_id=$(xdo id -N URxvt -n popup); 			\
+	fi; 												\
+	if [ $node_id ]; then 								\
+		bspc node $node_id -v 0 0 -g hidden --focus; 	\
+	fi

@@ -3,7 +3,7 @@ import sys
 from time import sleep
 
 
-def realpath(filename):
+def realpath(filename: str) -> str:
     return os.path.dirname(os.path.abspath(__file__)) + filename
 
 
@@ -31,6 +31,10 @@ def main():
 
     interfaces = sys.argv
     interval = 1
+
+    if not interfaces:
+        print(f"Usage: python3 {__file__} [interface] [interface] [etc]")
+        return
 
     with open(realpath('/status-generator.pid'), 'w') as file:
         file.write(f"{os.getpid()}")
