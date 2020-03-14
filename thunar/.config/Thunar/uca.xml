@@ -1,4 +1,4 @@
-<?xml encoding="UTF-8" version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
 	<icon>Terminal</icon>
@@ -35,6 +35,24 @@
 	<other-files/>
 	<text-files/>
 	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Slideshow</name>
+	<unique-id>1583520569665146-1</unique-id>
+	<command>feh --scale-down --auto-zoom --randomize --recursive --slideshow-delay 5 %d</command>
+	<description>...</description>
+	<patterns>*</patterns>
+</action>
+<action>
+	<icon></icon>
+	<name>Slideshow</name>
+	<unique-id>1582484772180892-1</unique-id>
+	<command>feh --scale-down --auto-zoom --randomize --recursive --slideshow-delay 10 %d</command>
+	<description>...</description>
+	<patterns>*</patterns>
+	<directories/>
+	<image-files/>
 </action>
 <action>
 	<icon>filefind</icon>

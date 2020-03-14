@@ -39,8 +39,8 @@ alt + bracketright
 #####
 
 # alternate between the tiled and monocle layout
-# alt + m
-# 	bspc desktop -l next
+alt + m
+	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
 alt + y
@@ -81,9 +81,9 @@ alt + {KP_Left, KP_Right}
 # alt + bracket{left,right}
 #	bspc desktop -f {prev,next}.local
 
-# focus the last node/desktop
-alt + {grave,Tab}
-	bspc {node,desktop} -f last
+# focus the last node
+alt + grave
+	bspc node -f last
 
 # focus the older or newer node in the focus history
 alt + {o,i}
@@ -160,10 +160,13 @@ alt + ctrl + shift + space
 # -f --focus
 # -d --to-desktop
 
-alt + {1-9,0}
+super + Tab
+	bspc desktop -f last
+
+super + {1-9,0}
 	bspc desktop -f '^{1-9,10}'
 
-alt + shift + {1-9,0}
+super + shift + {1-9,0}
 	bspc node -d '^{1-9,10}'
 
 super + {Left,Right}
@@ -202,11 +205,11 @@ super + shift + Return
 	$HOME/.scripts/bspwm-launch-application.sh \
 		'xfce4-taskmanager' 'Task Manager'
 
-super + space; {_, shift + } {b, c, f, k, m, s, t, x}
+super + {_, shift + } {b, c, f, k, m, s, t, x}
 	$HOME/.scripts/bspwm-launch-application.sh { 			\
-		'chromium-browser' 'Chromium', 						\
+		'chromium' 'Chromium', 								\
 		'firefox' 'Firefox',								\
-		'codium' 'VS Codium', 								\
+		'code' 'VS Code', 									\
 		'', 												\
 		'thunar' 'Thunar', 									\
 		'urxvtc -name ranger -e ranger' 'Ranger',			\
@@ -214,16 +217,19 @@ super + space; {_, shift + } {b, c, f, k, m, s, t, x}
 		'', 												\
 		'urxvtc -name ncmpcpp -e ncmpcpp' 'ncmpcpp', 		\
 		'megasync' 'Mega',									\
-		'subl' 'Sublime Text', 								\
+		'subl3' 'Sublime Text',								\
 		'', 												\
 		'telegram-desktop' 'Telegram', 						\
 		'teamviewer' 'Teamviewer',							\
 		'xdman' 'Xtream Download Manager', 					\
-		'', 												\
+		'',		 											\
 	}
 
-super + @space; Escape
-	notify-send -i 2000 'super + @space; Escape'
+super + {_, shift + } {y}
+	$HOME/.scripts/bspwm-launch-application.sh { 			\
+		'gtk-youtube-viewer' 'Youtube Viewer', 				\
+		'',	 												\
+	}
 
 {_, ctrl + } {_, shift + } Print
 	$HOME/.scripts/screenshot.sh {'normal', 'freeze', 'select', 'freeze-now'}
@@ -232,9 +238,6 @@ super + @space; Escape
 
 super + l
 	$HOME/.scripts/lockscreen.sh
-
-super + Tab
-	$HOME/.scripts/bspwm-toggle-desktop-focus.sh '^2'
 
 super + {_, ctrl + } Up
 	$HOME/.scripts/bspwm-unhide-application.sh {'', "$(bspc query -D -d .focused)"}
@@ -251,3 +254,6 @@ super + Return
 	if [ $node_id ]; then 								\
 		bspc node $node_id -v 0 0 -g hidden --focus; 	\
 	fi
+
+Pause; Pause
+	systemctl poweroff

@@ -21,12 +21,12 @@ screen_size=$(xrandr | awk '/connected primary/{print $4}')
 
 play-with-mpv &
 nitrogen --restore &
-/opt/xdman/jre/bin/java -Xmx1024m -jar /opt/xdman/xdman.jar -m &
+java -Dsun.java2d.xrender=false -jar /opt/xdman/xdman.jar -m &
 
 $HOME/.config/mpd/launch.sh &
 $HOME/.config/dunst/launch.sh &
 $HOME/.config/sxhkd/launch.sh &
-$HOME/.config/compton/launch.sh &
+#$HOME/.config/compton/launch.sh &
 $HOME/.config/polybar/launch.sh &
 
 # Config
@@ -35,7 +35,9 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width                2
 bspc config window_gap                  4
-bspc config bottom_padding              32
+bspc config left_padding                640
+bspc config right_padding               0
+bspc config bottom_padding              240
 
 bspc config split_ratio                 0
 bspc config pointer_modifier            mod4
@@ -50,37 +52,25 @@ bspc config presel_feedback_color       "#353535"
 
 # Rules
 
-bspc rule -a 'Codium' desktop='^2' follow=on
-bspc rule -a 'Sublime_text' desktop='^2' follow=on
-bspc rule -a 'tabbed:surf' desktop='^3' follow=on
-bspc rule -a 'Chromium-browser' desktop='^3' follow=on
-bspc rule -a 'Firefox' desktop='^3' follow=on
+bspc rule -a 'Code' desktop='^2' follow=on
+bspc rule -a 'Subl3' desktop='^2' follow=on
+bspc rule -a 'Chromium' desktop='^3' follow=on
+bspc rule -a 'firefox' desktop='^3' follow=on
 bspc rule -a 'Thunar' desktop='^4' follow=on
-bspc rule -a 'Kodi' desktop='^5' follow=on
 bspc rule -a 'vlc' desktop='^5' follow=on
 bspc rule -a 'mpv' desktop='^5' follow=on
 bspc rule -a 'Atril' desktop='^5' follow=on
+bspc rule -a 'Deezloader Remix' desktop='^6' follow=on
+bspc rule -a 'Kodi' desktop='^7' follow=on
 bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
+bspc rule -a 'MEGAsync' follow=on state=floating
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
 bspc rule -a 'java-lang-Thread:sun-awt-X11-XFramePeer' state=floating
 bspc rule -a 'URxvt:popup' follow=on layer=above state=floating hidden=on sticky=on border=off rectangle=$screen_size
 
 # Etc
 # kill `ps -aux | grep SCRIPT | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
-
-[ ! "$(xdo id -N Sublime_text -n sublime_text)" ] && {
-    bspc rule -a 'Sublime_text' --one-shot desktop='^2' follow=off
-    subl --background &
-} &
-
-[ $(xdo id -N Thunar | wc -l) -le 1 ] && {
-    bspc rule -a 'Thunar' --one-shot desktop='^4' follow=off
-    thunar &
-} &
-
-#
-#
 
 [ ! "$(pidof urxvtd)" ] && {
     urxvtd -q &
@@ -99,9 +89,4 @@ bspc rule -a 'URxvt:popup' follow=on layer=above state=floating hidden=on sticky
 [ ! "$(xdo id -N URxvt -n urxvt)" ] && {
     bspc rule -a 'URxvt:urxvt' --one-shot desktop='^1' follow=off
     urxvtc &
-} &
-
-[ ! "$(xdo id -N URxvt -n ncmpcpp)" ] && {
-    bspc rule -a 'URxvt:ncmpcpp' --one-shot desktop='^10' follow=off
-    urxvtc -name ncmpcpp -e ncmpcpp &
 } &

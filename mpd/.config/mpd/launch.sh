@@ -6,6 +6,8 @@ mkdir -p ~/.local/share/mpd/playlists
 # mpd --kill
 
 if [ ! "$(pidof mpd)" ]; then
+    sleep 30
     mpd ~/.config/mpd/mpd.conf
-    mpc load playlist
+    # mpc clear
+    # mpc load playlist
 fi

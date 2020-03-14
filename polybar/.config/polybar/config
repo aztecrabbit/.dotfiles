@@ -64,7 +64,7 @@ border-bottom-color = ${colors.bar-border-bottom}
 padding-right = 0
 module-margin = 0
 
-modules-left = bspwm separator-bar refresh-playlist mpd mpc-zscroll
+modules-left = bspwm separator-bar refresh-playlist mpd
 modules-right = wireless-network separator network-traffic separator cpu separator temperature separator memory separator pulseaudio separator date menu-power
 
 tray-maxsize = 14
