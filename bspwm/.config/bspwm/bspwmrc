@@ -60,7 +60,10 @@ bspc rule -a 'Thunar' desktop='^4' follow=on
 bspc rule -a 'vlc' desktop='^5' follow=on
 bspc rule -a 'mpv' desktop='^5' follow=on
 bspc rule -a 'Atril' desktop='^5' follow=on
+bspc rule -a 'Caprine' desktop='^6' follow=on
+bspc rule -a 'TelegramDesktop' desktop='^6' follow=on
 bspc rule -a 'Deezloader Remix' desktop='^6' follow=on
+bspc rule -a 'Thunderbird' desktop='^7' follow=on
 bspc rule -a 'Kodi' desktop='^7' follow=on
 bspc rule -a 'TeamViewer' desktop='^9' follow=on
 

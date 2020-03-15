@@ -19,20 +19,20 @@ ZSH_THEME="aztecrabbit"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-#CASE_SENSITIVE="true"
+# CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+# DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=3
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -98,7 +98,7 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # sxhkd
-export SXHKD_SHELL='/bin/sh'
+export SXHKD_SHELL='/bin/dash'
 
 # Virtual Environment Wrapper
 export WORKON_HOME="$HOME/.virtualenvs"
@@ -133,20 +133,21 @@ PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-psiphon-pro-go"
 
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -l'
-alias la='ls -A'
-alias lla='ls -la'
+alias lla='ll -a'
 
-alias yay="yay --pacman powerpill"
-alias instagram-scraper="instagram-scraper --retry-forever --verbose 2"
+alias yay="/usr/bin/yay --pacman powerpill"
+alias yay-ori="/usr/bin/yay"
 
 alias sudo="sudo --preserve-env"
 alias stow="stow --verbose --no-folding"
 alias tree="tree -a -I '.git|__pycache__'"
-alias dotfiles="cd ~/.dotfiles && git status"
 alias services="systemctl list-units --type=service --state=running"
-alias nmcli-refresh="nmcli net off > /dev/null 2>&1 && nmcli net on > /dev/null 2>&1 && sleep 2 && nmcli -f in-use,ssid,bssid,freq,rate,signal,security,wpa-flags,device,active dev wifi"
+alias instagram-scraper="instagram-scraper --retry-forever"
 
-loop()
+alias dotfiles="cd ~/.dotfiles && git status"
+alias dotfiles-private="cd ~/.dotfiles-private && git status"
+
+function loop()
 {
     while ! $*; do
         echo "\n-- Executing '$*' again\n"
