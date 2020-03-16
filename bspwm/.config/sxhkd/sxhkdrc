@@ -205,7 +205,7 @@ super + shift + Return
     $HOME/.scripts/bspwm-launch-application.sh \
         'xfce4-taskmanager' 'Task Manager'
 
-super + {_, shift + } {b, c, f, k, m, s, t, x}
+super + {_, shift + } {b, c, f, k}
     $HOME/.scripts/bspwm-launch-application.sh {            \
         'chromium' 'Chromium',                              \
         'firefox' 'Firefox',                                \
@@ -215,6 +215,10 @@ super + {_, shift + } {b, c, f, k, m, s, t, x}
         'urxvtc -name ranger -e ranger' 'Ranger',           \
         'kodi' 'Kodi',                                      \
         '',                                                 \
+    }
+
+super + {_, shift + } {m, s, t, x}
+    $HOME/.scripts/bspwm-launch-application.sh {            \
         'urxvtc -name ncmpcpp -e ncmpcpp' 'ncmpcpp',        \
         'megasync' 'Mega',                                  \
         'subl3' 'Sublime Text',                             \

@@ -138,7 +138,8 @@ alias lla='ll -a'
 alias yay="/usr/bin/yay --pacman powerpill"
 alias yay-ori="/usr/bin/yay"
 
-alias sudo="sudo --preserve-env"
+alias aria2c="aria2c --conf-path=/etc/aria2.conf --dir=${HOME}/Downloads/Aria2"
+
 alias stow="stow --verbose --no-folding"
 alias tree="tree -a -I '.git|__pycache__'"
 alias services="systemctl list-units --type=service --state=running"
