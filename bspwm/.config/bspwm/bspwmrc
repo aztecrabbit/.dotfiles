@@ -71,6 +71,7 @@ bspc rule -a 'TeamViewer' desktop='^9' follow=on
 bspc rule -a 'MEGAsync' follow=on state=floating
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
 bspc rule -a 'java-lang-Thread:sun-awt-X11-XFramePeer' state=floating
+bspc rule -a 'st-popup' follow=on layer=above state=floating hidden=on sticky=on border=off rectangle=$screen_size
 bspc rule -a 'URxvt:popup' follow=on layer=above state=floating hidden=on sticky=on border=off rectangle=$screen_size
 
 # Etc

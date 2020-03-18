@@ -214,14 +214,14 @@ super + {_, shift + } {b, c, f, k}
         'code' 'VS Code',                                   \
         'caprine' 'Caprine',                                \
         'thunar' 'Thunar',                                  \
-        'urxvtc -name ranger -e ranger' 'Ranger',           \
+        'st -c st-ranger -e ranger' 'Ranger',               \
         'kodi' 'Kodi',                                      \
         '',                                                 \
     }
 
 super + {_, shift + } {m, s, t, x}
     $HOME/.scripts/bspwm-launch-application.sh {            \
-        'urxvtc -name ncmpcpp -e ncmpcpp' 'ncmpcpp',        \
+        'st -c st-ncmpcpp -e ncmpcpp' 'ncmpcpp',            \
         'megasync' 'Mega',                                  \
         'subl3' 'Sublime Text',                             \
         '',                                                 \
@@ -231,8 +231,10 @@ super + {_, shift + } {m, s, t, x}
         '',                                                 \
     }
 
-super + {_, shift + } {y}
+super + {_, shift + } {v, y}
     $HOME/.scripts/bspwm-launch-application.sh {            \
+        'st -e nvim' 'Vim',                                 \
+        '',                                                 \
         'gtk-youtube-viewer' 'Youtube Viewer',              \
         '',                                                 \
     }
@@ -252,10 +254,10 @@ super + Down
     bspc node -g hidden=on
 
 super + Return
-    node_id=$(xdo id -N URxvt -n popup);                \
+    node_id=$(xdo id -N st-popup);                      \
     if [ ! $node_id ]; then                             \
-        $HOME/.scripts/urxvt-popup.sh;                  \
-        node_id=$(xdo id -N URxvt -n popup);            \
+        $HOME/.scripts/st-popup.sh;                     \
+        node_id=$(xdo id -N st-popup);                  \
     fi;                                                 \
     if [ $node_id ]; then                               \
         bspc node $node_id -v 0 0 -g hidden --focus;    \
@@ -263,3 +265,4 @@ super + Return
 
 Pause; Pause
     systemctl poweroff
+

@@ -1,6 +1,6 @@
-source $HOME/.config/nvim/plugin.vim
-source $HOME/.config/nvim/autocmd.vim
-source $HOME/.config/nvim/settings.vim
-source $HOME/.config/nvim/interface.vim
-source $HOME/.config/nvim/keybinding.vim
+source $HOME/.config/nvim/init.d/plugin.vim
+source $HOME/.config/nvim/init.d/autocmd.vim
+source $HOME/.config/nvim/init.d/settings.vim
+source $HOME/.config/nvim/init.d/interface.vim
+source $HOME/.config/nvim/init.d/keybinding.vim
 
