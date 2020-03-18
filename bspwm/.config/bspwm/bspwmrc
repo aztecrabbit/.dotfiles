@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 #                      ___           ___         ___           ___
 #       _____         /  /\         /  /\       /__/\         /__/\
@@ -35,7 +35,7 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width                2
 bspc config window_gap                  4
-bspc config left_padding                640
+bspc config left_padding                664
 bspc config right_padding               0
 bspc config bottom_padding              240
 
@@ -57,6 +57,7 @@ bspc rule -a 'Subl3' desktop='^2' follow=on
 bspc rule -a 'Chromium' desktop='^3' follow=on
 bspc rule -a 'firefox' desktop='^3' follow=on
 bspc rule -a 'Thunar' desktop='^4' follow=on
+bspc rule -a 'Gtk3-youtube-viewer' desktop='^4' follow=on
 bspc rule -a 'vlc' desktop='^5' follow=on
 bspc rule -a 'mpv' desktop='^5' follow=on
 bspc rule -a 'Atril' desktop='^5' follow=on
@@ -89,7 +90,8 @@ bspc rule -a 'URxvt:popup' follow=on layer=above state=floating hidden=on sticky
     $HOME/.scripts/urxvt-popup.sh &
 } &
 
-[ ! "$(xdo id -N URxvt -n urxvt)" ] && {
-    bspc rule -a 'URxvt:urxvt' --one-shot desktop='^1' follow=off
-    urxvtc &
+[ ! "$(xdo id -N st-256color -n st-256color)" ] && {
+    bspc rule -a 'st-256color:st-256color' --one-shot desktop='^1' follow=off
+    st &
 } &
+

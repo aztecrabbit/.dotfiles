@@ -1,0 +1,6 @@
+"
+syntax on
+colorscheme onedark
+
+"
+

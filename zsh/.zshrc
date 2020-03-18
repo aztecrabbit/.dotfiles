@@ -1,3 +1,4 @@
+# Skip the verification of insecure directories
 ZSH_DISABLE_COMPFIX=true
 
 # If you come from bash you might have to change your $PATH.
@@ -97,8 +98,11 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# sxhkd
+# SXHKD
 export SXHKD_SHELL='/bin/dash'
+
+# Repositories
+export repo="$HOME/Repositories"
 
 # Virtual Environment Wrapper
 export WORKON_HOME="$HOME/.virtualenvs"
@@ -106,47 +110,19 @@ export PROJECT_HOME="$HOME/Virtual Environment"
 export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3"
 
+
+# Path
+source $HOME/.path
+
+# Aliases
+source $HOME/.aliases
+
+# Virtual Environment Wrapper
 source $HOME/.local/bin/virtualenvwrapper.sh
 
-# Repositories
-export repo="$HOME/Repositories"
 
-
-# PATH
+# Function
 #
-
-PATH="${PATH}:${HOME}/.scripts"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-go"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-openvpn"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-shadowsocks"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-psiphon-pro-go"
-
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="vim ~/.zshrc"
-# alias ohmyzsh="vim ~/.oh-my-zsh"
-
-alias ls='ls --color=auto --group-directories-first'
-alias ll='ls -l'
-alias lla='ll -a'
-
-alias yay="/usr/bin/yay --pacman powerpill"
-alias yay-ori="/usr/bin/yay"
-
-alias aria2c="aria2c --conf-path=/etc/aria2.conf --dir=${HOME}/Downloads/Aria2"
-
-alias stow="stow --verbose --no-folding"
-alias tree="tree -a -I '.git|__pycache__'"
-alias services="systemctl list-units --type=service --state=running"
-alias instagram-scraper="instagram-scraper --retry-forever"
-
-alias dotfiles="cd ~/.dotfiles && git status"
-alias dotfiles-private="cd ~/.dotfiles-private && git status"
 
 function loop()
 {

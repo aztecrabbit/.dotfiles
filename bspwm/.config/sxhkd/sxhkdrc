@@ -1,4 +1,6 @@
-##### BSPWM AND SXHKD #####
+#
+#
+#
 
 # make sxhkd reload its configuration files:
 alt + r
@@ -193,7 +195,7 @@ alt + shift + @space
     rofi -show drun
 
 alt + Return
-    urxvtc
+    st
 
 
 # move to preselect
