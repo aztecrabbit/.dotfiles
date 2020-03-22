@@ -1,11 +1,13 @@
 "
 function! Start()
-    NERDTree
-    wincmd p
+	if !executable("termux-setup-storage")
+		NERDTree
+		wincmd p
+	endif
 endfunction
 
 autocmd VimEnter * call Start()
 
-" Go
-""autocmd FileType go setlocal noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType json setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 

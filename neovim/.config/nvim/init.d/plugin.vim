@@ -1,37 +1,27 @@
+"
 call plug#begin('~/.local/share/nvim/plugged')
 
-"
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'vim-airline/vim-airline'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'jiangmiao/auto-pairs'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plugin
+Plug 'scrooloose/nerdtree'                              " explorer
+""Plug 'jistr/vim-nerdtree-tabs'                          " explorer tab
+Plug 'Xuyuanp/nerdtree-git-plugin'                      " explorer git status
+Plug 'airblade/vim-gitgutter'                           " git
+Plug 'vim-airline/vim-airline'                          " status bar
+""Plug 'Yggdroot/indentLine'                              " indent
+""Plug 'nathanaelkane/vim-indent-guides'                  " indent
+Plug 'jiangmiao/auto-pairs'                             " unknown
+Plug 'neoclide/coc.nvim', {'branch': 'release'}         " autocomplete
+Plug 'tpope/vim-commentary'                             " comment
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } } " markdown
 
-" Code Jump (Autocomplete (disabled))
-""Plug 'davidhalter/jedi-vim'
-
-" Comment
-Plug 'tpope/vim-commentary'
-
-" Auto Format (pip install yapf (optional for python))
-Plug 'sbdchd/neoformat'
-
-" Code Checker
-"" python (pip install pylint or flake8)
-Plug 'neomake/neomake'
+" Syntax
+Plug 'baskerville/vim-sxhkdrc'
 
 " Themes
 Plug 'joshdick/onedark.vim'
-""Plug 'mhartington/oceanic-next'
-""Plug 'arcticicestudio/nord-vim'
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
-
-call neomake#configure#automake('nrwi', 500)
 

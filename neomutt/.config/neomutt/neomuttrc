@@ -1,0 +1,21 @@
+# Folder hooks
+# folder-hook 'ars.xda@gmail.com' 'source ~/.config/neomutt/accounts/ars.xda@gmail.com.account'
+# folder-hook 'rabbit.xda@gmail.com.account' 'source ~/.config/neomutt/accounts/rabbit.xda@gmail.com.account'
+
+source ~/.config/neomutt/accounts/ars.xda@gmail.com.account
+
+macro index <f2> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/ars.xda@gmail.com.account<enter><change-folder>!<enter>'
+macro index <f3> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/rabbit.xda@gmail.com.account<enter><change-folder>!<enter>'
+
+bind index G imap-fetch-mail
+
+set record = ''
+set editor = "nvim"
+set charset = "utf-8"
+
+# set sidebar_visible
+# set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+# set mail_check_stats
+
+source ~/.config/neomutt/colorscheme/dracula.muttrc
+

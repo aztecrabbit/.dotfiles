@@ -17,11 +17,16 @@
 
 screen_size=$(xrandr | awk '/connected primary/{print $4}')
 
+# Kill
+
+killall -q -w play-with-mpv syncthing
+
 # Autolaunch
 
 play-with-mpv &
 nitrogen --restore &
 java -Dsun.java2d.xrender=false -jar /opt/xdman/xdman.jar -m &
+syncthing -no-browser -home=$HOME/.config/syncthing -gui-address="http://127.0.0.1:3838" &
 
 $HOME/.config/mpd/launch.sh &
 $HOME/.config/dunst/launch.sh &
@@ -35,7 +40,7 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 
 bspc config border_width                2
 bspc config window_gap                  4
-bspc config left_padding                664
+bspc config left_padding                684
 bspc config right_padding               0
 bspc config bottom_padding              240
 
@@ -54,6 +59,7 @@ bspc config presel_feedback_color       "#353535"
 
 bspc rule -a 'Code' desktop='^2' follow=on
 bspc rule -a 'Subl3' desktop='^2' follow=on
+bspc rule -a 'st-vim' desktop='^2' follow=on
 bspc rule -a 'Chromium' desktop='^3' follow=on
 bspc rule -a 'firefox' desktop='^3' follow=on
 bspc rule -a 'Thunar' desktop='^4' follow=on
@@ -65,6 +71,7 @@ bspc rule -a 'Caprine' desktop='^6' follow=on
 bspc rule -a 'TelegramDesktop' desktop='^6' follow=on
 bspc rule -a 'Deezloader Remix' desktop='^6' follow=on
 bspc rule -a 'Thunderbird' desktop='^7' follow=on
+bspc rule -a 'st-neomutt' desktop='^7' follow=on
 bspc rule -a 'Kodi' desktop='^7' follow=on
 bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
@@ -72,23 +79,12 @@ bspc rule -a 'MEGAsync' follow=on state=floating
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
 bspc rule -a 'java-lang-Thread:sun-awt-X11-XFramePeer' state=floating
 bspc rule -a 'st-popup' follow=on layer=above state=floating hidden=on sticky=on border=off rectangle=$screen_size
-bspc rule -a 'URxvt:popup' follow=on layer=above state=floating hidden=on sticky=on border=off rectangle=$screen_size
 
 # Etc
 # kill `ps -aux | grep SCRIPT | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
 
-[ ! "$(pidof urxvtd)" ] && {
-    urxvtd -q &
-
-    while ! pgrep -x urxvtd > /dev/null; do
-        sleep 1
-    done
-
-    sleep 1
-}
-
-[ ! "$(xdo id -N URxvt -n popup)" ] && {
-    $HOME/.scripts/urxvt-popup.sh &
+[ ! "$(xdo id -N st-popup)" ] && {
+    $HOME/.scripts/st-popup.sh &
 } &
 
 [ ! "$(xdo id -N st-256color -n st-256color)" ] && {
