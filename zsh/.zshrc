@@ -1,3 +1,6 @@
+# Check is in termux
+IsInTermux="$(command -v termux-setup-storage)"
+
 # Skip the verification of insecure directories
 ZSH_DISABLE_COMPFIX=true
 
@@ -5,7 +8,7 @@ ZSH_DISABLE_COMPFIX=true
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-if hash termux-setup-storage 2>/dev/null; then
+if [ $IsInTermux ]; then
 	export ZSH="/data/data/com.termux/files/home/.oh-my-zsh"
 else
 	export ZSH="/home/aztecrabbit/.oh-my-zsh"
@@ -15,7 +18,7 @@ fi
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-if hash termux-setup-storage 2>/dev/null; then
+if [ $IsInTermux ]; then
 	ZSH_THEME="aztecrabbit-termux"
 else
 	ZSH_THEME="aztecrabbit"
@@ -35,13 +38,13 @@ fi
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=3
+# export UPDATE_ZSH_DAYS=3
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -109,6 +112,9 @@ source $ZSH/oh-my-zsh.sh
 # SXHKD
 export SXHKD_SHELL='/bin/dash'
 
+# Golang
+export GOPATH="$HOME/go"
+
 # Repositories
 export repo="$HOME/Repositories"
 
@@ -125,6 +131,9 @@ source $HOME/.path
 # Aliases
 source $HOME/.aliases
 
+# Variables
+source $HOME/.variables
+
 # Virtual Environment Wrapper
 source $HOME/.local/bin/virtualenvwrapper.sh
 
@@ -139,3 +148,6 @@ function loop()
     done
 }
 
+if [ $IsInTermux ]; then
+	clear
+fi

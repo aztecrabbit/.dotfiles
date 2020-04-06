@@ -218,7 +218,10 @@ super + {_, shift + } {b, c, f, k}
 	}
 
 super + {_, shift + } e
-	$HOME/.scripts/bspwm-launch-application.sh 'st -c st-neomutt -e neomutt' 'NeoMutt'
+	$HOME/.scripts/bspwm-launch-application.sh {			\
+		'st -c st-neomutt -e neomutt' 'NeoMutt',			\
+		''													\
+	}
 
 super + {_, shift + } {m, s, t, x}
 	$HOME/.scripts/bspwm-launch-application.sh {			\
@@ -232,10 +235,13 @@ super + {_, shift + } {m, s, t, x}
 		'',													\
 	}
 
-super + {_, shift + } {v, y}
+super + {_, shift + } v
 	$HOME/.scripts/bspwm-launch-application.sh {			\
-		'st -c st-vim -e nvim' 'NeoVim',					\
-		'',													\
+		'tmux-neovim' 'NeoVim',								\
+	}
+
+super + {_, shift + } y
+	$HOME/.scripts/bspwm-launch-application.sh {			\
 		'gtk-youtube-viewer' 'Youtube Viewer',				\
 		'',													\
 	}

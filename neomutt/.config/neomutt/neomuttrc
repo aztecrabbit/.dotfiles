@@ -6,6 +6,9 @@ source ~/.config/neomutt/accounts/ars.xda@gmail.com.account
 
 macro index <f2> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/ars.xda@gmail.com.account<enter><change-folder>!<enter>'
 macro index <f3> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/rabbit.xda@gmail.com.account<enter><change-folder>!<enter>'
+macro index <f4> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/username5513000@gmail.com.account<enter><change-folder>!<enter>'
+
+macro pager B '<pipe-entry>urlscan<enter>' 'call urlscan to extract URLs out of a message'
 
 bind index G imap-fetch-mail
 

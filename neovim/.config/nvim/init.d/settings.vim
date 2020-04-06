@@ -8,7 +8,7 @@ set splitbelow
 set splitright
 set termguicolors
 set colorcolumn=100
-set tabstop=4 shiftwidth=4 softtabstop=0 noexpandtab smarttab
+set tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab smarttab
 
 set list
 set listchars=tab:\|\ ,trail:■
@@ -31,7 +31,19 @@ let g:NERDTreeIndicatorMapCustom = {
 let g:NERDTreeShowIgnoredStatus = 1
 
 " coc.vim
+""set updatetime=300
 set statusline^=%{coc#status()}
+
+" emmet
+let g:user_emmet_leader_key=','
+
+
+
+
+
+
+
+
 
 " " indent
 " let g:indentLine_char = '█'

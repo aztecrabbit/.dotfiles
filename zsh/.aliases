@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -l'
@@ -11,7 +11,7 @@ alias yay-ori="/usr/bin/yay"
 
 alias stow="stow --verbose --no-folding"
 alias tree="tree -a -I '.git|__pycache__'"
-alias aria2c="aria2c --conf-path=/etc/aria2.conf --dir=${HOME}/Downloads/Aria2"
+alias aria2c="aria2c --conf-path=/etc/aria2.conf --dir=${HOME}/Downloads/Aria2 --file-allocation=falloc"
 alias services="systemctl list-units --type=service --state=running"
 alias instagram-scraper="instagram-scraper --retry-forever"
 
