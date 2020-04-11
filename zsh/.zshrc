@@ -114,6 +114,7 @@ export SXHKD_SHELL='/bin/dash'
 
 # Golang
 export GOPATH="$HOME/go"
+export GOBIN="$GOPATH/bin"
 
 # Repositories
 export repo="$HOME/Repositories"

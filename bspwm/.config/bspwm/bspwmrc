@@ -23,16 +23,19 @@ killall -q -w play-with-mpv syncthing
 
 # Autolaunch
 
-play-with-mpv &
-nitrogen --restore &
-syncthing -no-browser -home=$HOME/.config/syncthing -gui-address="http://127.0.0.1:3838" &
+/usr/bin/play-with-mpv &
+/usr/bin/nitrogen --restore &
 /usr/lib/jvm/java-13-openjdk/bin/java -Dsun.java2d.xrender=false -jar /opt/xdman/xdman.jar -m &
+/usr/bin/syncthing -no-browser -home=$HOME/.config/syncthing -gui-address="http://127.0.0.1:3838" &
+/usr/bin/aria2c --conf-path=/etc/aria2.conf --enable-rpc --rpc-listen-all --dir=${HOME}/Downloads/Aria2 --file-allocation=falloc &
+
+$HOME/go/bin/simplehttp http -d /usr/share/webapps/webui-aria2/docs --port 8300 &
 
 $HOME/.config/mpd/launch.sh &
 $HOME/.config/dunst/launch.sh &
 $HOME/.config/sxhkd/launch.sh &
-#$HOME/.config/compton/launch.sh &
 $HOME/.config/polybar/launch.sh &
+# $HOME/.config/compton/launch.sh &
 
 # Config
 
@@ -42,7 +45,7 @@ bspc config border_width                2
 bspc config window_gap                  4
 bspc config left_padding                664
 bspc config right_padding               0
-bspc config bottom_padding              212
+bspc config bottom_padding              224
 
 bspc config split_ratio                 0
 bspc config pointer_modifier            mod4

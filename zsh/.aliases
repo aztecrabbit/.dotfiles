@@ -13,6 +13,7 @@ alias stow="stow --verbose --no-folding"
 alias tree="tree -a -I '.git|__pycache__'"
 alias aria2c="aria2c --conf-path=/etc/aria2.conf --dir=${HOME}/Downloads/Aria2 --file-allocation=falloc"
 alias services="systemctl list-units --type=service --state=running"
+alias webui-aria2="simplehttp http -d /usr/share/webapps/webui-aria2/docs --port 8300"
 alias instagram-scraper="instagram-scraper --retry-forever"
 
 alias dotfiles="cd ~/.dotfiles && git status"

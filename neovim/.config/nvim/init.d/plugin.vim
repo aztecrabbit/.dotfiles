@@ -15,6 +15,7 @@ Plug 'majutsushi/tagbar'                                " function tree
 Plug 'tpope/vim-commentary'                             " comment
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } } " markdown
 
+Plug 'davidhalter/jedi-vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}         " autocomplete
 

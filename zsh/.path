@@ -1,5 +1,6 @@
 #!/bin/dash
 
+PATH="${PATH}:${GOBIN}"
 PATH="${PATH}:${HOME}/.scripts"
 PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-go"
 PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-openvpn"

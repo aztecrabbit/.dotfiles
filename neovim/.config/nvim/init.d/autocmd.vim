@@ -7,6 +7,7 @@ function! Start()
 endfunction
 
 autocmd VimEnter * call Start()
+autocmd BufWritePre * %s/\s\+$//e
 
 "autocmd FileType go setlocal tabstop=2 shiftwidth=2 softtabstop=2 noexpandtab
 autocmd FileType vim setlocal expandtab
