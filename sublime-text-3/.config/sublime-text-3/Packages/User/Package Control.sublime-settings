@@ -1,0 +1,30 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Agila Theme",
+		"AutoFileName",
+		"Babel",
+		"BracketHighlighter",
+		"Color Highlighter",
+		"CSScomb",
+		"DocBlockr",
+		"Emmet",
+		"FileIcons",
+		"Gofmt",
+		"GoGuru",
+		"HTMLBeautify",
+		"LiveReload",
+		"LSP",
+		"Package Control",
+		"PackageResourceViewer",
+		"ReactJS",
+		"Sass",
+		"SideBarEnhancements",
+		"SublimeLinter-golangcilint",
+		"TrailingSpaces"
+	]
+}

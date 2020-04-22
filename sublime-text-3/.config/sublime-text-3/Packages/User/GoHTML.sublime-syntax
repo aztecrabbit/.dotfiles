@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: 'GoHTML'
+file_extensions:
+  - go.html
+scope: text.html.gohtml
+contexts:
+  main:
+      - match: ''
+        push: 'Packages/HTML/HTML.sublime-syntax'
+        with_prototype:
+          - match: '{{'
+            captures:
+              0: punctuation.section.embedded.begin.gotemplate
+            push: Packages/User/GoTemplate.sublime-syntax
+            with_prototype:
+              - match: '}}'
+                captures:
+                  0: punctuation.section.embedded.end.gotemplate
+                pop: true
