@@ -67,16 +67,10 @@ bspc rule -a 'st-popup' follow=on layer=above state=floating hidden=on sticky=on
 
 # $HOME/.config/compton/launch.sh &
 $HOME/.config/dunst/launch.sh &
-$HOME/.config/polybar/launch.sh &
-
-# Music Player Daemon
-mkdir -p ~/.local/share/mpd/playlists
-mpd ~/.config/mpd/mpd.conf &
 
 {
-	# pkill -USR1 -x sxhkd
-	killall -q -w sxhkd
-	sxhkd &
+	mkdir -p $HOME/.local/share/mpd/playlists
+	mpd ~/.config/mpd/mpd.conf &
 } &
 
 {
@@ -87,6 +81,11 @@ mpd ~/.config/mpd/mpd.conf &
 {
 	killall -q -w polybar
 	polybar top &
+} &
+
+{
+	killall -q -w sxhkd
+	sxhkd &
 } &
 
 {
