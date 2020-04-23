@@ -65,8 +65,15 @@ bspc rule -a 'st-popup' follow=on layer=above state=floating hidden=on sticky=on
 /usr/bin/nitrogen --restore &
 /usr/lib/jvm/java-13-openjdk/bin/java -jar /opt/xdman/xdman.jar -m &
 
-# $HOME/.config/compton/launch.sh &
-$HOME/.config/dunst/launch.sh &
+# {
+# 	killall -q -w compton
+# 	compton --config ~/.config/compton/compton.conf &
+# } &
+
+{
+	killall -q -w xfce4-notifyd dunst
+	dunst &
+} &
 
 {
 	mkdir -p $HOME/.local/share/mpd/playlists

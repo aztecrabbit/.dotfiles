@@ -5,11 +5,17 @@ source /usr/share/zsh/share/antigen.zsh
 
 antigen use oh-my-zsh
 
-antigen bundle colorize
 antigen bundle colored-man-pages
 antigen bundle command-not-found
-antigen bundle git
+# antigen bundle cp
+# antigen bundle encode64
+# antigen bundle git
+antigen bundle history
+# antigen bundle safe-paste
+# antigen bundle z
 
+antigen bundle b4b4r07/enhancd
+antigen bundle Tarrasch/zsh-autoenv
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
