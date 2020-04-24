@@ -1,7 +1,13 @@
 # Check is in termux
 IsInTermux="$(command -v termux-setup-storage)"
 
-source /usr/share/zsh/share/antigen.zsh
+if [ $IsInTermux ]; then
+	# curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh > ~/.antigen.zsh
+	clear && source $HOME/.antigen.sh
+else
+	# yay -S antigen-git
+	source /usr/share/zsh/share/antigen.zsh
+fi
 
 antigen use oh-my-zsh
 
@@ -12,6 +18,7 @@ antigen bundle command-not-found
 # antigen bundle git
 antigen bundle history
 # antigen bundle safe-paste
+antigen bundle systemd
 # antigen bundle z
 
 antigen bundle b4b4r07/enhancd
@@ -34,6 +41,7 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[alias]='fg=white'
 ZSH_HIGHLIGHT_STYLES[command]='fg=white'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=white'
+ZSH_HIGHLIGHT_STYLES[function]='fg=white'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=red,bold'
 ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[globbing]='fg=cyan,bold'
@@ -59,3 +67,10 @@ alias instagram-scraper="instagram-scraper --retry-forever"
 
 alias dotfiles="cd ~/.dotfiles && git status"
 alias dotfiles-private="cd ~/.dotfiles-private && git status"
+
+function mega-progress() {
+	while true; do
+		clear && mega-transfers
+		sleep 2
+	done
+}
