@@ -21,6 +21,7 @@ antigen bundle history
 antigen bundle systemd
 # antigen bundle z
 
+# yay -S fzy
 antigen bundle b4b4r07/enhancd
 antigen bundle Tarrasch/zsh-autoenv
 antigen bundle zsh-users/zsh-autosuggestions

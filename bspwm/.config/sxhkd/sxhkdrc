@@ -182,20 +182,20 @@ super + {_, shift + } {b, c, f, k}
 		'code' 'VS Code',									\
 		'caprine' 'Caprine',								\
 		'thunar' 'Thunar',									\
-		'st -c st-ranger -e ranger' 'Ranger',				\
+		'st -c ranger -e ranger' 'Ranger',					\
 		'kodi' 'Kodi',										\
 		'',													\
 	}
 
 super + {_, shift + } e
 	$HOME/.scripts/bspwm-launch-application.sh {			\
-		'st -c st-neomutt -e neomutt' 'NeoMutt',			\
+		'st -c neomutt -e neomutt' 'NeoMutt',				\
 		''													\
 	}
 
 super + {_, shift + } {m, s, t, x}
 	$HOME/.scripts/bspwm-launch-application.sh {			\
-		'st -c st-ncmpcpp -e ncmpcpp' 'ncmpcpp',			\
+		'st -c ncmpcpp -e ncmpcpp' 'ncmpcpp',				\
 		'megasync' 'Mega',									\
 		'subl3' 'Sublime Text',								\
 		'',													\
@@ -203,6 +203,11 @@ super + {_, shift + } {m, s, t, x}
 		'teamviewer' 'Teamviewer',							\
 		'xdman' 'Xtream Download Manager',					\
 		'',													\
+	}
+
+super + {_, shift + } r
+	$HOME/.scripts/bspwm-launch-application.sh {			\
+		'st -c pyradio -e pyradio' 'Pyradio',				\
 	}
 
 super + {_, shift + } v
