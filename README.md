@@ -65,7 +65,7 @@ Packages
 Termux
 ------
 
-    $ apt install exa fzy stow zsh
+    $ apt install exa stow zsh
     $ curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh > ~/.antigen.zsh
 
 
