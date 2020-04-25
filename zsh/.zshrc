@@ -2,10 +2,8 @@
 IsInTermux="$(command -v termux-setup-storage)"
 
 if [ $IsInTermux ]; then
-	# curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh > ~/.antigen.zsh
 	clear && source $HOME/.antigen.sh
 else
-	# yay -S antigen-git
 	source /usr/share/zsh/share/antigen.zsh
 fi
 
@@ -21,8 +19,8 @@ antigen bundle history
 antigen bundle systemd
 # antigen bundle z
 
-# yay -S fzy
 antigen bundle b4b4r07/enhancd
+# antigen bundle supercrabtree/k
 antigen bundle Tarrasch/zsh-autoenv
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
@@ -48,15 +46,50 @@ ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[globbing]='fg=cyan,bold'
 ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=red"
 
+declare -A colors
+colors["fg-white"]="38;5;255"
+colors["fg-dark-gray"]="38;5;250"
+colors["fg-dark-gray-disabled"]="38;5;245"
+
+export EXA_COLORS=""
+# Owners and Groups
+EXA_COLORS="${EXA_COLORS}:uu=${colors["fg-dark-gray"]}"
+EXA_COLORS="${EXA_COLORS}:gu=${colors["fg-dark-gray"]}"
+EXA_COLORS="${EXA_COLORS}:un=${colors["fg-dark-gray-disabled"]}"
+EXA_COLORS="${EXA_COLORS}:gn=${colors["fg-dark-gray-disabled"]}"
+# Permissions
+EXA_COLORS="${EXA_COLORS}:ur=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:uw=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:ux=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:ue=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:gr=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:gw=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:gx=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:tr=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:tw=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:tx=${colors["fg-white"]}"
+# Details and Metadata
+EXA_COLORS="${EXA_COLORS}:da=${colors["fg-white"]}"
+# Git
+EXA_COLORS="${EXA_COLORS}:gm=38;5;84"
+# File Size
+EXA_COLORS="${EXA_COLORS}:sn=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:sb=${colors["fg-dark-gray"]}"
+
 PATH="${PATH}:${HOME}/.scripts"
 PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-go"
 PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-openvpn"
 PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-shadowsocks"
 PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-psiphon-pro-go"
 
-alias ls='LC_ALL="C" ls --color=auto --group-directories-first'
+# alias ls='LC_ALL="C" ls --color=auto --group-directories-first'
+# alias ll='ls -l'
+# alias lla='ll -a'
+
+alias ls='exa --color=auto --group --group-directories-first --git'
 alias ll='ls -l'
-alias lla='ll -a'
+alias la='ll -a'
+alias lt="ll --tree --level=2"
 
 alias vim="nvim"
 alias yay="/usr/bin/yay --pacman powerpill"
