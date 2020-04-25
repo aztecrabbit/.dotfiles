@@ -86,4 +86,4 @@ Close terminal and open again
     $ ln -sf /usr/bin/dash /usr/bin/sh
 
     $ cd ~/.dotfiles
-    $ stow --verbose --no-folding -R bin bspwm compton dunst etc fonts mpd mpv ncmpcpp neomutt neovim pyradio rofi scripts sublime-text-3 thunar tmux tumbler urxvt xdman youtube-viewer
+    $ stow --verbose --no-folding -R bin bspwm compton dunst etc fonts mpd mpv ncmpcpp neomutt neovim rofi scripts sublime-text-3 thunar tmux tumbler urxvt xdman youtube-viewer
