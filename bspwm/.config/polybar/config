@@ -67,14 +67,6 @@ content = "  "
 type = custom/text
 content = "  │   "
 
-[module/refresh-playlist]
-type = custom/text
-content = 
-click-left = ~/.config/polybar/scripts/refresh-playlist.sh && mpc clear && mpc load playlist && mpc random on && mpc play
-click-right = ~/.config/polybar/scripts/refresh-radio.sh && mpc clear && mpc load radio && mpc random on && mpc play
-scroll-up = mpc clear && mpc load playlist && mpc random on && mpc play
-scroll-down = mpc clear && mpc load radio && mpc random on && mpc play
-
 include-file = ~/.config/polybar/bspwm.ini
 include-file = ~/.config/polybar/cpu.ini
 include-file = ~/.config/polybar/date.ini
@@ -84,5 +76,6 @@ include-file = ~/.config/polybar/mpc-zscroll.ini
 include-file = ~/.config/polybar/mpd.ini
 include-file = ~/.config/polybar/network-traffic.ini
 include-file = ~/.config/polybar/pulseaudio.ini
+include-file = ~/.config/polybar/refresh-playlist.ini
 include-file = ~/.config/polybar/temperature.ini
 include-file = ~/.config/polybar/wireless-network.ini
