@@ -20,9 +20,8 @@ bottom = false
 
 font-0 = Sans:size=8;2
 font-1 = Material Icons:size=8;2
-font-2 = Material Icons:size=10;2
-font-3 = Font Awesome 5 Free Solid:size=7;1
-font-4 = Siji:weight=bold:size=8;1
+font-2 = Font Awesome 5 Free Solid:size=7;1
+font-3 = Siji:weight=bold:size=8;1
 
 background = ${colors.background}
 foreground = ${colors.foreground}
