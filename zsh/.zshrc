@@ -96,7 +96,6 @@ alias yay="/usr/bin/yay --pacman powerpill"
 
 alias stow="stow --verbose --no-folding"
 alias aria2c="aria2c --conf-path=/etc/aria2.conf --dir=${HOME}/Downloads/Aria2 --file-allocation=falloc"
-alias services="systemctl list-units --type=service --state=running"
 alias instagram-scraper="instagram-scraper --retry-forever"
 
 alias dotfiles="cd ~/.dotfiles && git status"
