@@ -1,6 +1,9 @@
 {
 	"clients":
 	{
+		"pyls":{
+			"enabled": true
+		},
 		"gopls":
 		{
 			"enabled": true

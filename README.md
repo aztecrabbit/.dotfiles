@@ -51,6 +51,7 @@ Packages
     ttf-material-design-icons
     unrar
     urlscan
+    wmname
     xclip
     xdman
     xdo
@@ -59,14 +60,14 @@ Packages
 
 <!-- -->
 
-    $ yay -S antigen-git aria2 bat bspwm-git dash dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neomutt neovim pgcli polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar urlscan xclip xdman xdo zscroll-git zsh
+    $ yay -S antigen-git aria2 bat bspwm-git dash dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neomutt neovim pgcli polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar urlscan wmname xclip xdman xdo zscroll-git zsh
 
 
 Termux
 ------
 
     $ apt install exa stow zsh
-    $ curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh > ~/.antigen.zsh
+    $ curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh > ~/.antigen.sh
 
 
 Usage
@@ -76,6 +77,7 @@ Usage
     $ cd ~/.dotfiles
 
     $ stow --verbose --no-folding -R zsh
+    $ chsh -s $(which zsh)
 
 Termux stop here
 

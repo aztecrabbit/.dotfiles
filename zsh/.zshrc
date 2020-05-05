@@ -53,8 +53,8 @@ colors["fg-dark-gray-disabled"]="38;5;245"
 
 export EXA_COLORS=""
 # Owners and Groups
-EXA_COLORS="${EXA_COLORS}:uu=${colors["fg-dark-gray"]}"
-EXA_COLORS="${EXA_COLORS}:gu=${colors["fg-dark-gray"]}"
+EXA_COLORS="${EXA_COLORS}:uu=${colors["fg-white"]}"
+EXA_COLORS="${EXA_COLORS}:gu=${colors["fg-white"]}"
 EXA_COLORS="${EXA_COLORS}:un=${colors["fg-dark-gray-disabled"]}"
 EXA_COLORS="${EXA_COLORS}:gn=${colors["fg-dark-gray-disabled"]}"
 # Permissions

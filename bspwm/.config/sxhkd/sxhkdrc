@@ -14,8 +14,8 @@ alt + r
 #  ██▄▪▐█▐█▄▪▐█▐█▪·•▐█▌██▐█▌██ ██▌▐█▌
 #  ·▀▀▀▀  ▀▀▀▀ .▀    ▀▀▀▀ ▀▪▀▀  █▪▀▀▀
 
-alt + shift + {q,r}
-	bspc {quit,wm -r}
+alt + shift + r
+	bspc wm -r
 
 # alternate between the tiled and monocle layout
 alt + m
