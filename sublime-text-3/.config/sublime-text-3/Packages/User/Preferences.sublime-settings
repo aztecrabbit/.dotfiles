@@ -11,5 +11,6 @@
 		80,
 		120
 	],
-	"theme": "Adaptive.sublime-theme"
+	"theme": "Adaptive.sublime-theme",
+	"index_files": false,
 }

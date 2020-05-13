@@ -3,7 +3,7 @@
 desktop_id="$1"
 
 node_id="$(bspc query -N -n .hidden | tail -n1)"
-node_id_urxvt_popup="$(xdo id -N URxvt -n popup)"
+node_id_urxvt_popup="$(xdo id -N st-popup)"
 
 if [ "$node_id" = "$node_id_urxvt_popup" ]; then
     node_id="$(bspc query -N -n .hidden | tail -n2 | awk 'NR==1')"
