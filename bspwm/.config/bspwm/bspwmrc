@@ -61,8 +61,8 @@ bspc rule -a 'Kodi' desktop='^7' follow=on
 bspc rule -a 'TeamViewer' desktop='^9' follow=on
 
 bspc rule -a 'MEGAsync' follow=on state=floating
+bspc rule -a 'xdman-Main' state=floating
 bspc rule -a 'com-rarchives-ripme-App' follow=on state=floating
-bspc rule -a 'java-lang-Thread:java-lang-Thread' state=floating
 bspc rule -a 'st-popup' follow=on layer=above state=floating hidden=on sticky=on border=off rectangle=$screen_size
 
 # Etc
@@ -115,3 +115,6 @@ bspc rule -a 'st-popup' follow=on layer=above state=floating hidden=on sticky=on
     bspc rule -a 'st-256color:st-256color' --one-shot desktop='^1' follow=off
     st &
 } &
+
+rm ~/hs_err_pid*.log &
+

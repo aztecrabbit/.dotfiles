@@ -77,18 +77,30 @@ EXA_COLORS="${EXA_COLORS}:sn=${colors["fg-white"]}"
 EXA_COLORS="${EXA_COLORS}:sb=${colors["fg-dark-gray"]}"
 
 PATH="${PATH}:${HOME}/.scripts"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-go"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-openvpn"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-shadowsocks"
-PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-psiphon-pro-go"
+# PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-go"
+# PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-openvpn"
+# PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-tunnel-shadowsocks"
+# PATH="${PATH}:${HOME}/go/src/github.com/aztecrabbit/brainfuck-psiphon-pro-go"
+
+# Virtual Environment Wrapper
+if [[ -a "$HOME/.local/bin/virtualenvwrapper.sh" ]]; then
+	export WORKON_HOME="$HOME/.virtualenvs"
+	export PROJECT_HOME="$HOME/Virtual Environment"
+	export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
+	export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=" -p /usr/bin/python3"
+
+	source $HOME/.local/bin/virtualenvwrapper.sh
+fi
+
+export ANDROID_SDK_ROOT='/opt/android-sdk'
 
 # alias ls='LC_ALL="C" ls --color=auto --group-directories-first'
 # alias ll='ls -l'
 # alias lla='ll -a'
 
-alias ls='exa --color=auto --group --group-directories-first --git'
-alias ll='ls -l'
-alias la='ll -a'
+alias ls="exa --color=auto --group --group-directories-first --git"
+alias ll="ls -l"
+alias la="ll -a"
 alias lt="ll --tree --level=2"
 
 alias vim="nvim"
@@ -107,3 +119,8 @@ function mega-progress() {
 		sleep 2
 	done
 }
+
+if [ -f ~/.zshrc-private ]; then
+    source ~/.zshrc-private
+fi
+
