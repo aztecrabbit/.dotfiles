@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  app1:
+    container_name: app1
+    image: app1:tag
+    ports:
+      - 8080:8080
+    networks:
+      - app_network
+  app2:
+    container_name: app2
+    image: app2:tag
+    ports:
+      - 8181:8181
+    networks:
+      - app_network
+  app3:
+    container_name: app3
+    image: app3:tag
+    ports:
+      - 80:80
+    depends_on:
+      - app1
+      - app2
+    environment:
+      - NAME=App3
+      - APP1_HOST=app1
+      - APP1_PORT=8080
+      - APP2_HOST=app2
+      - APP2_PORT=8181
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    name: app_network
