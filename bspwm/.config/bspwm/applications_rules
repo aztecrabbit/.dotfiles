@@ -1,0 +1,72 @@
+#!/bin/bash
+
+screen_size=$(xrandr | awk '/connected primary/{print $4}')
+
+set_applications_rules() {
+    applications=$1
+
+    # Default desktop
+    desktop='desktop=^1'
+
+    for data in "${applications[@]}"; do
+        # Split applications data
+        IFS='|' read -r -a data <<< "$data"
+
+        app=${data[@]:0:1}
+        app_rules=${data[@]:1}
+
+        if [[ $app == ^* ]]; then
+            desktop="desktop=${app}"
+            continue
+
+        elif [[ $data == --* ]]; then
+            desktop=''
+            continue
+
+        fi
+
+        # Call bspc
+        bspc rule -a "$app" $desktop follow=true $app_rules
+    done
+}
+
+declare -a applications=(
+    '^2'
+    'Code'
+    'Subl3'
+    'Neovim'
+
+    '^3'
+    'Chromium'
+    'firefox'
+
+    '^4'
+    'Thunar'
+    'Gtk3-youtube-viewer'
+
+    '^5'
+    'vlc'
+    'mpv'
+    'Atril'
+
+    '^6'
+    'TelegramDesktop'
+    'Deezloader Remix'
+
+    '^7'
+    'Thunderbird'
+    'neomutt'
+    'Caprine'
+    'Kodi'
+
+    '^9'
+    'TeamViewer'
+
+    '--'
+    'MEGAsync                   | state=floating'
+    'xdman-Main                 | state=floating follow=false'
+    'com-rarchives-ripme-App    | state=floating'
+    "st-popup                   | layer=above state=floating hidden=true sticky=true border=false rectangle=${screen_size}"
+)
+
+set_applications_rules $applications

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Kill script by path
+# kill `ps -aux | grep SCRIPT | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
+
+wmname LG3D &
+nitrogen --restore &   # Wallpaper
+xdman -m &
+
+{
+    killall -q -w xfce4-notifyd dunst
+    dunst &
+} &
+
+{
+    mkdir -p $HOME/.local/share/mpd/playlists
+    mpd ~/.config/mpd/mpd.conf &
+} &
+
+{
+    killall -q -w picom
+    picom &
+} &
+
+{
+    killall -q -w play-with-mpv
+    play-with-mpv &
+} &
+
+{
+    killall -q -w polybar
+    polybar top &
+} &
+
+{
+    killall -q -w sxhkd
+    sxhkd &
+} &
+
+{
+    killall -q -w syncthing
+    syncthing -no-browser -home=$HOME/.config/syncthing -gui-address='http://127.0.0.1:3838' &
+} &
+
+[[ ! $(xdo id -N st-popup) ]] && {
+    $HOME/.scripts/st-popup.sh &
+} &
+
+[[ ! $(xdo id -N st-256color -n st-256color) ]] && {
+    bspc rule -a 'st-256color:st-256color' --one-shot desktop='^1' follow=false
+    st &
+} &
