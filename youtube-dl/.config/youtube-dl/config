@@ -1,0 +1,4 @@
+--format "best"
+--output "%(title)s.%(ext)s"
+--external-downloader aria2c
+--external-downloader-args "--conf-path=/etc/aria2.conf"
