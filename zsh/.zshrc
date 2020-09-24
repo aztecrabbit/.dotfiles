@@ -92,6 +92,8 @@ if [[ -a "$HOME/.local/bin/virtualenvwrapper.sh" ]]; then
 	source $HOME/.local/bin/virtualenvwrapper.sh
 fi
 
+# export JAVA_HOME='/usr/lib/jvm/java-14-openjdk'
+# export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
 export ANDROID_SDK_ROOT='/opt/android-sdk'
 
 # alias ls='LC_ALL="C" ls --color=auto --group-directories-first'
@@ -113,6 +115,8 @@ alias instagram-scraper="instagram-scraper --retry-forever"
 alias dotfiles="cd ~/.dotfiles && git status"
 alias dotfiles-private="cd ~/.dotfiles-private && git status"
 
+alias openwrt="TERM=xterm ssh root@192.168.2.1 -t 'exec tmux new -A -s OpenWrt'"
+
 function mega-progress() {
 	while true; do
 		clear && mega-transfers
@@ -123,4 +127,3 @@ function mega-progress() {
 if [ -f ~/.zshrc-private ]; then
     source ~/.zshrc-private
 fi
-
