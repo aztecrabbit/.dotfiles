@@ -33,40 +33,39 @@ set_applications_rules() {
 declare -a applications=(
     '^2'
     'Code'
-    'Subl3'
-    'Neovim'
 
     '^3'
     'Chromium'
     'firefox'
 
     '^4'
-    'Thunar'
     'Gtk3-youtube-viewer'
+    'Thunar'
 
     '^5'
-    'vlc'
-    'mpv'
     'Atril'
+    'Master PDF Editor'
+    'mpv'
+    'qpdfview'
+    'vlc'
+    'Wps'
+    'Wpspdf'
 
     '^6'
     'TelegramDesktop'
-    'Deezloader Remix'
 
     '^7'
-    'Thunderbird'
-    'neomutt'
-    'Caprine'
     'Kodi'
+    'Thunderbird'
 
     '^9'
     'TeamViewer'
 
     '--'
-    'MEGAsync                   | state=floating'
-    'xdman-Main                 | state=floating follow=false'
     'com-rarchives-ripme-App    | state=floating'
+    'MEGAsync                   | state=floating'
     "st-popup                   | layer=above state=floating hidden=true sticky=true border=false rectangle=${screen_size}"
+    'xdman-Main                 | state=floating follow=false'
 )
 
 set_applications_rules $applications
