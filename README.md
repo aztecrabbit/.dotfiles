@@ -16,7 +16,6 @@ Packages
 | aria2                           | Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink |
 | bat                             | Cat clone with syntax highlighting and git integration |
 | bspwm-git                       | Tiling Window Manager based on binary space partitioning |
-| dash                            | POSIX compliant shell that aims to be as small as possible |
 | dmenu                           | Generic menu for X |
 | dunst                           | Customizable and lightweight notification-daemon |
 | ecryptfs-utils                  | Enterprise-class stacked cryptographic filesystem for Linux |
@@ -32,7 +31,6 @@ Packages
 | mpd                             | Flexible, powerful, server-side application for playing music |
 | mpv                             | Free, open source, and cross-platform media player |
 | ncmpcpp                         | Almost exact clone of ncmpc (Fully featured MPD client using ncurses) with some new features |
-| neomutt                         | A version of mutt with added features |
 | neovim                          | Fork of Vim aiming to improve user experience, plugins, and GUIs |
 | pgcli                           | Command line interface for Postgres with auto-completion and syntax highlighting |
 | picom                           | X compositor that may fix tearing issues |
@@ -60,7 +58,7 @@ Packages
 | zscroll-git                     | Horizontal text scroller for use with panels |
 | zsh                             | Very advanced and programmable command interpreter (shell) for UNIX |
 
-    $ yay -S antigen-git aria2 bat bspwm-git dash dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neomutt neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar urlscan wmname xclip xdman xdo zscroll-git zsh
+    $ yay -S antigen-git aria2 bat bspwm-git dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar urlscan wmname xclip xdman xdo zscroll-git zsh
 
 
 Termux
@@ -91,7 +89,5 @@ Termux stop here
 
 Close terminal and open again
 
-    $ sudo ln -sf /usr/bin/dash /usr/bin/sh
-
     $ cd ~/.dotfiles
-    $ stow --verbose --no-folding -R bin bspwm dunst etc fonts mpd mpv ncmpcpp neomutt neovim picom pylint rofi scripts sublime-text-3 thunar tmux tumbler urxvt xdman yapf
+    $ stow --verbose --no-folding -R bin bspwm dunst etc fonts mpd mpv ncmpcpp neovim picom pylint rofi scripts thunar tmux tumbler urxvt xdman yapf
