@@ -1,4 +1,9 @@
---format "best"
+--format "best[height=720]"
 --output "%(title)s.%(ext)s"
+
+--write-sub
+--write-auto-sub
+--sub-lang=en,id
+
 --external-downloader aria2c
 --external-downloader-args "--conf-path=/etc/aria2.conf"
