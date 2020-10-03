@@ -50,7 +50,6 @@ Packages
 | ttf-font-awesome                | Iconic font designed for Bootstrap |
 | ttf-material-design-icons       | Material Design icons by Google |
 | unrar                           | RAR uncompression program |
-| urlscan                         | Mutt and terminal url selector |
 | wmname                          | Utility to set the name of your window manager |
 | xclip                           | Command line interface to the X11 clipboard |
 | xdman                           | Powerful tool to increase download speed up-to 500% |
@@ -58,7 +57,7 @@ Packages
 | zscroll-git                     | Horizontal text scroller for use with panels |
 | zsh                             | Very advanced and programmable command interpreter (shell) for UNIX |
 
-    $ yay -S antigen-git aria2 bat bspwm-git dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar urlscan wmname xclip xdman xdo zscroll-git zsh
+    $ yay -S antigen-git aria2 bat bspwm-git dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar wmname xclip xdman xdo zscroll-git zsh
 
 
 Termux
