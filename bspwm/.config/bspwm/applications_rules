@@ -65,6 +65,7 @@ declare -a applications=(
     'com-rarchives-ripme-App    | state=floating'
     'MEGAsync                   | state=floating'
     "st-popup                   | layer=above state=floating hidden=true sticky=true border=false rectangle=${screen_size}"
+    'Uget-gtk                   | state=floating'
     'xdman-Main                 | state=floating follow=false'
 )
 
