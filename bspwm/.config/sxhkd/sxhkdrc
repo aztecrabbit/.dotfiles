@@ -210,6 +210,11 @@ super + {_, shift + } r
         'st -c pyradio -e pyradio' 'Pyradio',               \
     }
 
+super + {_, shift + } u
+    $HOME/.scripts/bspwm-launch-application.sh {            \
+        'uget-gtk' 'UGet',                                  \
+    }
+
 super + {_, shift + } v
     $HOME/.scripts/bspwm-launch-application.sh {            \
         'tmux-neovim' 'NeoVim',                             \
