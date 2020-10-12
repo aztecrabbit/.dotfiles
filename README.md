@@ -14,6 +14,7 @@ Packages
 | ----                            | ----------- |
 | antigen-git                     | Plugin manager for zsh, inspired by oh-my-zsh and vundle |
 | aria2                           | Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink |
+| aria2c-daemon                   | Daemonize aria2c |
 | bat                             | Cat clone with syntax highlighting and git integration |
 | bspwm-git                       | Tiling Window Manager based on binary space partitioning |
 | dmenu                           | Generic menu for X |
@@ -57,7 +58,7 @@ Packages
 | zscroll-git                     | Horizontal text scroller for use with panels |
 | zsh                             | Very advanced and programmable command interpreter (shell) for UNIX |
 
-    $ yay -S antigen-git aria2 bat bspwm-git dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar wmname xclip xdman xdo zscroll-git zsh
+    $ yay -S antigen-git aria2 aria2c-daemon bat bspwm-git dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar wmname xclip xdman xdo zscroll-git zsh
 
 
 Termux
