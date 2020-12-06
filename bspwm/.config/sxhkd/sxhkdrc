@@ -178,7 +178,7 @@ super + shift + Return
 super + {_, shift + } {b, c, f, k}
     $HOME/.scripts/bspwm-launch-application.sh {            \
         'chromium' 'Chromium',                              \
-        'firefox' 'Firefox',                                \
+        'falkon' 'Falkon',                                  \
         'code' 'VS Code',                                   \
         'caprine' 'Caprine',                                \
         'thunar' 'Thunar',                                  \

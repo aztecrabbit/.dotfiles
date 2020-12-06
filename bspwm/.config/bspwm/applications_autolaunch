@@ -8,6 +8,11 @@ nitrogen --restore &   # Wallpaper
 xdman -m &
 
 {
+    killall -q -w xfce-polkit
+    /usr/lib/xfce-polkit/xfce-polkit &
+} &
+
+{
     killall -q -w xfce4-notifyd dunst
     dunst &
 } &
@@ -17,10 +22,10 @@ xdman -m &
     mpd ~/.config/mpd/mpd.conf &
 } &
 
-{
-    killall -q -w picom
-    picom &
-} &
+# {
+#     killall -q -w picom
+#     picom &
+# } &
 
 {
     killall -q -w play-with-mpv
@@ -37,10 +42,10 @@ xdman -m &
     sxhkd &
 } &
 
-{
-    killall -q -w syncthing
-    syncthing -no-browser -home=$HOME/.config/syncthing -gui-address='http://127.0.0.1:3838' &
-} &
+# {
+#     killall -q -w syncthing
+#     syncthing -no-browser -home=$HOME/.config/syncthing -gui-address='http://127.0.0.1:3838' &
+# } &
 
 [[ ! $(xdo id -N st-popup) ]] && {
     $HOME/.scripts/st-popup.sh &

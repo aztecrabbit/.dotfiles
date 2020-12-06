@@ -1,6 +1,0 @@
-"
-syntax on
-colorscheme onedark
-
-"
-
