@@ -1,0 +1,12 @@
+#
+# . = scale-down
+# d = draw-filename
+# r = recursive
+# z = randomize
+# D = slideshow-delay
+# Z = auto-zoom
+
+feh                 -g 640x480 -B "#090909" -d -. -Z
+recursive           -g 640x480 -B "#090909" -d -. -Z -r
+slideshow           -g 640x480 -B "#090909" -d -. -Z -r -D 10
+slideshow-random    -g 640x480 -B "#090909" -d -. -Z -r -D 10 -z
