@@ -50,14 +50,13 @@ wm-restack = bspwm
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
-modules-left = bspwm | refresh-playlist - mpd - mpc-zscroll
-modules-right = wireless-network - network-traffic - cpu - temperature - memory - pulseaudio - date menu-power
+enable-ipc = true
 
-;;  • ▌ ▄ ·.       ·▄▄▄▄  ▄• ▄▌▄▄▌  ▄▄▄ ..▄▄ ·
-;;  ·██ ▐███▪▪     ██▪ ██ █▪██▌██•  ▀▄.▀·▐█ ▀.
-;;  ▐█ ▌▐▌▐█· ▄█▀▄ ▐█· ▐█▌█▌▐█▌██▪  ▐▀▀▪▄▄▀▀▀█▄
-;;  ██ ██▌▐█▌▐█▌.▐▌██. ██ ▐█▄█▌▐█▌▐▌▐█▄▄▌▐█▄▪▐█
-;;  ▀▀  █▪▀▀▀ ▀█▄▀▪▀▀▀▀▀•  ▀▀▀ .▀▀▀  ▀▀▀  ▀▀▀▀
+modules-left = bspwm | refresh-playlist - mpd - mpc-zscroll
+modules-right = wireless-network - cpu - temperature - memory - pulseaudio - date menu-power
+
+
+;; Modules
 
 [module/-]
 type = custom/text
@@ -67,6 +66,14 @@ content = "  "
 type = custom/text
 content = "  │   "
 
+[module/ipc-left]
+type = custom/ipc
+hook-0 = whoami
+hook-1 = date +%s
+initial = 1
+scroll-up = polybar-msg -p %pid% hook ipc-left 1
+scroll-down = polybar-msg -p %pid% hook ipc-left 2
+
 include-file = ~/.config/polybar/bspwm.ini
 include-file = ~/.config/polybar/cpu.ini
 include-file = ~/.config/polybar/date.ini
@@ -74,7 +81,7 @@ include-file = ~/.config/polybar/memory.ini
 include-file = ~/.config/polybar/menu-power.ini
 include-file = ~/.config/polybar/mpc-zscroll.ini
 include-file = ~/.config/polybar/mpd.ini
-include-file = ~/.config/polybar/network-traffic.ini
+; include-file = ~/.config/polybar/network-traffic.ini
 include-file = ~/.config/polybar/pulseaudio.ini
 include-file = ~/.config/polybar/refresh-playlist.ini
 include-file = ~/.config/polybar/temperature.ini
