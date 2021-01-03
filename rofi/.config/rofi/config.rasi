@@ -1,12 +1,12 @@
 configuration {
     modi: "drun";
-	width: 48;
+	width: 32;
 	lines: 12;
 	columns: 1;
 	font: "Sans 9";
-	bw: 1;
-	location: 0;
-    padding: 200;
+/*	bw: 0;*/
+/*	location: 0;*/
+    padding: 4;
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
@@ -40,7 +40,7 @@ configuration {
 /*	filter: ;*/
 /*	separator-style: "dash";*/
 	hide-scrollbar: true;
-	fullscreen: true;
+	fullscreen: false;
 /*	fake-transparency: false;*/
 /*	dpi: -1;*/
 /*	threads: 0;*/
@@ -50,13 +50,17 @@ configuration {
 /*	window-format: "{w}    {i}{c}   {t}";*/
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
-/*	theme: ;*/
+/*	theme: "aztecrabbit";*/
 /*	color-normal: "row-1-background, 	foreground, 	row-2-background, 	background-focus, 	foreground-focus"; */
+
 	color-normal: "#20ffffff, 			#ccffffff, 		#2affffff, 			#11ffffff, 			#ddffffff";
+
 /*	color-urgent: ;*/
 /*	color-active: ;*/
 /*  color-window: "background, 	border, 	separator"; */
+
 	color-window: "#111111, 	#00000000, 	#2affffff";
+
 /*	max-history-size: 25;*/
 /*	combi-hide-mode-prefix: false;*/
 /*	pid: "/run/user/1000/rofi.pid";*/
