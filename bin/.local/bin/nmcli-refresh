@@ -1,3 +1,0 @@
-#!/usr/bin/dash
-
-nmcli net off > /dev/null 2>&1 && nmcli net on > /dev/null 2>&1 && sleep 2 && nmcli -f in-use,ssid,bssid,freq,rate,signal,security,wpa-flags,device,active dev wifi

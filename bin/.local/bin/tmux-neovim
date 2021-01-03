@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ -n "$(tmux ls | grep neovim:)" ]; then
-	st -c neovim -e tmux attach -t neovim
-else
-	st -c neovim -e tmux new-session -s neovim 'sleep 1 && nvim'
-fi
-
