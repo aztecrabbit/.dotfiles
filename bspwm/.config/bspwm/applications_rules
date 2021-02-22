@@ -26,13 +26,14 @@ set_applications_rules() {
         fi
 
         # Call bspc
-        bspc rule -a "$app" $desktop follow=true $app_rules
+        bspc rule -a "${app//[[:blank:]]/}" $desktop follow=true $app_rules
     done
 }
 
 declare -a applications=(
     '^2'
     'Code'
+    'Subl3'
 
     '^3'
     'Chromium'
@@ -61,13 +62,13 @@ declare -a applications=(
     'Thunderbird'
 
     '^8'
-    'Subl3'
 
     '^9'
     'TeamViewer'
 
     '--'
     'com-rarchives-ripme-App    | state=floating'
+    'GParted                    | state=floating'
     'MEGAsync                   | state=floating'
     "st-popup                   | layer=above state=floating hidden=true sticky=true border=false rectangle=${screen_size}"
     'Uget-gtk                   | state=floating'
