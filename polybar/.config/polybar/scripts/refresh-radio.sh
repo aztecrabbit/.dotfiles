@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 declare -A radios
 
 radios["Alternative (BAGeL Radio - SomaFM)"]="http://somafm.com/bagel.pls"
@@ -29,12 +27,15 @@ radios["Radio Play Emotions - Music for Work and Relax"]="http://5.39.82.157:805
 radios["Majestic Jukebox Radio"]="https://www.internet-radio.com/servers/tools/playlistgenerator/?u=http://uk3.internet-radio.com:8405/live.m3u&t=.pls"
 radios["Smooth Jazz CD 101.9 New York"]="http://us3.internet-radio.com:8485/listen.pls"
 
-filepath="$HOME/.local/share/mpd/playlists/radio.m3u"
 
-mkdir -p "$(dirname "$filepath")"
-rm -f "$filepath"
+#
+#
 
-cat << EOF > "$filepath"
+playlist_filepath="$HOME/.local/share/mpd/playlists/radio.m3u"
+
+mkdir -p "$(dirname "$playlist_filepath")"
+
+cat << EOF > "$playlist_filepath"
 #EXTM3U
 
 EOF
@@ -44,7 +45,7 @@ for k in "${!radios[@]}"; do
 
 	stream_url="$(curl -s ${radios[$k]} | grep -m 1 -E 'https?://' | awk -F 'http' '{printf "http"$2"\n"}')"
 
-	cat << EOF >> "$filepath"
+	cat << EOF >> "$playlist_filepath"
 #EXTINF:-1,${k}
 ${stream_url}
 
