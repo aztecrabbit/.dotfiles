@@ -31,6 +31,7 @@ radios["Smooth Jazz CD 101.9 New York"]="http://us3.internet-radio.com:8485/list
 
 filepath="$HOME/.local/share/mpd/playlists/radio.m3u"
 
+mkdir -p "$(dirname "$filepath")"
 rm -f "$filepath"
 
 cat << EOF > "$filepath"
