@@ -15,42 +15,32 @@ Packages
 | antigen-git                     | Plugin manager for zsh, inspired by oh-my-zsh and vundle |
 | aria2                           | Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink |
 | aria2c-daemon                   | Daemonize aria2c |
-| bat                             | Cat clone with syntax highlighting and git integration |
 | bspwm-git                       | Tiling Window Manager based on binary space partitioning |
 | dmenu                           | Generic menu for X |
 | dunst                           | Customizable and lightweight notification-daemon |
 | ecryptfs-utils                  | Enterprise-class stacked cryptographic filesystem for Linux |
-| exa                             | ls replacement |
 | ffscreencast                    | ffmpeg screencast/desktop-recording with video overlay and multi monitor support |
-| fzy                             | A better fuzzy finder |
 | gtk-youtube-viewer-git          | GTK+ application for searching and streaming videos from YouTube |
 | gucharmap                       | Gnome Unicode Charmap |
-| httping                         | Ping-like tool for http-requests |
 | lxappearance                    | Feature-rich GTK+ theme switcher of the LXDE Desktop |
 | megacmd-bin                     | MEGA Command Line Interactive and Scriptable Application |
 | mpc                             | Minimalist command line interface to MPD |
 | mpd                             | Flexible, powerful, server-side application for playing music |
 | mpv                             | Free, open source, and cross-platform media player |
 | ncmpcpp                         | Almost exact clone of ncmpc (Fully featured MPD client using ncurses) with some new features |
-| neovim                          | Fork of Vim aiming to improve user experience, plugins, and GUIs |
 | pgcli                           | Command line interface for Postgres with auto-completion and syntax highlighting |
 | picom                           | X compositor that may fix tearing issues |
 | polybar                         | Fast and easy-to-use status bar |
 | powerpill                       | Pacman wrapper for faster download |
-| redsocks                        | Transparent redirector of any TCP connection to proxy using your firewal |
 | rofi                            | Window switcher |
 | scrot                           | Simple command-line screenshot utility for X |
-| shadowsocks-libev               | Lightweight secured socks5 proxy for embedded devices and low end boxes |
-| simple-obfs-git                 | Simple obfusacting tool designed as plugin server of shadowsocks |
 | stow                            | Manage installation of multiple softwares in the same directory tree |
-| subfinder-bin                   | subdomain discovery tool |
 | sxhkd-git                       | Simple X hotkey daemon |
-| syncthing                       | Synchronize files bidirectionally across multiple devices |
-| telegram-desktop                | Official Telegram Desktop client |
 | tmux                            | Terminal multiplexer |
 | ttf-font-awesome                | Iconic font designed for Bootstrap |
 | ttf-material-design-icons       | Material Design icons by Google |
 | unrar                           | RAR uncompression program |
+| vim                             | Vi Improved, a highly configurable, improved version of the vi text editor |
 | wmname                          | Utility to set the name of your window manager |
 | xclip                           | Command line interface to the X11 clipboard |
 | xdman                           | Powerful tool to increase download speed up-to 500% |
@@ -58,13 +48,13 @@ Packages
 | zscroll-git                     | Horizontal text scroller for use with panels |
 | zsh                             | Very advanced and programmable command interpreter (shell) for UNIX |
 
-    $ yay -S antigen-git aria2 aria2c-daemon bat bspwm-git dmenu dunst ecryptfs-utils exa ffscreencast fzy gtk-youtube-viewer-git gucharmap httping lxappearance megacmd-bin mpc mpd mpv ncmpcpp neovim pgcli picom polybar powerpill redsocks rofi scrot shadowsocks-libev simple-obfs-git sncli stow subfinder-bin sxhkd-git syncthing telegram-desktop tmux ttf-font-awesome ttf-material-design-icons unrar wmname xclip xdman xdo zscroll-git zsh
+    $ yay -S antigen-git aria2 aria2c-daemon bspwm-git dmenu dunst ecryptfs-utils ffscreencast gtk-youtube-viewer-git gucharmap lxappearance megacmd-bin mpc mpd mpv ncmpcpp pgcli picom polybar powerpill rofi scrot stow sxhkd-git tmux ttf-font-awesome ttf-material-design-icons unrar vim wmname xclip xdman xdo zscroll-git zsh
 
 
 Termux
 ------
 
-    $ apt install exa stow zsh
+    $ apt install stow zsh
     $ curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh > ~/.antigen.sh
 
 
@@ -90,4 +80,4 @@ Termux stop here
 Close terminal and open again
 
     $ cd ~/.dotfiles
-    $ stow --verbose --no-folding -R bin bspwm dunst etc fonts mpd mpv ncmpcpp neovim picom pylint rofi scripts thunar tmux tumbler urxvt xdman yapf
+    $ stow --verbose --no-folding -R bin bspwm dunst etc fonts mpd mpv ncmpcpp picom pylint rofi scripts thunar tmux tumbler urxvt xdman yapf
