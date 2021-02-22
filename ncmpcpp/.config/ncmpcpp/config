@@ -198,14 +198,14 @@ song_status_format = {%a - %t}|{%f}
 #
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
 
-current_item_prefix = $r
-current_item_suffix = $/r
+current_item_prefix = ">> "
+current_item_suffix = ""
 
-#current_item_inactive_column_prefix = $(white)$r
-#current_item_inactive_column_suffix = $/r$(end)
+current_item_inactive_column_prefix = $(142)$r
+current_item_inactive_column_suffix = $/r$(end)
 
-now_playing_prefix = $b
-now_playing_suffix = $/b
+now_playing_prefix = "$b"
+now_playing_suffix = "$/b"
 
 #browser_playlist_prefix = "$2playlist$9 "
 
@@ -265,7 +265,7 @@ now_playing_suffix = $/b
 ##
 
 # song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
-song_columns_list_format = (20)[142]{a} (45)[148]{t|f:Title} (20)[142]{b} (7f)[148]{l}
+song_columns_list_format = (20)[]{a} (55)[147]{t|f:Title} (20)[]{b} (5f)[141]{lr}
 
 
 ##### various settings #####
@@ -450,9 +450,9 @@ follow_now_playing_lyrics = yes
 #mouse_support = yes
 #
 #mouse_list_scroll_whole_page = yes
-#
-#empty_tag_marker = <empty>
-#
+
+empty_tag_marker = "-"
+
 #tags_separator = " | "
 #
 #tag_editor_extended_numeration = no
@@ -477,7 +477,7 @@ follow_now_playing_lyrics = yes
 #
 #search_engine_default_search_mode = 1
 
-external_editor = nvim
+external_editor = vim
 
 ## Note: set to yes if external editor is a console application.
 ##
@@ -525,14 +525,14 @@ external_editor = nvim
 #
 #state_flags_color = default:b
 
-main_window_color = white
+main_window_color = 148
 
 #color1 = white
 #
 #color2 = green
 
-progressbar_color = 148
-progressbar_elapsed_color = 136
+progressbar_color = 60
+progressbar_elapsed_color = 61
 
 #statusbar_color = default
 #
