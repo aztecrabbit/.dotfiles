@@ -38,7 +38,7 @@ declare -a applications=(
     '^3'
     'Chromium'
     'firefox'
-	'Falkon'
+    'Falkon'
 
     '^4'
     'Gtk3-youtube-viewer'
@@ -46,7 +46,7 @@ declare -a applications=(
 
     '^5'
     'Atril'
-	'feh'
+    'feh'
     'Master PDF Editor'
     'mpv'
     'qpdfview'
