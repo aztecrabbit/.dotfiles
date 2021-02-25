@@ -24,12 +24,11 @@
 </action>
 <action>
 	<icon>utilities-terminal</icon>
-	<name>Open Terminal Here (urxvt)</name>
-	<unique-id>1570301134527186-4</unique-id>
-	<command>sh -c &quot;cd %f &amp;&amp; urxvt&quot;</command>
-	<description>...</description>
+	<name>Open Terminal Here (st)</name>
+	<unique-id>1600198055959881-3</unique-id>
+	<command>sh -c &quot;cd %d &amp;&amp; st&quot;</command>
+	<description>File</description>
 	<patterns>*</patterns>
-	<directories/>
 	<audio-files/>
 	<image-files/>
 	<other-files/>
@@ -37,19 +36,68 @@
 	<video-files/>
 </action>
 <action>
-	<icon></icon>
-	<name>Slideshow</name>
-	<unique-id>1583520569665146-1</unique-id>
-	<command>feh --scale-down --auto-zoom --randomize --recursive --slideshow-delay 5 %d</command>
-	<description>...</description>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here (st)</name>
+	<unique-id>1570301134527186-4</unique-id>
+	<command>sh -c &quot;cd %f &amp;&amp; st&quot;</command>
+	<description>Directory</description>
 	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>Play with MPV</name>
+	<unique-id>1600198436825171-4</unique-id>
+	<command>mpv --playlist=%f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>Play with MPV (Shuffle)</name>
+	<unique-id>1600197812100274-2</unique-id>
+	<command>mpv --playlist=%f --shuffle</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
 </action>
 <action>
 	<icon></icon>
 	<name>Slideshow</name>
 	<unique-id>1582484772180892-1</unique-id>
-	<command>feh --scale-down --auto-zoom --randomize --recursive --slideshow-delay 10 %d</command>
-	<description>...</description>
+	<command>feh --theme slideshow %d</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Slideshow Fast</name>
+	<unique-id>1613364414348622-1</unique-id>
+	<command>feh --theme slideshow-fast %d</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Slideshow Very Fast</name>
+	<unique-id>1613368281384100-2</unique-id>
+	<command>feh --theme slideshow-very-fast %d</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Slideshow (Random)</name>
+	<unique-id>1607246235423501-1</unique-id>
+	<command>feh --theme slideshow-random %d</command>
+	<description></description>
 	<patterns>*</patterns>
 	<directories/>
 	<image-files/>
