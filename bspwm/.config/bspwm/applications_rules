@@ -49,6 +49,7 @@ declare -a applications=(
     'feh'
     'Master PDF Editor'
     'mpv'
+    'Tk                         | state=floating'
     'qpdfview'
     'vlc'
     'Wps'
@@ -73,6 +74,8 @@ declare -a applications=(
     "st-popup                   | layer=above state=floating hidden=true sticky=true border=false rectangle=${screen_size}"
     'Uget-gtk                   | state=floating'
     'xdman-Main                 | state=floating follow=false'
+
+    'DFHack                     | state=floating'
 )
 
 set_applications_rules $applications

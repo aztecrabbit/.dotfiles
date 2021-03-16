@@ -13,12 +13,14 @@ alt + shift + r
     bspc wm -r
 
 # alternate between the tiled and monocle layout
+#
 alt + m
     bspc desktop -l next
 
 # swap the current node and the biggest node
 # alt + g
 #    bspc node -s biggest
+#
 alt + g
     bspc node -s biggest
 
