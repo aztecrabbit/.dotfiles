@@ -1,14 +1,23 @@
 #!/bin/bash
 
 wmname LG3D &
-nitrogen --restore &
-xdman -m &
+xdman -m >/dev/null &
 
 # {
 #     # Kill script by script path
 #     #
 #     kill `ps -aux | grep SCRIPT | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
 # } &
+
+{
+    killall -q -w sxhkd
+    sxhkd
+} &
+
+{
+    killall -q -w polybar
+    polybar top
+} &
 
 {
     killall -q -w xfce-polkit
@@ -19,36 +28,6 @@ xdman -m &
     killall -q -w xfce4-notifyd dunst
     dunst
 } &
-
-{
-    mkdir -p ~/.local/share/mpd/playlists
-    mpd ~/.config/mpd/mpd.conf
-} &
-
-# {
-#     killall -q -w picom
-#     picom
-# } &
-
-{
-    killall -q -w play-with-mpv
-    play-with-mpv
-} &
-
-{
-    killall -q -w polybar
-    polybar top
-} &
-
-{
-    killall -q -w sxhkd
-    sxhkd
-} &
-
-# {
-#     killall -q -w syncthing
-#     syncthing -no-browser -home=~/.config/syncthing -gui-address='http://127.0.0.1:3838'
-# } &
 
 [[ ! $(xdo id -N st-popup) ]] && {
     ~/.scripts/st-popup.sh
