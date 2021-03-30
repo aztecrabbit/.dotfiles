@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 nitrogen --restore &
 xsetroot -cursor_name left_ptr &
