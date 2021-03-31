@@ -184,7 +184,7 @@ super + {_, shift + } {m, s, t, x}
     $HOME/.scripts/bspwm-launch-application.sh {            \
         'st -c ncmpcpp -e ncmpcpp' 'ncmpcpp',               \
         'megasync' 'Mega',                                  \
-        'subl3' 'Sublime Text',                             \
+        'subl' 'Sublime Text',                              \
         '',                                                 \
         'telegram-desktop' 'Telegram',                      \
         'teamviewer' 'Teamviewer',                          \

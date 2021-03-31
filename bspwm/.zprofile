@@ -1,6 +1,6 @@
 #!/bin/bash
 
 if [ "$(tty)" = "/dev/tty1" ]; then
-	startx
-	logout
+    startx
+    logout
 fi

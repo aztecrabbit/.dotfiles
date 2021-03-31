@@ -1,7 +1,5 @@
 #!/bin/bash
 
-screen_size=$(xrandr | awk '/connected primary/{print $4}')
-
 set_applications_rules() {
     applications=$1
 
@@ -33,7 +31,7 @@ set_applications_rules() {
 declare -a applications=(
     '^2'
     'Code'
-    'Subl3'
+    'Subl'
 
     '^3'
     'Chromium'
@@ -71,7 +69,6 @@ declare -a applications=(
     'com-rarchives-ripme-App    | state=floating'
     'GParted                    | state=floating'
     'MEGAsync                   | state=floating'
-    "st-popup                   | layer=above state=floating hidden=true sticky=true border=false rectangle=${screen_size}"
     'Uget-gtk                   | state=floating'
     'xdman-Main                 | state=floating follow=false'
 

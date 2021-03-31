@@ -8,9 +8,4 @@ xsetroot -cursor_name left_ptr &
     mpd ~/.config/mpd/mpd.conf
 } &
 
-# {
-#     killall -q -w picom
-#     picom
-# } &
-
 exec bspwm

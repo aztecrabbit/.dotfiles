@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wmname LG3D &
+# wmname LG3D &
 xdman -m >/dev/null &
 
 # {
@@ -13,6 +13,11 @@ xdman -m >/dev/null &
     killall -q -w sxhkd
     sxhkd
 } &
+
+# {
+#     killall -q -w picom
+#     picom
+# } &
 
 {
     killall -q -w polybar
@@ -29,11 +34,13 @@ xdman -m >/dev/null &
     dunst
 } &
 
-[[ ! $(xdo id -N st-popup) ]] && {
+[ -z "$(xdo id -N st-popup)" ] && {
+    bspc rule -a 'st-popup' follow=true layer=above state=floating hidden=true sticky=true border=false \
+        rectangle="$(xrandr | awk '/connected primary/{print $4}')"
     ~/.scripts/st-popup.sh
 } &
 
-[[ ! $(xdo id -N st-256color -n st-256color) ]] && {
+[ -z "$(xdo id -N st-256color -n st-256color)" ] && {
     bspc rule -a 'st-256color:st-256color' --one-shot desktop='^1' follow=false
     st
 } &
