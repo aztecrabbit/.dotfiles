@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 background='/tmp/background-lock.png'
 

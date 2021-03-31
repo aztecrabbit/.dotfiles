@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 command="$1"
 application_name="$2"

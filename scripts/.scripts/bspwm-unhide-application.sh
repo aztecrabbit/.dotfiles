@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 desktop_id="$1"
 

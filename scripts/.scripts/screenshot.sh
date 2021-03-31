@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 mode="$1"
 command='scrot --quality 50'
