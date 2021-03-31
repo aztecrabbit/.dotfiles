@@ -190,10 +190,10 @@ song_status_format = {%a - %t}|{%f}
 song_library_format = {%n - }{%t}|{%f}
 
 #alternative_header_first_line_format = $b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b
-alternative_header_first_line_format = $b{%a} - {%t}|{%f}$/b
+alternative_header_first_line_format = $b{%a - }{%t}|{%f}$/b
 
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
-alternative_header_second_line_format = {%b}|{{%a} - {%t}|{%f}}
+alternative_header_second_line_format = {%b}|{{%a - }{%t}|{%f}}
 
 current_item_prefix = "$b>> "
 current_item_suffix = "$/b"
@@ -262,7 +262,7 @@ selected_item_suffix = "$9"
 
 #song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
 # song_columns_list_format = (20)[]{a} (50)[147]{t|f:Title} (20)[]{b} (5f)[141]{lr}
-song_columns_list_format = (40)[]{a} (50)[147]{t|f:Title} (5f)[141]{lr}
+song_columns_list_format = (35)[]{a} (50)[147]{t|f:Title} (5f)[141]{lr}
 
 
 ## Various Settings
