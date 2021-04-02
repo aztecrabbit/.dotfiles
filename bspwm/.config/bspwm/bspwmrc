@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #                      ___           ___         ___           ___
 #       _____         /  /\         /  /\       /__/\         /__/\
@@ -23,7 +23,7 @@ bspc config borderless_monocle          true
 bspc config gapless_monocle             true
 bspc config focus_follows_pointer       true
 
-if [[ $(hostname) = "home" ]]; then
+if [ "$(hostname)" = "home" ]; then
     bspc config left_padding            664
     bspc config top_padding             0
     bspc config right_padding           0
@@ -42,5 +42,3 @@ bspc config presel_feedback_color       "#353535"
 
 ~/.config/bspwm/applications_rules
 ~/.config/bspwm/applications_autolaunch
-
-rm ~/hs_err_pid*.log &

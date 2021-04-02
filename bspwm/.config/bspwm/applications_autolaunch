@@ -35,8 +35,6 @@ xdman -m >/dev/null &
 } &
 
 [ -z "$(xdo id -N st-popup)" ] && {
-    bspc rule -a 'st-popup' follow=true layer=above state=floating hidden=true sticky=true border=false \
-        rectangle="$(xrandr | awk '/connected primary/{print $4}')"
     ~/.scripts/st-popup.sh
 } &
 

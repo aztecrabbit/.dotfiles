@@ -71,6 +71,7 @@ declare -a applications=(
     'MEGAsync                   | state=floating'
     'Uget-gtk                   | state=floating'
     'xdman-Main                 | state=floating follow=false'
+    "st-popup                   | follow=true layer=above state=floating hidden=true sticky=true border=false rectangle=$(xrandr | awk '/connected primary/{print $4}')"
 
     'DFHack                     | state=floating'
 )
