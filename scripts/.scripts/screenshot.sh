@@ -1,40 +1,39 @@
-#!/bin/bash
+#!/bin/sh
 
 mode="$1"
 command='scrot --quality 50'
 
-mkdir -p $HOME/Pictures/Screenshots/
+mkdir -p ~/Pictures/Screenshots/
 
-if [ "$mode" = 'select' -o "$mode" = 'freeze-now' -o "$mode" = 'freeze' ]; then
+if [ "$mode" = "select" -o "$mode" = "freeze" -o "$mode" = "freeze-now" ]; then
     command="$command --select"
-    command_delay="1"
 fi
 
-if [ "$mode" = 'select' ]; then
-    notify-send -t 2000 'Screenshot select mode'
-fi
 
-if [ "$mode" = 'freeze-now' ]; then
-    command="$command --freeze"
-fi
+case "$mode" in
+    select )
+        notify-send -t 2000 'Screenshot select mode'
+        ;;
 
-if [ "$mode" = 'freeze' ]; then
-    command="$command --freeze"
+    freeze )
+        command="$command --freeze"
 
-    notify-send -t 2950 'Screenshot, freezing in'
-    notify-send -t 2900 '3'
-    sleep 1
-    notify-send -t 1900 '2'
-    sleep 1
-    notify-send -t  900 '1'
-fi
+        notify-send -t 2950 'Screenshot, freezing in'
+        notify-send -t 2900 '3'
+        sleep 1
+        notify-send -t 1900 '2'
+        sleep 1
+        notify-send -t  900 '1'
+        sleep 1
+        ;;
 
-if [ "$command_delay" ]; then
-    sleep "$command_delay"
-fi
+    freeze-now )
+        command="$command --freeze"
+        ;;
+esac
 
 if ! $command --exec \
     'mv $f ~/Pictures/Screenshots/ && notify-send -t 2000 -i ~/Pictures/Screenshots/$f "Screenshot saved!"'
 then
-    notify-send -t 3000 'Screenshot canceled!'
+    notify-send -t 2000 'Screenshot canceled!'
 fi

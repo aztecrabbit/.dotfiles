@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
-background='/tmp/background-lock.png'
+bg='/tmp/background-lock.png'
 
-scrot $background --overwrite --quality 100
-convert $background -blur 2x8 $background && i3lock --image $background &
+scrot $bg --overwrite --quality 100
+convert $bg -blur 2x8 $bg && i3lock --image $bg &
 
 notify-send -t 3000 'Screen will be locked' 'Please wait...'
