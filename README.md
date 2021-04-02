@@ -59,7 +59,15 @@ Multithreading Package Manager
 
 Install required packages
 
-    $ yay -S aria2 powerpill
+    $ yay -S git stow aria2 powerpill
+
+Clone this repo
+
+    $ git clone https://github.com/aztecrabbit/.dotfiles ~/.dotfiles
+
+Go to this repo folder
+
+    $ cd ~/.dotfiles
 
 Change to root
 
@@ -88,4 +96,4 @@ or
 
     $ yay --pacman powerpill -S package-name
 
-or just use my dotfiles for terminal [here](https://github.com/aztecrabbit/.dotfiles-terminal) :D
+or just use zsh dotfile from my dotfiles terminal [here](https://github.com/aztecrabbit/.dotfiles-terminal) :D
