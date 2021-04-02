@@ -21,12 +21,15 @@ Packages
 | ffscreencast                     | ffmpeg screencast/desktop-recording with video overlay and multi monitor support |
 | gtk-youtube-viewer-git           | GTK+ application for searching and streaming videos from YouTube |
 | gucharmap                        | Gnome Unicode Charmap |
+| libxft-bgra                      | libXft with BGRA glyph (color emoji) rendering & scaling patches by Maxime Coste |
 | lxappearance                     | Feature-rich GTK+ theme switcher of the LXDE Desktop |
-| megacmd-bin                      | MEGA Command Line Interactive and Scriptable Application |
+| matcha-gtk-theme                 | A flat design theme for GTK 3, GTK 2 and GNOME Shell |
+| megacmd                          | MEGA Command Line Interactive and Scriptable Application |
 | mpc                              | Minimalist command line interface to MPD |
 | mpd                              | Flexible, powerful, server-side application for playing music |
 | mpv                              | Free, open source, and cross-platform media player |
 | ncmpcpp                          | Almost exact clone of ncmpc (Fully featured MPD client using ncurses) with some new features |
+| papirus-icon-theme               | Papirus icon theme |
 | picom                            | X compositor that may fix tearing issues |
 | polybar-git                      | Fast and easy-to-use status bar |
 | powerpill                        | Pacman wrapper for faster download |
@@ -37,12 +40,14 @@ Packages
 | tmux                             | Terminal multiplexer |
 | ttf-dejavu                       | Font family based on the Bitstream Vera Fonts with a wider range of characters |
 | ttf-font-awesome                 | Iconic font designed for Bootstrap |
+| ttf-joypixels                    | Emoji as a Service (formerly EmojiOne) |
 | ttf-material-design-icons        | Material Design icons by Google |
 | ttf-nerd-fonts-hack-complete-git | A typeface designed for source code. Patched with Nerd Fonts iconics |
 | unrar                            | RAR uncompression program |
 | vim                              | Vi Improved, a highly configurable, improved version of the vi text editor |
 | wmname                           | Utility to set the name of your window manager |
 | xclip                            | Command line interface to the X11 clipboard |
+| xcursor-breeze                   | Breeze cursor theme (KDE Plasma 5). This package is for usage in non-KDE Plasma desktops |
 | xdman                            | Powerful tool to increase download speed up-to 500% |
 | xdo                              | Utility for performing actions on windows in X |
 | zscroll-git                      | Horizontal text scroller for use with panels |
