@@ -1,5 +1,7 @@
 #!/bin/sh
 
+exit
+
 get_st_popup_node_id() {
     echo "$(xdo id -N st-popup)"
 }
@@ -9,8 +11,6 @@ create_st_popup() {
 
     sleep 0.200
 }
-
-exit
 
 if [ -z "$(get_st_popup_node_id)" ]; then
     create_st_popup
