@@ -1,29 +1,24 @@
-#!/bin/bash
+#!/bin/sh
+
+get_st_popup_node_id() {
+    echo "$(xdo id -N st-popup)"
+}
 
 create_st_popup() {
-    st='st -c st-popup -e'
+    st -c st-popup -e tmux new-session -A -s st-popup > /dev/null 2>&1 &
 
-	$st tmux new-session -A -s st-popup > /dev/null 2>&1 &
-
-	# $st tmux new -s st-popup \; split-window -v \; select-pane -t 1 \; \
-    #     split-window -h \; select-pane -t 1 \; resize-pane -D 24 \; attach > /dev/null 2>&1 &
+    sleep 0.200
 }
 
-main() {
-    node_id=$(xdo id -N st-popup)
+exit
 
-    if [[ -z $node_id ]]; then
-		create_st_popup
+if [ -z "$(get_st_popup_node_id)" ]; then
+    create_st_popup
+fi
 
-        sleep 0.200
+node_id="$(get_st_popup_node_id)"
 
-	    node_id=$(xdo id -N st-popup)
-    fi
-
-    if [[ $node_id ]]; then
-		bspc node $node_id -g hidden --focus
-        xdo move -x 0 -y 0 $node_id
-	fi
-}
-
-main
+if [ "$node_id" ]; then
+    bspc node $node_id -g hidden --focus
+    xdo move -x 0 -y 0 $node_id
+fi
