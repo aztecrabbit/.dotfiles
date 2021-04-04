@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 nitrogen --restore &
 xsetroot -cursor_name left_ptr &
@@ -8,4 +8,13 @@ xsetroot -cursor_name left_ptr &
     mpd ~/.config/mpd/mpd.conf
 } &
 
-exec bspwm
+{
+    killall -q -w xfce4-notifyd dunst
+    dunst
+} &
+
+if [ "$1" ]; then
+	exec "$1"
+else
+	exec xmonad
+fi
