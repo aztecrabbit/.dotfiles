@@ -17,12 +17,11 @@ Config { font = "xft:DejaVu Sans-8"
        , allDesktops = True
        , overrideRedirect = True
        , commands = [ Run Network "wlp0s29f7u2" ["-t","<rx>  <tx>","-S","True"] 10
-       				, Run Wireless "" ["-t","<quality>%  <ssid>  -"] 10
+                    , Run Wireless "" ["-t","<quality>%  <ssid>  -"] 10
                     , Run Cpu ["-t","<total>%","-L","3","-H","95","--high","red"] 10
                     , Run Memory ["-t","<usedratio>%"] 10
                     , Run Swap ["-t","<usedratio>%"] 10
                     , Run Volume "default" "Master" ["-t","<volume>%"] 10
-                    -- , Run Com "uname" ["-s","-r"] "" 36000
                     , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
                     , Run Date "%b %d %Y, %H:%M:%S" "date" 10
                     , Run StdinReader

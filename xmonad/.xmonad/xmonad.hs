@@ -8,11 +8,13 @@ import qualified Data.Map        as M
 import Control.Monad (liftM2)
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.Minimize
 import XMonad.Actions.Navigation2D
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Grid
+import XMonad.Layout.Minimize
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Spacing
 import XMonad.Util.EZConfig
@@ -95,6 +97,7 @@ myCustomKeys :: [(String, X ())]
 myCustomKeys =
     -- System
     [ ("<Pause> <Pause>", spawn "systemctl poweroff")
+    , ("M-S-<Pause>"    , spawn "systemctl reboot")
 
     -- Xmonad
     , ("M-S-r"          , spawn "notify-send -t 3000 'Restarting Xmonad ...'; xmonad --recompile; xmonad --restart")
@@ -103,6 +106,10 @@ myCustomKeys =
     -- Change workspace
     , ("M4-<Left>"      , prevWS)
     , ("M4-<Right>"     , nextWS)
+
+    -- Show Hide window
+    , ("M4-<Up>"        , withLastMinimized maximizeWindowAndFocus)
+    , ("M4-<Down>"      , withFocused minimizeWindow >> windows W.focusUp)
 
     -- Increment Deincrement the number of windows in the master area
     , ("M-,"            , sendMessage (IncMasterN 1))
@@ -156,6 +163,7 @@ myCustomKeys =
     , ("M-p +"          , spawn "mpc vol +5")
     , ("M-p S-,"        , spawn "mpc prev")
     , ("M-p S-."        , spawn "mpc next")
+    , ("M-S-p"          , spawn "mpc next")
     , ("M-p m"          , spawn "mpc clear && mpc load music && mpc random on && mpc play")
     , ("M-p r"          , spawn "mpc clear && mpc load radio && mpc random on && mpc play")
     , ("M-p S-m"        , spawn "~/.scripts/mpd-refresh-music.sh")
@@ -170,6 +178,7 @@ myCustomKeys =
     , ("M4-x"           , spawn "~/.scripts/launch-app.sh 'xdman' 'Xtream Download Manager'")
     , ("M4-y"           , spawn "~/.scripts/launch-app.sh 'gtk-youtube-viewer' 'YouTube Viewer'")
     ]
+
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -196,14 +205,14 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $ spacingRaw False (Border 1 224 1 664) True (Border 2 2 2 2) True
-  -- tiled ||| Mirror tiled ||| Full
-  $ onWorkspaces ["1"] (tiled ||| Grid)
-  $ onWorkspaces ["2","3","4","5"] (masterTiled)
-  $ onWorkspaces ["0"] (Grid)
-  $ tiled ||| masterTiled ||| Grid
-  where
-    masterTiled = Tall 1 (2/100) (65/100)
-    tiled = Tall 1 (2/100) (35/100)
+    $ onWorkspaces ["1"] (tiled ||| grid)
+    $ onWorkspaces ["2","3","4","5"] (masterTiled ||| grid)
+    $ onWorkspaces ["0"] (grid ||| tiled)
+    $ tiled ||| masterTiled ||| grid
+    where
+        masterTiled = minimize $ Tall 1 (2/100) (65/100)
+        tiled = minimize $ Tall 1 (2/100) (35/100)
+        grid = minimize $ Grid
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -231,8 +240,8 @@ myManageHook = insertPosition End Newer <+> composeAll
     , className =? "GParted"         --> doFloat
     , className =? "xdman-Main"      --> doFloat
     ]
-  where
-    viewShift = doF . liftM2 (.) W.greedyView W.shift
+    where
+        viewShift = doF . liftM2 (.) W.greedyView W.shift
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -251,6 +260,10 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
+
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+
 myLogHook xmproc = dynamicLogWithPP $ xmobarPP
     { ppOutput = hPutStrLn xmproc
     , ppCurrent = xmobarColor "#eaeaea" ""
@@ -262,8 +275,8 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
     , ppTitle = xmobarColor "#eaeaea" "" . shorten 64      -- Title of active window
     , ppSep = "  :  "
     , ppWsSep = "  "
-    , ppExtras  = []
-    , ppOrder  = \(ws:l:t:e) -> [ws,l] ++ e
+    , ppExtras  = [windowCount]
+    , ppOrder  = \(ws:l:t:e) -> [ws] ++ e ++ [l]
     }
 
 ------------------------------------------------------------------------
