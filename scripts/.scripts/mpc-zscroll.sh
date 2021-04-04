@@ -1,22 +1,23 @@
-#!/bin/bash
+#!/bin/sh
 
-length=32
-characters="$(printf ' %.0s' $(eval "echo {1.."$(($length))"}"))"
+len=32
+pad="$(printf ' %.0s' $(eval "echo {1.."$(($len))"}"))"
 
 while true; do
-    if ! mpc > /dev/null 2>&1; then
+    if ! mpc >/dev/null 2>&1; then
 		echo
         exit 1
 
 	elif mpc | grep -q playing; then
-        ( mpc current | xargs echo -n | zscroll -l $length -d 0.25 -p "$characters" -n true ) 2> /dev/null &
+        mpc current | tr -d '\n' | zscroll -n true -d 0.25 -l "$len" -p "$pad" 2>/dev/null &
 
 	else
-		current_song="$(mpc current)"
-		echo ${current_song:0:$length}
+		echo "$(mpc current | cut -c "1-$len")"
+
     fi
 
-    mpc idle > /dev/null 2>&1
+    mpc idle >/dev/null 2>&1
 
-	killall -q -w zscroll
+	killall -q zscroll
+
 done
