@@ -169,6 +169,12 @@ myCustomKeys =
     , ("M-p S-m"        , spawn "~/.scripts/mpd-refresh-music.sh")
     , ("M-p S-r"        , spawn "~/.scripts/mpd-refresh-radio.sh")
 
+    -- Screenshot
+    , ("<Print>"        , spawn "~/.scripts/screenshot.sh")
+    , ("S-<Print>"      , spawn "~/.scripts/screenshot.sh select")
+    , ("C-<Print>"      , spawn "~/.scripts/screenshot.sh freeze")
+    , ("C-S-<Print>"    , spawn "~/.scripts/screenshot.sh freeze-now")
+
     -- Launch app
     , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'falkon' 'Falkon'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
