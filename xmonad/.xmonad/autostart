@@ -1,0 +1,21 @@
+#!/bin/sh
+
+xdman -m >/dev/null &
+
+# {
+#     killall -q -w picom
+#     picom
+# } &
+
+{
+    killall -q -w xfce-polkit
+    /usr/lib/xfce-polkit/xfce-polkit
+} &
+
+# [ -z "$(xdo id -N st-popup)" ] && {
+#     ~/.scripts/st-popup.sh
+# } &
+
+# [ -z "$(xdo id -N st-256color -n st-256color)" ] && {
+#     ~/.scripts/st.sh
+# } &

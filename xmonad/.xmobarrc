@@ -1,0 +1,34 @@
+Config { font = "xft:DejaVu Sans-8"
+       , additionalFonts = []
+       , border = BottomB
+       , borderWidth = 2
+       , borderColor = "#1f1f1f"
+       , bgColor = "#101216"
+       , fgColor = "#eaeaea"
+       , alpha = 255
+       , position = Static { xpos = 0, ypos = 0, width = 1920, height = 24 }
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Network "wlp0s29f7u2" ["-t","<rx>  <tx>","-S","True"] 10
+       				, Run Wireless "" ["-t","<quality>%  <ssid>  -"] 10
+                    , Run Cpu ["-t","<total>%","-L","3","-H","95","--high","red"] 10
+                    , Run Memory ["-t","<usedratio>%"] 10
+                    , Run Swap ["-t","<usedratio>%"] 10
+                    , Run Volume "default" "Master" ["-t","<volume>%"] 10
+                    -- , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
+                    , Run Date "%b %d %Y, %H:%M:%S" "date" 10
+                    , Run StdinReader
+                    , Run MPD ["-t","<statei>  :  <volume>%  <lapsed>/<length>","--","-h","127.0.0.1","-p","6600","-P","P","-Z","p","-S","S"] 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp0s29f7u2%  %wi%  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
+       }
