@@ -1,7 +1,7 @@
           /\        aztecrabbit@home
          /  \       ----------------
         /\   \      OS: Arch Linux x86_64
-       /      \     WM: bspwm
+       /      \     WM: xmonad
       /   ,,   \    Shell: zsh
      /   |  |  -\   Terminal: st
     /_-''    ''-_\  
