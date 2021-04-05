@@ -7,6 +7,7 @@ import qualified Data.Map        as M
 
 import Control.Monad (liftM2)
 import Data.Char (toUpper)
+import Foreign.C.Types (CLong)
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
@@ -14,12 +15,14 @@ import XMonad.Actions.Navigation2D
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.Grid
 import XMonad.Layout.Minimize
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
@@ -102,10 +105,10 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm ]
         findTerm   = resource =? "scratchpad"
         manageTerm = customFloating $ W.RationalRect l t w h
             where
+                l = 0
+                t = 0
                 w = 1
                 h = 1
-                l = 1 - w
-                t = 1 - h
 
 
 -- Ignore NSP Workspace
@@ -175,12 +178,16 @@ myCustomKeys =
     , ("M4-<Down>"      , withFocused minimizeWindow >> windows W.focusUp)
 
     -- Increment Deincrement the number of windows in the master area
-    , ("M-,"            , sendMessage (IncMasterN 1))
-    , ("M-."            , sendMessage (IncMasterN (-1)))
+    , ("M-S-,"          , sendMessage (IncMasterN 1))
+    , ("M-S-."          , sendMessage (IncMasterN (-1)))
 
-    -- Shrink Expand the master area
+    -- Shrink Expand master
     , ("M-h"            , sendMessage Shrink)
     , ("M-l"            , sendMessage Expand)
+
+    -- Shrink Expand window
+    , ("M-,"            , sendMessage MirrorExpand)
+    , ("M-."            , sendMessage MirrorShrink)
 
     -- Push window back into tiling
     , ("M-t"            , withFocused $ windows . W.sink)
@@ -293,8 +300,8 @@ myLayout = avoidStruts $ fullscreenFull
     where
         ratio = 35/100
         ratioWide = 65/100
-        tall = renamed [Replace "Tall"] $ wrapperLayout $ Tall 1 (2/100) ratio
-        tallWide = renamed [Replace "Tall Wide"] $ wrapperLayout $ Tall 1 (2/100) ratioWide
+        tall = renamed [Replace "Tall"] $ wrapperLayout $ ResizableTall 1 (2/100) ratio []
+        tallWide = renamed [Replace "Tall Wide"] $ wrapperLayout $ ResizableTall 1 (2/100) ratioWide []
         grid = renamed [Replace "Grid"] $ wrapperLayout $ Grid
         full = renamed [Replace "Full"] $ noBorders $ minimize $ Full
         wrapperLayout a = spacingRaw False (Border 1 224 1 664) True (Border 2 2 2 2) True $ minimize $ a
@@ -315,6 +322,22 @@ myLayout = avoidStruts $ fullscreenFull
 -- 'className' and 'resource' are used below.
 --
 
+-- Helper to read a property
+getProp :: Atom -> Window -> X (Maybe [CLong])
+getProp a w = withDisplay $ \dpy -> io $ getWindowProperty32 dpy a w
+
+--
+checkDialog :: Query Bool
+checkDialog =
+    ask >>= \w -> liftX $ do
+        a <- getAtom "_NET_WM_WINDOW_TYPE"
+        dialog <- getAtom "_NET_WM_WINDOW_TYPE_DIALOG"
+        mbr <- getProp a w
+        case mbr of
+            Just [r] -> return $ elem (fromIntegral r) [dialog]
+            _ -> return False
+
+-- ManageHook
 myManageHook = insertPosition End Newer
     <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchPads
@@ -327,11 +350,19 @@ myManageHook = insertPosition End Newer
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)
     , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
     , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 5)
-    , className =? "GParted"            --> doFloat
-    , className =? "xdman-Main"         --> doFloat
+    , floats                            --> doCenterFloat
     ]
     where
         viewShift = doF . liftM2 (.) W.greedyView W.shift
+        floats = foldr1 (<||>)
+            [ checkDialog
+            , title     =? "." <&&> ( className =? "" <||> appName =? "." )
+            , flip fmap className $ flip elem
+                [ "GParted"
+                , "xdman-Main"
+                , "Xmessage"
+                ]
+            ]
 
 
 ---- Event handling
@@ -352,9 +383,11 @@ myEventHook = fullscreenEventHook
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
 
+--
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
+-- LogHook
 myLogHook xmproc = dynamicLogWithPP $ xmobarPP
     { ppOutput = hPutStrLn xmproc
     , ppSort = fmap (namedScratchpadFilterOutWorkspace.) (ppSort def)   -- Hide "NSP" from workspace list
