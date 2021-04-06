@@ -338,9 +338,9 @@ myTabTheme = def
 
 myLayout = avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
-    $ onWorkspaces ["1"] (tall ||| grid)
-    $ onWorkspaces ["2","3","4","5"] (wide ||| tabbed)
-    $ onWorkspaces ["0"] (grid ||| tall)
+    $ onWorkspaces [" 1 "] (tall ||| grid)
+    $ onWorkspaces [" 2 "," 3 "," 4 "," 5 "] (wide ||| tabbed)
+    $ onWorkspaces [" 0"] (grid ||| tall)
     $ tall ||| grid ||| wide ||| tabbed
     where
         ratio = 35/100
