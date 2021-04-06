@@ -7,6 +7,7 @@ import qualified Data.Map        as M
 
 import Control.Monad (liftM2)
 import Data.Char (toUpper)
+import Data.Maybe (fromJust)
 import Foreign.C.Types (CLong)
 
 import XMonad.Actions.CycleWS
@@ -69,7 +70,8 @@ myModMask = mod1Mask
 -- Workspaces
 --
 
-myWorkspaces = ["1","2","3","4","5","6","7","8","9","0"]
+myWorkspaces = [" 1 "," 2 "," 3 "," 4 "," 5 "," 6 "," 7 "," 8 "," 9 "," 0"]
+myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces ([1..9] ++ [0])
 
 
 -- Style
@@ -90,7 +92,7 @@ myFocusedBorderColor = "#353535"
 myTabActiveColor = myFocusedBorderColor
 myTabActiveTextColor = myFgColor
 myTabInactiveColor = myNormalBorderColor
-myTabInactiveTextColor = myFgColorUnfocused
+myTabInactiveTextColor = "#aaaaaa"
 
 
 -- XPConfig for Prompt
@@ -140,7 +142,7 @@ prevWS' :: X ()
 prevWS' = moveTo Prev (WSIs notNSP)
 
 
--- Key bindings. Add, modify or remove key bindings here.
+-- Key bindings
 --
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -189,6 +191,9 @@ myCustomKeys =
     , ("M4-<Left>"      , prevWS')
     , ("M4-<Right>"     , nextWS')
 
+    -- Toggle the status bar gap
+    , ("M-b"            , sendMessage ToggleStruts)
+
     -- Show Hide window
     , ("M4-<Up>"        , withLastMinimized maximizeWindowAndFocus)
     , ("M4-<Down>"      , withFocused minimizeWindow >> windows W.focusUp)
@@ -215,8 +220,8 @@ myCustomKeys =
     , ("M-S-<Return>"   , windows W.swapMaster)
 
     -- Move focus to the next previous window
+    , ("M-S-<Tab>"      , windows W.focusUp)
     , ("M-<Tab>"        , windows W.focusDown)
-    , ("M-S-<Tab>"      , windows W.focusUp  )
 
     -- Directional navigation of windows
     , ("M-<Right>"      , sendMessage $ Go R)
@@ -245,9 +250,6 @@ myCustomKeys =
 
     -- Resize viewed windows to the correct size
     -- , ("M-n"            , refresh)
-
-    -- Toggle the status bar gap
-    , ("M-b"            , sendMessage ToggleStruts)
 
     -- Launcher
     , ("M-<Space>"      , spawn "~/.scripts/dmenu_run.sh")
@@ -420,7 +422,7 @@ myManageHook = insertPosition End Newer
         viewShift = doF . liftM2 (.) W.greedyView W.shift
         floats = foldr1 (<||>)
             [ checkDialog
-            , title     =? "." <&&> ( className =? "" <||> appName =? "." )
+            , title =? "." <&&> ( className =? "" <||> appName =? "." )
             , flip fmap className $ flip elem
                 [ "GParted"
                 , "xdman-Main"
@@ -447,6 +449,10 @@ myEventHook = mempty
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
 
+-- Workspace actions
+wsActions ws = "<action=`xdotool key super+Left` button=4><action=`xdotool key super+Right` button=5><action=xdotool key super+"++show i++">"++ws++"</action></action></action>"
+    where i = fromJust $ M.lookup ws myWorkspaceIndices
+
 --
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -455,14 +461,14 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myLogHook xmproc = dynamicLogWithPP $ xmobarPP
     { ppOutput = hPutStrLn xmproc
     , ppSort = fmap (namedScratchpadFilterOutWorkspace.) (ppSort def)   -- Hide "NSP" from workspace list
-    , ppCurrent = xmobarColor myFgColor ""                              -- Focused
-    , ppVisible = xmobarColor myFgColorUnfocused ""                     -- Unfocused
-    , ppHidden = xmobarColor "#898989" ""                               -- What the fuck is this?
-    , ppHiddenNoWindows = xmobarColor myFgColorDisabled ""              -- No windows
-    , ppUrgent = xmobarColor "#C45500" "" . wrap "*" ""                 -- Urgent workspace
+    , ppCurrent = xmobarColor myFgColor "" . wsActions                  -- Focused
+    , ppVisible = xmobarColor myFgColorUnfocused "" . wsActions         -- Unfocused
+    , ppHidden = xmobarColor "#898989" "" . wsActions                   -- What the fuck is this?
+    , ppHiddenNoWindows = xmobarColor myFgColorDisabled "" . wsActions  -- No windows
+    , ppUrgent = xmobarColor "#C45500" "" . wrap "*" "" . wsActions     -- Urgent workspace
     , ppLayout = xmobarColor myFgColor ""
     , ppSep = "  :  "
-    , ppWsSep = "  "
+    , ppWsSep = ""
     , ppExtras  = [windowCount]
     , ppOrder  = \(ws:l:t:e) -> [ws] ++ e ++ [l]
     }
