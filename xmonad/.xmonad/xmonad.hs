@@ -33,14 +33,13 @@ import XMonad.Layout.SubLayouts
 import XMonad.Layout.Tabbed
 import XMonad.Layout.WindowNavigation
 
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+
 import XMonad.Util.EZConfig
 import XMonad.Util.Font
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
-
--- Prompt
-import XMonad.Prompt
-import XMonad.Prompt.Shell
 
 
 -- The preferred terminal program, which is used in a binding below and by
