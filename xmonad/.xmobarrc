@@ -18,7 +18,7 @@ Config
     , allDesktops = True
     , overrideRedirect = True
     , commands =
-        [ Run MPD ["-t","<statei>  :  <volume>%  <lapsed>/<length>","--","-h","127.0.0.1","-p","6600","-P","P","-Z","p","-S","S"] 10
+        [ Run MPD ["-t","<action=`mpc toggle` button=1><action=`mpc stop` button=3><statei></action></action>  :  <action=`mpc vol +5` button=4><action=`mpc vol -5` button=5><volume>%</action></action>  <lapsed>/<length>","--","-h","127.0.0.1","-p","6600","-P","P","-Z","p","-S","S"] 10
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
         , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2"] 10
         , Run Wireless "" ["-t","<quality>%  <ssid>  -  "] 10
@@ -26,7 +26,7 @@ Config
         , Run Cpu ["-t","<total>%","-L","3","-H","95","--high","red"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
-        , Run Volume "default" "Master" ["-t","<volume>%"] 10
+        , Run Volume "default" "Master" ["-t","<action=`pactl set-sink-mute 0 toggle` button=1><action=`amixer set Master 1%+` button=4><action=`amixer set Master 1%-` button=5><status><volume>%</action></action></action>","--","--on","","--off","M  "] 10
         , Run Date "%b %d %Y, %H:%M:%S" "date" 10
         , Run UnsafeStdinReader
         ]
