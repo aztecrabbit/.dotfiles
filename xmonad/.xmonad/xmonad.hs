@@ -11,20 +11,29 @@ import Foreign.C.Types (CLong)
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.Minimize
-import XMonad.Actions.Navigation2D
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
-import XMonad.Layout.Fullscreen
+
+import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.Grid
 import XMonad.Layout.Minimize
+import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.Tabbed
+import XMonad.Layout.WindowNavigation
+
 import XMonad.Util.EZConfig
+import XMonad.Util.Font
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
 
@@ -68,13 +77,20 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9","0"]
 
 myFont = "xft:DejaVu Sans-8"
 myBgColor = "#101216"
+myBgColorFocused = "#3f3f3f"
 myFgColor = "#eaeaea"
 myFgColorUnfocused = "#dadada"
 myFgColorDisabled = "#444444"
 
 myBorderWidth = 2
-myNormalBorderColor  = "#191919"
+myNormalBorderColor = "#191919"
+myPreselectBorderColor = myNormalBorderColor
 myFocusedBorderColor = "#353535"
+
+myTabActiveColor = myFocusedBorderColor
+myTabActiveTextColor = myFgColor
+myTabInactiveColor = myNormalBorderColor
+myTabInactiveTextColor = myFgColorUnfocused
 
 
 -- XPConfig for Prompt
@@ -191,6 +207,7 @@ myCustomKeys =
 
     -- Push window back into tiling
     , ("M-t"            , withFocused $ windows . W.sink)
+    , ("M-f"            , sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
 
     -- Move and Swap focus to the master window
     , ("M-m"            , windows W.focusMaster)
@@ -202,16 +219,26 @@ myCustomKeys =
     , ("M-S-<Tab>"      , windows W.focusUp  )
 
     -- Directional navigation of windows
-    , ("M-<Right>"      , windowGo R False)
-    , ("M-<Left>"       , windowGo L False)
-    , ("M-<Up>"         , windowGo U False)
-    , ("M-<Down>"       , windowGo D False)
+    , ("M-<Right>"      , sendMessage $ Go R)
+    , ("M-<Left>"       , sendMessage $ Go L)
+    , ("M-<Up>"         , sendMessage $ Go U)
+    , ("M-<Down>"       , sendMessage $ Go D)
 
     -- Swap adjacent windows
-    , ("M-S-<Right>"    , windowSwap R False)
-    , ("M-S-<Left>"     , windowSwap L False)
-    , ("M-S-<Up>"       , windowSwap U False)
-    , ("M-S-<Down>"     , windowSwap D False)
+    , ("M-S-<Right>"    , sendMessage $ Swap R)
+    , ("M-S-<Left>"     , sendMessage $ Swap L)
+    , ("M-S-<Up>"       , sendMessage $ Swap U)
+    , ("M-S-<Down>"     , sendMessage $ Swap D)
+
+    -- SubLayout
+    , ("M-M4-S-<Left>"  , sendMessage $ pullGroup L)
+    , ("M-M4-S-<Right>" , sendMessage $ pullGroup R)
+    , ("M-M4-S-<Up>"    , sendMessage $ pullGroup U)
+    , ("M-M4-S-<Down>"  , sendMessage $ pullGroup D)
+    , ("M-M4-<Left>"    , onGroup W.focusUp')
+    , ("M-M4-<Right>"   , onGroup W.focusDown')
+    , ("M-M4-<Space>"   , withFocused (sendMessage . UnMerge))
+    , ("M-M4-S-<Space>" , withFocused (sendMessage . UnMergeAll))
 
     -- Close focused window
     , ("M-q"            , kill)
@@ -292,19 +319,57 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 
-myLayout = avoidStruts $ fullscreenFull
+-- setting colors for tabs layout and tabs sublayout.
+myTabTheme = def
+    { fontName              = myFont
+    , activeColor           = myTabActiveColor
+    , activeBorderColor     = myTabActiveColor
+    , activeTextColor       = myTabActiveTextColor
+    , inactiveColor         = myTabInactiveColor
+    , inactiveBorderColor   = myTabInactiveColor
+    , inactiveTextColor     = myTabInactiveTextColor
+    , urgentColor           = "#ffffff"
+    , urgentBorderColor     = "#ffffff"
+    , urgentTextColor       = "#000000"
+    , decoHeight            = 14
+    }
+
+myLayout = avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
+    $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces ["1"] (tall ||| grid)
-    $ onWorkspaces ["2","3","4","5"] (tallWide ||| full)
-    $ onWorkspaces ["9","0"] (grid ||| tall)
-    $ tall ||| tallWide ||| grid
+    $ onWorkspaces ["2","3","4","5"] (wide ||| tabbed)
+    $ onWorkspaces ["0"] (grid ||| tall)
+    $ tall ||| grid ||| wide ||| tabbed
     where
         ratio = 35/100
         ratioWide = 65/100
-        tall = renamed [Replace "Tall"] $ wrapperLayout $ ResizableTall 1 (2/100) ratio []
-        tallWide = renamed [Replace "Tall Wide"] $ wrapperLayout $ ResizableTall 1 (2/100) ratioWide []
-        grid = renamed [Replace "Grid"] $ wrapperLayout $ Grid
-        full = renamed [Replace "Full"] $ noBorders $ minimize $ Full
-        wrapperLayout a = spacingRaw False (Border 1 224 1 664) True (Border 2 2 2 2) True $ minimize $ a
+
+        tall =
+            renamed [Replace "Tall"]
+            $ wrapper
+            $ addTabs shrinkText myTabTheme
+            $ subLayout [] Simplest
+            $ ResizableTall 1 (2/100) ratio []
+        wide =
+            renamed [Replace "Wide"]
+            $ wrapper
+            $ addTabs shrinkText myTabTheme
+            $ subLayout [] Simplest
+            $ ResizableTall 1 (2/100) ratioWide []
+        grid =
+            renamed [Replace "Grid"]
+            $ wrapper
+            $ addTabs shrinkText myTabTheme
+            $ subLayout [] Simplest
+            $ Grid
+        tabbed =
+            renamed [Replace "Tabbed"]
+            $ wrapperTabbed
+            $ noBorders
+            $ tabbedAlways shrinkText myTabTheme
+
+        wrapper a = spacingRaw False (Border 2 224 2 664) True (Border 2 2 2 2) True $ minimize $ a
+        wrapperTabbed a = spacingRaw False (Border 4 224 4 664) True (Border 0 0 0 0) True $ minimize $ a
 
 
 ---- Window rules:
@@ -339,7 +404,6 @@ checkDialog =
 
 -- ManageHook
 myManageHook = insertPosition End Newer
-    <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchPads
     <+> composeAll
     [ className =? "Code"               --> viewShift (myWorkspaces !! 1)
@@ -374,7 +438,7 @@ myManageHook = insertPosition End Newer
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
 
-myEventHook = fullscreenEventHook
+myEventHook = mempty
 
 
 ---- Status bars and logging
@@ -420,7 +484,7 @@ myStartupHook = spawn "~/.xmonad/autostart"
 
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ fullscreenSupport $ withNavigation2DConfig def $ docks def {
+    xmonad $ docks def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
