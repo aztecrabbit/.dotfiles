@@ -18,7 +18,7 @@ Config
     , allDesktops = True
     , overrideRedirect = True
     , commands =
-        [ Run MPD ["-t","<action=`mpc toggle` button=1><action=`mpc stop` button=3><statei></action></action>  :  <action=`mpc vol +5` button=4><action=`mpc vol -5` button=5><volume>%</action></action>  <lapsed>/<length>","--","-h","127.0.0.1","-p","6600","-P","P","-Z","p","-S","S"] 10
+        [ Run MPD ["-t","<action=`mpc toggle` button=1><action=`mpc stop` button=3><statei></action></action>  :  <action=`mpc vol +5` button=4><action=`mpc vol -5` button=5><volume>%</action></action>  <action=`mpc next` button=1><action=`mpc prev` button=3><lapsed>/<length></action></action>","--","-h","127.0.0.1","-p","6600","-P","P","-Z","p","-S","S"] 10
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
         , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2"] 10
         , Run Wireless "" ["-t","<quality>%  <ssid>  -  "] 10
