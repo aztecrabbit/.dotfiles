@@ -3,7 +3,7 @@
         /\   \      OS: Arch Linux x86_64
        /      \     WM: xmonad
       /   ,,   \    Shell: zsh
-     /   |  |  -\   Terminal: st
+     /   |  |  -\   Terminal: alacritty
     /_-''    ''-_\  
 
 
