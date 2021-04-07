@@ -17,6 +17,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
+import XMonad.Hooks.SetWMName
 
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.Fullscreen
@@ -41,6 +42,7 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Font
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
+import XMonad.Util.SpawnOnce
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -485,7 +487,9 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
 --
 -- By default, do nothing.
 
-myStartupHook = spawn "~/.xmonad/autostart"
+myStartupHook = do
+    spawnOnce "~/.xmonad/autostart"
+    setWMName "LG3D"
 
 
 -- Main
