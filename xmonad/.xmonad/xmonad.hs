@@ -19,6 +19,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
+import XMonad.Layout.Fullscreen
 import XMonad.Layout.Grid
 import XMonad.Layout.Minimize
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
@@ -338,7 +339,7 @@ myTabTheme = def
     , decoHeight            = 14
     }
 
-myLayout = avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
+myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces [" 1 "] (tall ||| grid)
     $ onWorkspaces [" 2 "," 3 "," 4 "," 5 "] (wide ||| tabbed)
@@ -407,6 +408,7 @@ checkDialog =
 
 -- ManageHook
 myManageHook = insertPosition End Newer
+    <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchPads
     <+> composeAll
     [ className =? "Code"               --> viewShift (myWorkspaces !! 1)
@@ -441,7 +443,7 @@ myManageHook = insertPosition End Newer
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
 
-myEventHook = mempty
+myEventHook = fullscreenEventHook
 
 
 ---- Status bars and logging
@@ -491,7 +493,7 @@ myStartupHook = spawn "~/.xmonad/autostart"
 
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ docks def {
+    xmonad $ fullscreenSupport $ docks def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
