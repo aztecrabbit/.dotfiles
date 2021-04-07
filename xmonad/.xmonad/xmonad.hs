@@ -46,7 +46,7 @@ import XMonad.Util.Run
 -- certain contrib modules.
 --
 myTerminal :: String
-myTerminal = "~/.scripts/st.sh"
+myTerminal = "LIBGL_ALWAYS_SOFTWARE=1 alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -116,11 +116,12 @@ myXPConfig = def
 --
 
 myScratchPads :: [NamedScratchpad]
-myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm ]
+myScratchPads =
+    [ NS "terminal" sTerm fTerm mTerm ]
     where
-        spawnTerm  = "st -n scratchpad -e tmux new-session -A -s scratchpad"
-        findTerm   = resource =? "scratchpad"
-        manageTerm = customFloating $ W.RationalRect l t w h
+        sTerm = myTerminal ++ " --class scratchpad -e tmux new-session -A -s scratchpad"
+        fTerm = resource =? "scratchpad"
+        mTerm = customFloating $ W.RationalRect l t w h
             where
                 l = 0
                 t = 0
@@ -147,10 +148,6 @@ prevWS' = moveTo Prev (WSIs notNSP)
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
-
-    -- Super Key
-    , ((mod4Mask,               xK_Tab ), sendMessage NextLayout)
-    , ((mod4Mask .|. shiftMask, xK_Tab ), setLayout $ XMonad.layoutHook conf)
     ]
     ++
 
@@ -173,11 +170,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --}
 
 
--- Custom key bindings
+-- Key bindings P
 --
 
-myCustomKeys :: [(String, X ())]
-myCustomKeys =
+myKeysP :: [(String, X ())]
+myKeysP =
     -- System
     [ ("<Pause> <Pause>", spawn "systemctl poweroff")
     , ("M-S-<Pause>"    , spawn "systemctl reboot")
@@ -189,6 +186,12 @@ myCustomKeys =
     -- Change workspace
     , ("M4-<Left>"      , prevWS')
     , ("M4-<Right>"     , nextWS')
+
+    -- Toggle workspace
+    , ("M4-<Tab>"       , toggleWS' ["NSP"])
+
+    -- Change layout
+    , ("M4-S-<Tab>"     , sendMessage NextLayout)
 
     -- Toggle the status bar gap
     , ("M-b"            , sendMessage ToggleStruts)
@@ -279,7 +282,7 @@ myCustomKeys =
     , ("C-S-<Print>"    , spawn "~/.scripts/screenshot.sh freeze-now")
 
     -- Prompt
-    , ("M4-<Space>"     , prompt ("st" ++ " -e") myXPConfig)
+    , ("M4-<Space>"     , prompt (myTerminal ++ " -e") myXPConfig)
 
     -- ScratchPads
     , ("M4-<Return>"    , namedScratchpadAction myScratchPads "terminal")
@@ -347,26 +350,25 @@ myLayout = avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
 
         tall =
             renamed [Replace "Tall"]
-            $ wrapper
             $ addTabs shrinkText myTabTheme
+            $ wrapper
             $ subLayout [] Simplest
             $ ResizableTall 1 (2/100) ratio []
         wide =
             renamed [Replace "Wide"]
-            $ wrapper
             $ addTabs shrinkText myTabTheme
+            $ wrapper
             $ subLayout [] Simplest
             $ ResizableTall 1 (2/100) ratioWide []
         grid =
             renamed [Replace "Grid"]
-            $ wrapper
             $ addTabs shrinkText myTabTheme
+            $ wrapper
             $ subLayout [] Simplest
             $ Grid
         tabbed =
             renamed [Replace "Tabbed"]
             $ wrapperTabbed
-            $ noBorders
             $ tabbedAlways shrinkText myTabTheme
 
         wrapper a = spacingRaw False (Border 2 224 2 664) True (Border 2 2 2 2) True $ minimize $ a
@@ -510,4 +512,4 @@ main = do
         handleEventHook    = myEventHook,
         logHook            = myLogHook xmproc,
         startupHook        = myStartupHook
-    } `additionalKeysP` myCustomKeys
+    } `additionalKeysP` myKeysP
