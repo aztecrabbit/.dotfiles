@@ -23,10 +23,10 @@ Config
         , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2"] 10
         , Run Wireless "" ["-t","<quality>%  <ssid>  -  "] 10
         , Run DiskIO [("sda", "<read>B  <write>B  -  ")] [] 10
-        , Run Cpu ["-t","<total>%","-L","3","-H","95","--high","red"] 10
+        , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
-        , Run Volume "default" "Master" ["-t","<action=`pactl set-sink-mute 0 toggle` button=1><action=`amixer set Master 1%+` button=4><action=`amixer set Master 1%-` button=5><status><volume>%</action></action></action>","--","--on","","--off","M  "] 10
+        , Run Volume "default" "Master" ["-t","<action=`pactl set-sink-mute @DEFAULT_SINK@ toggle` button=1><action=`amixer set Master 1%+` button=4><action=`amixer set Master 1%-` button=5><status><volume>%</action></action></action>","--","--on","","--off","M  "] 10
         , Run Date "%b %d %Y, %H:%M:%S" "date" 10
         , Run UnsafeStdinReader
         ]
