@@ -488,7 +488,8 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
 -- By default, do nothing.
 
 myStartupHook = do
-    spawnOnce "~/.xmonad/autostart"
+    spawn "~/.xmonad/autostart"
+    spawnOnce myTerminal
     setWMName "LG3D"
 
 
