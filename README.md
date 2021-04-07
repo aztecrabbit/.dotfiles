@@ -39,9 +39,7 @@ Packages
 | sxhkd-git                        | Simple X hotkey daemon |
 | tmux                             | Terminal multiplexer |
 | ttf-dejavu                       | Font family based on the Bitstream Vera Fonts with a wider range of characters |
-| ttf-font-awesome                 | Iconic font designed for Bootstrap |
 | ttf-joypixels                    | Emoji as a Service (formerly EmojiOne) |
-| ttf-material-design-icons        | Material Design icons by Google |
 | ttf-nerd-fonts-hack-complete-git | A typeface designed for source code. Patched with Nerd Fonts iconics |
 | unrar                            | RAR uncompression program |
 | vim                              | Vi Improved, a highly configurable, improved version of the vi text editor |
