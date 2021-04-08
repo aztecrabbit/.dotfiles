@@ -40,7 +40,6 @@ Packages
 | tmux                             | Terminal multiplexer |
 | ttf-dejavu                       | Font family based on the Bitstream Vera Fonts with a wider range of characters |
 | ttf-joypixels                    | Emoji as a Service (formerly EmojiOne) |
-| ttf-nerd-fonts-hack-complete-git | A typeface designed for source code. Patched with Nerd Fonts iconics |
 | unrar                            | RAR uncompression program |
 | vim                              | Vi Improved, a highly configurable, improved version of the vi text editor |
 | wmname                           | Utility to set the name of your window manager |
