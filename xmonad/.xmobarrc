@@ -18,7 +18,15 @@ Config
     , allDesktops = True
     , overrideRedirect = True
     , commands =
-        [ Run MPD ["-t","<action=`mpc toggle` button=1><action=`mpc stop` button=3><statei></action></action>  :  <action=`mpc vol +5` button=4><action=`mpc vol -5` button=5><volume>%</action></action>  <action=`mpc next` button=1><action=`mpc prev` button=3><lapsed>/<length></action></action>","--","-h","127.0.0.1","-p","6600","-P","P","-Z","p","-S","S"] 10
+        [ Run MPD
+            [ "-t", "<action=`mpc toggle` button=1><action=`mpc stop` button=3><action=`mpc clear && mpc load music && mpc random on && mpc play` button=4><action=`mpc clear && mpc load radio && mpc random on && mpc play` button=5><statei></action></action></action></action>  :  <action=`mpc vol +5` button=4><action=`mpc vol -5` button=5><volume>%</action></action>  <action=`mpc next` button=1><action=`mpc prev` button=3><lapsed>/<length></action></action>"
+            , "--"
+            , "-h", "127.0.0.1"
+            , "-p", "6600"
+            , "-P", "P"
+            , "-Z", "p"
+            , "-S", "S"
+            ] 10
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
         , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2"] 10
         , Run Wireless "" ["-t","<quality>%  <ssid>  -  "] 10
@@ -26,11 +34,17 @@ Config
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
-        , Run Volume "default" "Master" ["-t","<action=`pactl set-sink-mute @DEFAULT_SINK@ toggle` button=1><action=`amixer set Master 1%+` button=4><action=`amixer set Master 1%-` button=5><status><volume>%</action></action></action>","--","--on","","--off","M  "] 10
+        , Run Volume "default" "Master"
+            [ "-t", "<action=`pactl set-sink-mute @DEFAULT_SINK@ toggle` button=1><action=`amixer set Master 1%+` button=4><action=`amixer set Master 1%-` button=5><status><volume>%</action></action></action>"
+            , "--"
+            , "-O", ""
+            , "-o", "M  "
+            ] 10
+        , Run CommandReader "~/.scripts/weather.sh" "weather"
         , Run Date "%b %d %Y, %H:%M:%S" "date" 10
         , Run UnsafeStdinReader
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %dynnetwork%  %wi%%diskio%%cpu%  %memory%  %swap%  %default:Master%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %dynnetwork%  %wi%%diskio%%cpu%  %memory%  %swap%  %default:Master%  %weather%  %date%  "
     }
