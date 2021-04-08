@@ -257,7 +257,7 @@ myKeysP =
     -- , ("M-n"            , refresh)
 
     -- Launcher
-    , ("M-<Space>"      , spawn "~/.scripts/dmenu_run.sh")
+    , ("M-<Space>"      , spawn "~/.scripts/dmenu.sh")
     , ("M-S-<Space>"    , spawn "rofi -show drun")
 
     -- Audio
