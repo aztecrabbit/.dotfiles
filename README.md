@@ -48,6 +48,9 @@ Packages
 | xcursor-breeze                   | Breeze cursor theme (KDE Plasma 5). This package is for usage in non-KDE Plasma desktops |
 | xdman                            | Powerful tool to increase download speed up-to 500% |
 | xdo                              | Utility for performing actions on windows in X |
+| xmobar                           | Minimalistic Text Based Status Bar |
+| xmonad                           | Lightweight X11 tiled window manager written in Haskell |
+| xmonad-contrib                   | Add-ons for xmonad |
 | zscroll-git                      | Horizontal text scroller for use with panels |
 | zsh                              | Very advanced and programmable command interpreter (shell) for UNIX |
 
