@@ -267,6 +267,7 @@ myKeysP =
     -- MPC MPD
     , ("M-p p"          , spawn "mpc toggle")
     , ("M-p s"          , spawn "mpc stop")
+    , ("M-p S-s"        , spawn "~/.scripts/mpd-mpc-save-song.sh")
     , ("M-p -"          , spawn "mpc vol -5")
     , ("M-p ="          , spawn "mpc vol +5")
     , ("M-p +"          , spawn "mpc vol +5")
