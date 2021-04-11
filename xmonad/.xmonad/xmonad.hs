@@ -292,7 +292,8 @@ myKeysP =
     , ("M4-<Return>"    , namedScratchpadAction myScratchPads "terminal")
 
     -- Launch app
-    , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'falkon' 'Falkon'")
+    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'google-chrome-stable' 'Google Chrome'")
+    , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'tor-browser' 'Tor Browser'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
     , ("M4-f"           , spawn "~/.scripts/launch-app.sh 'thunar' 'Thunar'")
     , ("M4-s"           , spawn "~/.scripts/launch-app.sh 'subl' 'Sublime Text'")
@@ -306,9 +307,9 @@ myKeysP =
 --
 
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((mod4Mask, button1), (\w -> focus w >> mouseMoveWindow w))
+    [ ((mod4Mask, button1), (\w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster))
     , ((mod4Mask, button2), (\w -> focus w >> windows W.shiftMaster))
-    , ((mod4Mask, button3), (\w -> focus w >> mouseResizeWindow w))
+    , ((mod4Mask, button3), (\w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster))
 
     -- Change workspace
     , ((mod4Mask, button4), (\_ -> prevWS'))
@@ -375,8 +376,9 @@ myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
             $ wrapperTabbed
             $ tabbedAlways shrinkText myTabTheme
 
-        wrapper a = spacingRaw False (Border 2 224 2 664) True (Border 2 2 2 2) True $ minimize $ a
-        wrapperTabbed a = spacingRaw False (Border 4 224 4 664) True (Border 0 0 0 0) True $ minimize $ a
+        spacing a b = spacingRaw False (Border a 224 a 664) True (Border b b b b) True
+        wrapper a = spacing 2 2 $ minimize $ a
+        wrapperTabbed a = spacing 4 0 $ minimize $ a
 
 
 ---- Window rules:
@@ -410,13 +412,15 @@ checkDialog =
             _ -> return False
 
 -- ManageHook
-myManageHook = insertPosition End Newer
+myManageHook = (floats --> doF W.swapUp)
+    <+> insertPosition End Newer
     <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchPads
     <+> composeAll
     [ className =? "Code"               --> viewShift (myWorkspaces !! 1)
     , className =? "Subl"               --> viewShift (myWorkspaces !! 1)
-    , className =? "Chromium"           --> viewShift (myWorkspaces !! 2)
+    , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
+    , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
     , className =? "Falkon"             --> viewShift (myWorkspaces !! 2)
     , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)

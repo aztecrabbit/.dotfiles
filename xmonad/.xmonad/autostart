@@ -11,3 +11,8 @@ xdman -m >/dev/null &
     killall -q -w xfce-polkit
     /usr/lib/xfce-polkit/xfce-polkit
 } &
+
+{
+	killall -q -w trayer
+	trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216
+} &
