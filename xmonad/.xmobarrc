@@ -40,11 +40,10 @@ Config
             , "-O", ""
             , "-o", "M  "
             ] 10
-        , Run CommandReader "~/.scripts/weather.sh" "weather"
         , Run Date "%b %d %Y, %H:%M:%S" "date" 10
         , Run UnsafeStdinReader
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %dynnetwork%  %wi%%diskio%%cpu%  %memory%  %swap%  %default:Master%  %weather%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %dynnetwork%  %wi%%diskio%%cpu%  %memory%  %swap%  %default:Master%  %date%  "
     }
