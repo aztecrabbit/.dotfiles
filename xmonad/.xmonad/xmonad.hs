@@ -376,7 +376,7 @@ myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
             $ wrapperTabbed
             $ tabbedAlways shrinkText myTabTheme
 
-        spacing a b = spacingRaw False (Border a 224 a 664) True (Border b b b b) True
+        spacing a b = spacingRaw False (Border a 232 a 664) True (Border b b b b) True
         wrapper a = spacing 2 2 $ minimize $ a
         wrapperTabbed a = spacing 4 0 $ minimize $ a
 
@@ -423,6 +423,7 @@ myManageHook = (floats --> doF W.swapUp)
     , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
     , className =? "Falkon"             --> viewShift (myWorkspaces !! 2)
     , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
+    , className =? "Gtk-youtube-viewer" --> viewShift (myWorkspaces !! 3)
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)
     , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
     , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 5)
