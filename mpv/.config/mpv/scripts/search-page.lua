@@ -296,7 +296,7 @@ function KEYBINDS:search(keyword, flags)
 
             --add comments to entry
             if keybind.comment ~= nil then
-                comment = return_spaces(key:len()+section:len()+cmd:len(),60) .. "#" .. keybind.comment
+                comment = return_spaces(key:len()+section:len()+cmd:len(),60) .. "# " .. keybind.comment
             end
 
             key = self.ass_escape(key)

@@ -7,7 +7,7 @@ local scroll_list = {
     cursor_style = [[{\c&00ccff&}]],
     selected_style = [[{\c&Hfce788&}]],
 
-    cursor = [[➤\h]],
+    cursor = [[➤\h\h\h]],
     indent = [[\h\h\h\h]],
 
     num_entries = 16,
