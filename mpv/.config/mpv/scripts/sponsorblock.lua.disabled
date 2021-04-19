@@ -14,7 +14,7 @@ local options = {
     categories = "sponsor,intro,outro,interaction,selfpromo",
 
     -- Categories to skip automatically
-    skip_categories = "sponsor",
+    skip_categories = "sponsor,intro,outro,interaction,selfpromo",
 
     -- If true, sponsored segments will only be skipped once
     skip_once = true,
@@ -37,7 +37,7 @@ local options = {
     display_name = "",
 
     -- Tell the server when a skip happens
-    report_views = true,
+    report_views = false,
 
     -- Auto upvote skipped sponsors
     auto_upvote = false,
