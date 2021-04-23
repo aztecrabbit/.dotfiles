@@ -296,6 +296,7 @@ myKeysP =
     , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'tor-browser' 'Tor Browser'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
     , ("M4-f"           , spawn "~/.scripts/launch-app.sh 'thunar' 'Thunar'")
+    , ("M4-k"           , spawn "~/.scripts/launch-app.sh 'kodi' 'Kodi'")
     , ("M4-s"           , spawn "~/.scripts/launch-app.sh 'subl' 'Sublime Text'")
     , ("M4-t"           , spawn "~/.scripts/launch-app.sh 'telegram-desktop' 'Telegram'")
     , ("M4-x"           , spawn "~/.scripts/launch-app.sh 'xdman' 'Xtream Download Manager'")
@@ -426,7 +427,8 @@ myManageHook = (floats --> doF W.swapUp)
     , className =? "Gtk-youtube-viewer" --> viewShift (myWorkspaces !! 3)
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)
     , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
-    , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 5)
+    , className =? "Kodi"               --> viewShift (myWorkspaces !! 5)
+    , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
     , floats                            --> doCenterFloat
     ]
     where
@@ -436,6 +438,7 @@ myManageHook = (floats --> doF W.swapUp)
             , title =? "." <&&> ( className =? "" <||> appName =? "." )
             , flip fmap className $ flip elem
                 [ "GParted"
+                , "JDownloader"
                 , "xdman-Main"
                 , "Xmessage"
                 ]
@@ -477,7 +480,7 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
     , ppHidden = xmobarColor "#898989" "" . wsActions                   -- What the fuck is this?
     , ppHiddenNoWindows = xmobarColor myFgColorDisabled "" . wsActions  -- No windows
     , ppUrgent = xmobarColor "#C45500" "" . wrap "*" "" . wsActions     -- Urgent workspace
-    , ppLayout = xmobarColor myFgColor ""
+    , ppLayout = xmobarColor myFgColor "" . wrap "<action=`xdotool key super+Shift+Tab` button=1>" "</action>"
     , ppSep = "  :  "
     , ppWsSep = ""
     , ppExtras  = [windowCount]
