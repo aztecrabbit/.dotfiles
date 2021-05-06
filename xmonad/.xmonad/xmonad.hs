@@ -183,7 +183,7 @@ myKeysP =
     , ("M-S-<Pause>"    , spawn "systemctl reboot")
 
     -- Xmonad
-    , ("M-S-r"          , spawn "notify-send -t 3000 'Restarting Xmonad ...'; xmonad --recompile; xmonad --restart")
+    , ("M-S-r"          , spawn "notify-send -t 3000 'Restarting XMonad ...'; xmonad --recompile; xmonad --restart")
     , ("M-S-<Escape>"   , io (exitWith ExitSuccess))
 
     -- Change workspace
@@ -292,10 +292,11 @@ myKeysP =
     , ("M4-<Return>"    , namedScratchpadAction myScratchPads "terminal")
 
     -- Launch app
-    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'google-chrome-stable' 'Google Chrome'")
-    , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'tor-browser' 'Tor Browser'")
+    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'brave' 'Brave'")
+    , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'google-chrome-stable' 'Google Chrome'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
     , ("M4-f"           , spawn "~/.scripts/launch-app.sh 'thunar' 'Thunar'")
+    , ("M4-j"           , spawn "~/.scripts/launch-app.sh 'jdownloader' 'JDownloader'")
     , ("M4-k"           , spawn "~/.scripts/launch-app.sh 'kodi' 'Kodi'")
     , ("M4-s"           , spawn "~/.scripts/launch-app.sh 'subl' 'Sublime Text'")
     , ("M4-t"           , spawn "~/.scripts/launch-app.sh 'telegram-desktop' 'Telegram'")
@@ -347,7 +348,8 @@ myTabTheme = def
 myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces [" 1 "] (tall ||| grid)
-    $ onWorkspaces [" 2 "," 3 "," 4 "," 5 "] (wide ||| tabbed)
+    $ onWorkspaces [" 2 "," 3 "," 4 "] (wide ||| tabbed)
+    $ onWorkspaces [" 5 "] (tall ||| tabbed)
     $ onWorkspaces [" 0"] (grid ||| tall)
     $ tall ||| grid ||| wide ||| tabbed
     where
@@ -420,6 +422,7 @@ myManageHook = (floats --> doF W.swapUp)
     <+> composeAll
     [ className =? "Code"               --> viewShift (myWorkspaces !! 1)
     , className =? "Subl"               --> viewShift (myWorkspaces !! 1)
+    , className =? "Brave-browser"      --> viewShift (myWorkspaces !! 2)
     , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
     , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
     , className =? "Falkon"             --> viewShift (myWorkspaces !! 2)
