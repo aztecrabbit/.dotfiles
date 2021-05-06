@@ -33,6 +33,7 @@ radios["EZ Hits South Florida"]="http://us4.internet-radio.com:8197/listen.pls"
 radios["Merge 104.8"]="http://uk7.internet-radio.com:8040/listen.pls"
 radios["Venice Classic Radio Italia"]="http://174.36.206.197:8000/listen.pls"
 
+radios["Delta FM"]="https://www.internet-radio.com/servers/tools/playlistgenerator/?u=http://live.deltafm.net:9002/deltafm&t=.pls"
 
 #
 #
