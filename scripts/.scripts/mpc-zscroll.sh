@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 len=32
 pad="$(printf "%${len}s" ' ')"
