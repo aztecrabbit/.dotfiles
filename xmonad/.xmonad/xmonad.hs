@@ -430,6 +430,7 @@ myManageHook = (floats --> doF W.swapUp)
     , className =? "Gtk-youtube-viewer" --> viewShift (myWorkspaces !! 3)
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)
     , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
+    , className =? "Atril"              --> viewShift (myWorkspaces !! 4)
     , className =? "Kodi"               --> viewShift (myWorkspaces !! 5)
     , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
     , floats                            --> doCenterFloat
