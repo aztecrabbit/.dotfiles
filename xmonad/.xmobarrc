@@ -30,7 +30,7 @@ Config
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
         , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2"] 10
         , Run Wireless "" ["-t","<quality>%  <ssid>  -  "] 10
-        , Run DiskIO [("sda", "<read>B  <write>B  -  ")] [] 10
+        , Run DiskIO [("sda", "<readb>B  <writeb>B  -  ")] [] 20
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
