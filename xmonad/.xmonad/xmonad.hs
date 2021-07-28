@@ -180,7 +180,7 @@ myKeysP :: [(String, X ())]
 myKeysP =
     -- System
     [ ("<Pause> <Pause>", spawn "systemctl poweroff")
-    , ("M-S-<Pause>"    , spawn "systemctl reboot")
+    , ("M-S-<Pause>"    , spawn "notify-send -t 3000 'Restarting ...'; systemctl reboot")
 
     -- Xmonad
     , ("M-S-r"          , spawn "notify-send -t 3000 'Restarting XMonad ...'; xmonad --recompile; xmonad --restart")
@@ -203,17 +203,23 @@ myKeysP =
     , ("M4-<Up>"        , withLastMinimized maximizeWindowAndFocus)
     , ("M4-<Down>"      , withFocused minimizeWindow >> windows W.focusUp)
 
-    -- Increment Deincrement the number of windows in the master area
-    , ("M-S-,"          , sendMessage (IncMasterN 1))
-    , ("M-S-."          , sendMessage (IncMasterN (-1)))
+    -- Directional navigation of windows
+    , ("M-l"            , sendMessage $ Go R)
+    , ("M-h"            , sendMessage $ Go L)
+    , ("M-k"            , sendMessage $ Go U)
+    , ("M-j"            , sendMessage $ Go D)
 
     -- Shrink Expand master
-    , ("M-h"            , sendMessage Shrink)
-    , ("M-l"            , sendMessage Expand)
+    , ("M-S-h"          , sendMessage Shrink)
+    , ("M-S-l"          , sendMessage Expand)
 
     -- Shrink Expand window
-    , ("M-,"            , sendMessage MirrorExpand)
-    , ("M-."            , sendMessage MirrorShrink)
+    , ("M-S-k"          , sendMessage MirrorExpand)
+    , ("M-S-j"          , sendMessage MirrorShrink)
+
+    -- Increment Deincrement the number of windows in the master area
+    , ("M-,"            , sendMessage (IncMasterN 1))
+    , ("M-."            , sendMessage (IncMasterN (-1)))
 
     -- Push window back into tiling
     , ("M-t"            , withFocused $ windows . W.sink)
@@ -350,7 +356,7 @@ myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ onWorkspaces [" 1 "] (tall ||| grid)
     $ onWorkspaces [" 2 "," 3 "," 4 "] (wide ||| tabbed)
     $ onWorkspaces [" 5 "] (tall ||| tabbed)
-    $ onWorkspaces [" 0"] (grid ||| tall)
+    $ onWorkspaces [" 0"] (tall ||| grid)
     $ tall ||| grid ||| wide ||| tabbed
     where
         ratio = 35/100
