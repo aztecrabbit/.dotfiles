@@ -359,7 +359,7 @@ myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ onWorkspaces [" 0"] (tall ||| grid)
     $ tall ||| grid ||| wide ||| tabbed
     where
-        ratio = 35/100
+        ratio = 50/100
         ratioWide = 65/100
 
         tall =
@@ -385,7 +385,7 @@ myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
             $ wrapperTabbed
             $ tabbedAlways shrinkText myTabTheme
 
-        spacing a b = spacingRaw False (Border a 232 a 664) True (Border b b b b) True
+        spacing a b = spacingRaw False (Border a a a a) True (Border b b b b) True
         wrapper a = spacing 2 2 $ minimize $ a
         wrapperTabbed a = spacing 4 0 $ minimize $ a
 
