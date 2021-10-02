@@ -7,7 +7,7 @@ Config
     , bgColor = "#101216"
     , fgColor = "#eaeaea"
     , alpha = 255
-    , position = Static { xpos = 0, ypos = 0, width = 1920, height = 24 }
+    , position = Static { xpos = 0, ypos = 0, width = 1366, height = 24 }
     , textOffset = -1
     , iconOffset = -1
     , lowerOnStart = True
@@ -28,8 +28,11 @@ Config
             , "-S", "S"
             ] 10
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
-        , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2"] 10
-        , Run Wireless "" ["-t","<quality>%  <ssid>  -  "] 10
+        , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2,wlp0s29f7u8"] 10
+        , Run Network "wlp0s29f7u2" ["-t","<rx>  <tx>","-S","True"] 10
+        , Run Network "wlp0s29f7u8" ["-t","<rx>  <tx>","-S","True"] 10
+        , Run Wireless "wlp0s29f7u2" ["-t","<quality>%  <ssid>"] 10
+        , Run Wireless "wlp0s29f7u8" ["-t","<quality>%  <ssid>"] 10
         , Run DiskIO [("sda", "<readb>B  <writeb>B  -  ")] [] 20
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
@@ -45,5 +48,5 @@ Config
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %dynnetwork%  %wi%%diskio%%cpu%  %memory%  %swap%  %default:Master%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp0s29f7u2%  -  %wlp0s29f7u8%  -  %wlp0s29f7u2wi%  -  %wlp0s29f7u8wi%  -  %diskio%%cpu%  %memory%  %swap%  %default:Master%  %date%  "
     }
