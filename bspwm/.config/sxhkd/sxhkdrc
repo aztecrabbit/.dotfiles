@@ -22,7 +22,7 @@ alt + m
 #    bspc node -s biggest
 #
 alt + g
-    bspc node -s biggest
+    bspc node -s biggest.local --follow
 
 
 # Workspace
@@ -150,13 +150,13 @@ alt + ctrl + shift + space
 #
 
 alt + shift + @space
-    dmenu_run -fn "monospace-9" -nb "#101216" -nf "#dadada" -l 24
+    $HOME/.scripts/dmenu_run.sh
 
 alt + @space
     rofi -show drun
 
 alt + Return
-    st
+    $HOME/.scripts/st.sh
 
 super + shift + Return
     $HOME/.scripts/bspwm-launch-application.sh \
@@ -226,7 +226,7 @@ alt + {_,shift + }p
 super + l
     $HOME/.scripts/lockscreen.sh
 
-super + {_, ctrl + } Up
+super + {_,ctrl + } Up
     $HOME/.scripts/bspwm-unhide-application.sh {'', "$(bspc query -D -d .focused)"}
 
 super + Down
