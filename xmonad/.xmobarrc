@@ -28,12 +28,10 @@ Config
             , "-S", "S"
             ] 10
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
-        , Run DynNetwork ["-t","<rx>  <tx>","-S","True","--","--devices","wlp0s29f7u2,wlp0s29f7u8"] 10
         , Run Network "wlp0s29f7u2" ["-t","<rx>  <tx>","-S","True"] 10
         , Run Network "wlp0s29f7u8" ["-t","<rx>  <tx>","-S","True"] 10
         , Run Wireless "wlp0s29f7u2" ["-t","<quality>%  <ssid>"] 10
         , Run Wireless "wlp0s29f7u8" ["-t","<quality>%  <ssid>"] 10
-        , Run DiskIO [("sda", "<readb>B  <writeb>B  -  ")] [] 20
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
@@ -48,5 +46,5 @@ Config
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp0s29f7u2%  -  %wlp0s29f7u8%  -  %wlp0s29f7u2wi%  -  %wlp0s29f7u8wi%  -  %diskio%%cpu%  %memory%  %swap%  %default:Master%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp0s29f7u2%  -  %wlp0s29f7u8%  -  %wlp0s29f7u2wi%  -  %wlp0s29f7u8wi%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
     }
