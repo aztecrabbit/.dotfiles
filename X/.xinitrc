@@ -1,7 +1,7 @@
 #!/bin/sh
 
 xmodmap ~/.Xmodmap &
-nitrogen --restore &
+~/.fehbg &
 xsetroot -cursor_name left_ptr &
 
 {
@@ -15,7 +15,7 @@ xsetroot -cursor_name left_ptr &
 } &
 
 if [ "$1" ]; then
-	exec "$1"
+    exec "$1"
 else
-	exec xmonad
+    exec xmonad
 fi
