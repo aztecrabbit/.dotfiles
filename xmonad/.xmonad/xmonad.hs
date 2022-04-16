@@ -49,7 +49,7 @@ import XMonad.Util.SpawnOnce
 -- certain contrib modules.
 --
 myTerminal :: String
-myTerminal = "LIBGL_ALWAYS_SOFTWARE=1 alacritty"
+myTerminal = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
