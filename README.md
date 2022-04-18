@@ -12,16 +12,12 @@ Packages
 
 | Name                             | Description |
 | ----                             | ----------- |
-| antigen-git                      | Plugin manager for zsh, inspired by oh-my-zsh and vundle |
 | aria2                            | Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink |
-| bspwm-git                        | Tiling Window Manager based on binary space partitioning |
 | dmenu                            | Generic menu for X |
 | dunst                            | Customizable and lightweight notification-daemon |
 | ecryptfs-utils                   | Enterprise-class stacked cryptographic filesystem for Linux |
 | ffscreencast                     | ffmpeg screencast/desktop-recording with video overlay and multi monitor support |
-| gtk-youtube-viewer-git           | GTK+ application for searching and streaming videos from YouTube |
 | gucharmap                        | Gnome Unicode Charmap |
-| libxft-bgra                      | libXft with BGRA glyph (color emoji) rendering & scaling patches by Maxime Coste |
 | lxappearance                     | Feature-rich GTK+ theme switcher of the LXDE Desktop |
 | matcha-gtk-theme                 | A flat design theme for GTK 3, GTK 2 and GNOME Shell |
 | megacmd                          | MEGA Command Line Interactive and Scriptable Application |
@@ -31,12 +27,10 @@ Packages
 | ncmpcpp                          | Almost exact clone of ncmpc (Fully featured MPD client using ncurses) with some new features |
 | papirus-icon-theme               | Papirus icon theme |
 | picom                            | X compositor that may fix tearing issues |
-| polybar-git                      | Fast and easy-to-use status bar |
 | powerpill                        | Pacman wrapper for faster download |
 | rofi                             | Window switcher |
 | scrot                            | Simple command-line screenshot utility for X |
 | stow                             | Manage installation of multiple softwares in the same directory tree |
-| sxhkd-git                        | Simple X hotkey daemon |
 | tmux                             | Terminal multiplexer |
 | ttf-dejavu                       | Font family based on the Bitstream Vera Fonts with a wider range of characters |
 | ttf-joypixels                    | Emoji as a Service (formerly EmojiOne) |
