@@ -1,0 +1,75 @@
+* {
+	bg-0: #111111;
+	bg-1: rgba(255, 255, 255, 15%);
+	bg-2: rgba(255, 255, 255, 20%);
+	bg-focus: rgba(255, 255, 255, 10%);
+	fg: rgba(255, 255, 255, 95%);
+	fg-focus: #ddffffff;
+}
+
+
+#window {
+}
+
+#mainbox {
+	spacing: 0;
+}
+
+
+#inputbar {
+	background-color: @bg-0;
+	spacing: 0;
+	padding: 6px;
+}
+#prompt {
+	color: @fg;
+	background-color: transparent;
+	padding: 0px 6px 0px 0px;
+
+	spacing: 0;
+	highlight: bold red;
+}
+#entry {
+	color: @fg;
+	background-color: transparent;
+}
+#case-indicator {
+	spacing: 0;
+	color: @fg;
+	background-color: @bg-0;
+}
+
+
+#message {
+}
+
+
+#listview {
+	background-color: @bg-0;
+	columns: 1;
+	spacing: 0;
+	lines: 16;
+}
+
+#element {
+	padding: 6px;
+}
+#element.normal {
+	background-color: @bg-1;
+}
+#element.alternate {
+	background-color: @bg-2;
+}
+#element.selected {
+	background-color: @bg-focus;
+}
+
+#element-icon {
+	background-color: transparent;
+	padding: 0px 3px 0px 0px;
+	size: 14px;
+}
+#element-text {
+	color: @fg;
+	background-color: transparent;
+}
