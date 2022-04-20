@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 mode="$1"
-command="scrot --quality 50"
+command="scrot --quality 75"
 
 mkdir -p ~/Pictures/Screenshots
 
@@ -33,6 +33,6 @@ esac
 
 $command --exec 'mv $f ~/Pictures/Screenshots/ && notify-send -t 2000 -i ~/Pictures/Screenshots/$f "Screenshot saved!"'
 
-if [ "$?" = "2" ]; then
+if [ "$?" = "1" ]; then
     notify-send -t 2000 "Screenshot canceled!"
 fi
