@@ -259,9 +259,14 @@ myKeysP =
     -- Resize viewed windows to the correct size
     -- , ("M-n"            , refresh)
 
+    -- Prompt
+    , ("M-S-<Space>"    , prompt (myTerminal ++ " -e") myXPConfig)
+
     -- Launcher
+    , ("M4-<Space>"     , spawn "rofi -show drun")
     , ("M-<Space>"      , spawn "~/.scripts/dmenu.sh")
-    , ("M-S-<Space>"    , spawn "rofi -show drun")
+
+    -- Network Manager DMenu
     , ("M-n"            , spawn "networkmanager_dmenu")
 
     -- Audio
@@ -288,9 +293,6 @@ myKeysP =
     , ("S-<Print>"      , spawn "~/.scripts/screenshot.sh select")
     , ("C-<Print>"      , spawn "~/.scripts/screenshot.sh freeze")
     , ("C-S-<Print>"    , spawn "~/.scripts/screenshot.sh freeze-now")
-
-    -- Prompt
-    , ("M4-<Space>"     , prompt (myTerminal ++ " -e") myXPConfig)
 
     -- ScratchPads
     , ("M4-<Return>"    , namedScratchpadAction myScratchPads "terminal")
