@@ -196,9 +196,6 @@ myKeysP =
     -- Change layout
     , ("M4-S-<Tab>"     , sendMessage NextLayout)
 
-    -- Toggle the status bar gap
-    , ("M-b"            , sendMessage ToggleStruts)
-
     -- Show Hide window
     , ("M4-<Up>"        , withLastMinimized maximizeWindowAndFocus)
     , ("M4-<Down>"      , withFocused minimizeWindow >> windows W.focusUp)
@@ -265,6 +262,7 @@ myKeysP =
     -- Launcher
     , ("M-<Space>"      , spawn "~/.scripts/dmenu.sh")
     , ("M-S-<Space>"    , spawn "rofi -show drun")
+    , ("M-n"            , spawn "networkmanager_dmenu")
 
     -- Audio
     , ("M--"            , spawn "amixer set Master 1%-")
