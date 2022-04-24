@@ -80,6 +80,7 @@ myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces ([1..9] ++ [0])
 --
 
 myFont = "xft:DejaVu Sans-8"
+myFontSmall = "xft:DejaVu Sans-6"
 myBgColor = "#101216"
 myBgColorFocused = "#3f3f3f"
 myFgColor = "#eaeaea"
@@ -223,9 +224,9 @@ myKeysP =
     , ("M-f"            , sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
 
     -- Move and Swap focus to the master window
-    , ("M-m"            , windows W.focusMaster)
-    , ("M-S-m"          , windows W.swapMaster)
-    , ("M-S-<Return>"   , windows W.swapMaster)
+    -- , ("M-m"            , windows W.focusMaster)
+    -- , ("M-S-m"          , windows W.swapMaster)
+    -- , ("M-S-<Return>"   , windows W.swapMaster)
 
     -- Move focus to the next previous window
     , ("M-S-<Tab>"      , windows W.focusUp)
@@ -260,14 +261,14 @@ myKeysP =
     -- , ("M-n"            , refresh)
 
     -- Prompt
-    , ("M-S-<Space>"    , prompt (myTerminal ++ " -e") myXPConfig)
+    , ("M4-<Space>"    , prompt (myTerminal ++ " -e") myXPConfig)
 
     -- Launcher
-    , ("M4-<Space>"     , spawn "rofi -show drun")
-    , ("M-<Space>"      , spawn "~/.scripts/dmenu.sh")
+    , ("M-<Space>"     , spawn "rofi -show drun")
 
-    -- Network Manager DMenu
-    , ("M-n"            , spawn "networkmanager_dmenu")
+    -- DMenu
+    , ("M-m m"          , spawn "~/.scripts/dmenu-mpd.sh")
+    , ("M-m n"          , spawn "networkmanager_dmenu")
 
     -- Audio
     , ("M--"            , spawn "amixer set Master 1%-")
@@ -338,7 +339,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 -- setting colors for tabs layout and tabs sublayout.
 myTabTheme = def
-    { fontName              = myFont
+    { fontName              = myFontSmall
     , activeColor           = myTabActiveColor
     , activeBorderColor     = myTabActiveColor
     , activeTextColor       = myTabActiveTextColor
@@ -348,7 +349,7 @@ myTabTheme = def
     , urgentColor           = "#ffffff"
     , urgentBorderColor     = "#ffffff"
     , urgentTextColor       = "#000000"
-    , decoHeight            = 14
+    , decoHeight            = 12
     }
 
 myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
