@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cmd="$1"
 app_name="$2"

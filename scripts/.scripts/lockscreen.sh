@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 bg='/tmp/background-lock.png'
 

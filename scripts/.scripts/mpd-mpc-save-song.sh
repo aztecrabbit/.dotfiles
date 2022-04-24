@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 song="$(mpc current)"
 song_list_file="$HOME/.notes-songs"
