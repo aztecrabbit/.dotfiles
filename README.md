@@ -76,7 +76,7 @@ Backup default config
 
 Stow required config file
 
-    # stow --verbose --no-folding -t / -R aria2 makepkg pacman powerpill
+    # stow --verbose --no-folding -t / -R root
 
 
 Usage
