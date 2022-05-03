@@ -1,36 +1,12 @@
 #!/bin/sh
 
-xdman -m >/dev/null &
-
-# {
-#     killall -q -w picom
-#     picom
-# } &
-
-{
-    killall -q -w xfce-polkit
-    /usr/lib/xfce-polkit/xfce-polkit
-} &
-
-{
-	killall -q -w trayer
-	trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216
-} &
-
-{
-	killall -q -w play-with-mpv
-	play-with-mpv
-} &
-
-#
-
 set_screen() {
 	mode=$(cvt $1 $2 | awk -F 'Modeline ' '/Modeline/ { print $2 }' | sed 's/"//g')
 	resolution=$(echo $mode | cut -d " " -f 1)
 
 	xrandr --newmode $mode
-	xrandr --addmode VGA1 $resolution
-	xrandr --output VGA1 --mode $resolution
+	xrandr --addmode VGA-0 $resolution
+	xrandr --output VGA-0 --mode $resolution
 }
 
-set_screen 1360 768
+# set_screen 1364 768

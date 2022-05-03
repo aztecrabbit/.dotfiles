@@ -92,9 +92,9 @@ myNormalBorderColor = "#191919"
 myPreselectBorderColor = myNormalBorderColor
 myFocusedBorderColor = "#353535"
 
-myTabActiveColor = myFocusedBorderColor
+myTabActiveColor = "#23272e"
 myTabActiveTextColor = myFgColor
-myTabInactiveColor = myNormalBorderColor
+myTabInactiveColor = "#1a1e23"
 myTabInactiveTextColor = "#aaaaaa"
 
 
@@ -121,16 +121,26 @@ myXPConfig = def
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
-    [ NS "terminal" sTerm fTerm mTerm ]
+    [ NS "terminal" sTerm fTerm mTerm
+    , NS "terminal-gotop" sGotop fGotop mGotop
+    ]
     where
         sTerm = myTerminal ++ " --class scratchpad -e tmux new-session -A -s scratchpad"
         fTerm = resource =? "scratchpad"
         mTerm = customFloating $ W.RationalRect l t w h
             where
-                l = 0
-                t = 0
-                w = 1
-                h = 1
+                l = (1/20)
+                t = (1/20)
+                w = (9/10)
+                h = (9/10)
+        sGotop = myTerminal ++ " --class scratchpad-gotop -e tmux new-session -A -s scratchpad-gotop gotop"
+        fGotop = resource =? "scratchpad-gotop"
+        mGotop = customFloating $ W.RationalRect l t w h
+            where
+                l = (1/20)
+                t = (1/20)
+                w = (9/10)
+                h = (9/10)
 
 
 -- Ignore NSP Workspace
@@ -297,18 +307,18 @@ myKeysP =
 
     -- ScratchPads
     , ("M4-<Return>"    , namedScratchpadAction myScratchPads "terminal")
+    , ("M4-S-<Return>"  , namedScratchpadAction myScratchPads "terminal-gotop")
 
     -- Launch app
+    , ("M4-a"           , spawn "~/.scripts/launch-app.sh 'android-studio' 'Android Studio'")
     , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'brave' 'Brave'")
     , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'google-chrome-stable' 'Google Chrome'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
+    , ("M4-d"           , spawn "~/.scripts/launch-app.sh 'dbeaver' 'DBeaver'")
     , ("M4-f"           , spawn "~/.scripts/launch-app.sh 'thunar' 'Thunar'")
     , ("M4-j"           , spawn "~/.scripts/launch-app.sh 'jdownloader' 'JDownloader'")
-    , ("M4-k"           , spawn "~/.scripts/launch-app.sh 'kodi' 'Kodi'")
-    , ("M4-s"           , spawn "~/.scripts/launch-app.sh 'subl' 'Sublime Text'")
     , ("M4-t"           , spawn "~/.scripts/launch-app.sh 'telegram-desktop' 'Telegram'")
     , ("M4-x"           , spawn "~/.scripts/launch-app.sh 'xdman' 'Xtream Download Manager'")
-    , ("M4-y"           , spawn "~/.scripts/launch-app.sh 'gtk-youtube-viewer' 'YouTube Viewer'")
     ]
 
 
@@ -355,7 +365,8 @@ myTabTheme = def
 myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces [" 1 "] (tall ||| grid)
-    $ onWorkspaces [" 2 "," 3 "," 4 "] (wide ||| tabbed)
+    $ onWorkspaces [" 2 "] (tabbed ||| wide)
+    $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed)
     $ onWorkspaces [" 5 "] (tall ||| tabbed)
     $ onWorkspaces [" 0"] (tall ||| grid)
     $ tall ||| grid ||| wide ||| tabbed
@@ -386,7 +397,7 @@ myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
             $ wrapperTabbed
             $ tabbedAlways shrinkText myTabTheme
 
-        spacing a b = spacingRaw False (Border a a a a) True (Border b b b b) True
+        spacing a b = spacingRaw False (Border a a 5 5) True (Border b b b b) True
         wrapper a = spacing 2 2 $ minimize $ a
         wrapperTabbed a = spacing 4 0 $ minimize $ a
 
@@ -427,19 +438,20 @@ myManageHook = (floats --> doF W.swapUp)
     <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchPads
     <+> composeAll
-    [ className =? "Code"               --> viewShift (myWorkspaces !! 1)
+    [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
+    , className =? "scrcpy"             --> viewShift (myWorkspaces !! 1)
+    , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
     , className =? "Subl"               --> viewShift (myWorkspaces !! 1)
     , className =? "Brave-browser"      --> viewShift (myWorkspaces !! 2)
     , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
     , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
-    , className =? "Falkon"             --> viewShift (myWorkspaces !! 2)
     , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
-    , className =? "Gtk-youtube-viewer" --> viewShift (myWorkspaces !! 3)
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)
     , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
     , className =? "Atril"              --> viewShift (myWorkspaces !! 4)
     , className =? "Kodi"               --> viewShift (myWorkspaces !! 5)
     , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
+    , className =? "DBeaver"            --> viewShift (myWorkspaces !! 8)
     , floats                            --> doCenterFloat
     ]
     where
@@ -447,11 +459,17 @@ myManageHook = (floats --> doF W.swapUp)
         floats = foldr1 (<||>)
             [ checkDialog
             , title =? "." <&&> ( className =? "" <||> appName =? "." )
+            , title =? "win0" <&&> className =? "jetbrains-studio"
+            , flip fmap title $ flip elem
+                [ "Picture in picture" ]
             , flip fmap className $ flip elem
                 [ "GParted"
+                , "Java"
                 , "JDownloader"
-                , "xdman-Main"
+                , "org-jdownloader-update-launcher-JDLauncher"
                 , "Xmessage"
+                , "xdman-Main"
+                , "Zenmonitor"
                 ]
             ]
 
@@ -508,7 +526,13 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
 -- By default, do nothing.
 
 myStartupHook = do
-    spawn "~/.xmonad/autostart"
+    spawn "~/.xmonad/autostart &"
+    spawnOnce "dunst"
+    spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216"
+    spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
+    spawnOnce "lxpolkit"
+    spawnOnce "xdman -m"
+    spawnOnce "picom"
     spawnOnce myTerminal
     setWMName "LG3D"
 
