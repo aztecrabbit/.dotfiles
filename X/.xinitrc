@@ -1,18 +1,7 @@
 #!/bin/sh
 
-xmodmap ~/.Xmodmap &
 ~/.fehbg &
-xsetroot -cursor_name left_ptr &
-
-{
-    mkdir -p ~/.local/share/mpd/playlists
-    mpd ~/.config/mpd/mpd.conf
-} &
-
-{
-    killall -q -w xfce4-notifyd dunst
-    dunst
-} &
+xsetroot -bg "#000000" -cursor_name left_ptr &
 
 if [ "$1" ]; then
     exec "$1"
