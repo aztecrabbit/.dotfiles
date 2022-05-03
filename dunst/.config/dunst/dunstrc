@@ -41,7 +41,7 @@
     notification_limit = 0
 
 
-    ###
+    ### Etc ###
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -192,7 +192,7 @@
     sticky_history = yes
 
     # Maximum amount of notifications kept in history
-    history_length = 20
+    history_length = 8
 
     ### Misc/Advanced ###
 
