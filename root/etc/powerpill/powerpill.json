@@ -17,7 +17,7 @@
 		"reflect databases": false
 	},
 	"reflector": {
-		"args.unused": [
+		"args": [
 			"--protocol",
 			"http",
 			"--latest",
