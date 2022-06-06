@@ -22,6 +22,7 @@ import XMonad.Hooks.SetWMName
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.Grid
+import XMonad.Layout.IfMax
 import XMonad.Layout.Minimize
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
@@ -50,6 +51,19 @@ import XMonad.Util.SpawnOnce
 --
 myTerminal :: String
 myTerminal = "alacritty"
+
+myTerminalWithDaemon :: String
+myTerminalWithDaemon = "alacritty msg create-window || alacritty"
+
+
+-- Scratchpads
+--
+scratchpadsTerminal :: String
+scratchpadsTerminal = myTerminal ++ " --class scratchpad -e tmux new-session -A -s scratchpad"
+
+scratchpadsTerminalGotop :: String
+scratchpadsTerminalGotop = myTerminal ++ " --class scratchpad-gotop -e tmux new-session -A -s scratchpad-gotop gotop --nvidia"
+
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -119,13 +133,12 @@ myXPConfig = def
 -- ScratchPads
 --
 
-myScratchPads :: [NamedScratchpad]
-myScratchPads =
-    [ NS "terminal" sTerm fTerm mTerm
-    , NS "terminal-gotop" sGotop fGotop mGotop
+myScratchpads :: [NamedScratchpad]
+myScratchpads =
+    [ NS "terminal" scratchpadsTerminal fTerm mTerm
+    , NS "terminal-gotop" scratchpadsTerminalGotop fTermGotop mTermGotop
     ]
     where
-        sTerm = myTerminal ++ " --class scratchpad -e tmux new-session -A -s scratchpad"
         fTerm = resource =? "scratchpad"
         mTerm = customFloating $ W.RationalRect l t w h
             where
@@ -133,9 +146,8 @@ myScratchPads =
                 t = (1/20)
                 w = (9/10)
                 h = (9/10)
-        sGotop = myTerminal ++ " --class scratchpad-gotop -e tmux new-session -A -s scratchpad-gotop gotop"
-        fGotop = resource =? "scratchpad-gotop"
-        mGotop = customFloating $ W.RationalRect l t w h
+        fTermGotop = resource =? "scratchpad-gotop"
+        mTermGotop = customFloating $ W.RationalRect l t w h
             where
                 l = (1/20)
                 t = (1/20)
@@ -160,18 +172,13 @@ prevWS' = moveTo Prev (WSIs notNSP)
 --
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    -- launch a terminal
-    [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
-    ]
-    ++
-
     -- Workspace
     --
 
-    [((m .|. mod4Mask, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-
+    [ ((m .|. mod4Mask, k), windows $ f i) |
+        (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0]),
+        (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+    ]
 
     {--
         -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -233,11 +240,6 @@ myKeysP =
     , ("M-t"            , withFocused $ windows . W.sink)
     , ("M-f"            , sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
 
-    -- Move and Swap focus to the master window
-    -- , ("M-m"            , windows W.focusMaster)
-    -- , ("M-S-m"          , windows W.swapMaster)
-    -- , ("M-S-<Return>"   , windows W.swapMaster)
-
     -- Move focus to the next previous window
     , ("M-S-<Tab>"      , windows W.focusUp)
     , ("M-<Tab>"        , windows W.focusDown)
@@ -271,10 +273,13 @@ myKeysP =
     -- , ("M-n"            , refresh)
 
     -- Prompt
-    , ("M4-<Space>"    , prompt (myTerminal ++ " -e") myXPConfig)
+    , ("M4-<Space>"     , prompt (myTerminalWithDaemon ++ " -e") myXPConfig)
+
+    -- Terminal
+    , ("M-<Return>"     , spawn myTerminalWithDaemon)
 
     -- Launcher
-    , ("M-<Space>"     , spawn "rofi -show drun")
+    , ("M-<Space>"      , spawn "rofi -show drun")
 
     -- DMenu
     , ("M-m m"          , spawn "~/.scripts/dmenu-mpd.sh")
@@ -306,13 +311,13 @@ myKeysP =
     , ("C-S-<Print>"    , spawn "~/.scripts/screenshot.sh freeze-now")
 
     -- ScratchPads
-    , ("M4-<Return>"    , namedScratchpadAction myScratchPads "terminal")
-    , ("M4-S-<Return>"  , namedScratchpadAction myScratchPads "terminal-gotop")
+    , ("M4-<Return>"    , namedScratchpadAction myScratchpads "terminal")
+    , ("M4-S-<Return>"  , namedScratchpadAction myScratchpads "terminal-gotop")
 
     -- Launch app
-    , ("M4-a"           , spawn "~/.scripts/launch-app.sh 'android-studio' 'Android Studio'")
-    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'brave' 'Brave'")
-    , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'google-chrome-stable' 'Google Chrome'")
+    , ("M4-a"           , spawn "~/.scripts/launch-app.sh 'android-studio-canary' 'Android Studio'")
+    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'firefox-nightly' 'Firefox Nightly'")
+    , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'brave' 'Brave'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
     , ("M4-d"           , spawn "~/.scripts/launch-app.sh 'dbeaver' 'DBeaver'")
     , ("M4-f"           , spawn "~/.scripts/launch-app.sh 'thunar' 'Thunar'")
@@ -362,44 +367,63 @@ myTabTheme = def
     , decoHeight            = 12
     }
 
-myLayout = avoidStruts $ fullscreenFull $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
+myLayout =
+    avoidStruts
+    $ fullscreenFull
+    $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
-    $ onWorkspaces [" 1 "] (tall ||| grid)
+    $ onWorkspaces [" 1 "] (terminal ||| terminalTall)
     $ onWorkspaces [" 2 "] (tabbed ||| wide)
     $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed)
-    $ onWorkspaces [" 5 "] (tall ||| tabbed)
+    $ onWorkspaces [" 5 "] (tall ||| grid)
+    $ onWorkspaces [" 6 "] (tall ||| tabbed)
     $ onWorkspaces [" 0"] (tall ||| grid)
-    $ tall ||| grid ||| wide ||| tabbed
-    where
-        ratio = 50/100
-        ratioWide = 65/100
+    $ tall ||| wide ||| tabbed ||| grid
+        where
+            tallModified nmaster ratio =
+                addTabs shrinkText myTabTheme
+                $ wrapper
+                $ subLayout [] Simplest
+                $ ResizableTall nmaster (2/100) ratio []
+            tallMirrorModified nmaster ratio =
+                addTabs shrinkText myTabTheme
+                $ wrapperMirror
+                $ subLayout [] Simplest
+                $ Mirror
+                $ ResizableTall nmaster (2/100) ratio []
 
-        tall =
-            renamed [Replace "Tall"]
-            $ addTabs shrinkText myTabTheme
-            $ wrapper
-            $ subLayout [] Simplest
-            $ ResizableTall 1 (2/100) ratio []
-        wide =
-            renamed [Replace "Wide"]
-            $ addTabs shrinkText myTabTheme
-            $ wrapper
-            $ subLayout [] Simplest
-            $ ResizableTall 1 (2/100) ratioWide []
-        grid =
-            renamed [Replace "Grid"]
-            $ addTabs shrinkText myTabTheme
-            $ wrapper
-            $ subLayout [] Simplest
-            $ Grid
-        tabbed =
-            renamed [Replace "Tabbed"]
-            $ wrapperTabbed
-            $ tabbedAlways shrinkText myTabTheme
+            ratio = 50/100
+            ratioWide = 65/100
 
-        spacing a b = spacingRaw False (Border a a 5 5) True (Border b b b b) True
-        wrapper a = spacing 2 2 $ minimize $ a
-        wrapperTabbed a = spacing 4 0 $ minimize $ a
+            terminal =
+                renamed [Replace "Terminal"]
+                $ IfMax 3 (tallMirrorModified 1 ratio) grid
+            terminalTall =
+                renamed [Replace "Terminal Tall"]
+                $ grid
+            tall =
+                renamed [Replace "Tall"]
+                $ tallModified 1 ratio
+            wide =
+                renamed [Replace "Wide"]
+                $ tallModified 1 ratioWide
+            grid =
+                renamed [Replace "Grid"]
+                $ IfMax 2 tall (
+                    addTabs shrinkText myTabTheme
+                    $ wrapper
+                    $ subLayout [] Simplest
+                    $ Grid
+                )
+            tabbed =
+                renamed [Replace "Tabbed"]
+                $ wrapperTabbed
+                $ tabbedAlways shrinkText myTabTheme
+
+            spacing a b = spacingRaw False (Border a a 5 5) True (Border b b b b) True
+            wrapper a = spacing 2 2 $ minimize $ a
+            wrapperMirror a = spacing 2 2 $ minimize $ a
+            wrapperTabbed a = spacing 4 0 $ minimize $ a
 
 
 ---- Window rules:
@@ -436,7 +460,7 @@ checkDialog =
 myManageHook = (floats --> doF W.swapUp)
     <+> insertPosition End Newer
     <+> fullscreenManageHook
-    <+> namedScratchpadManageHook myScratchPads
+    <+> namedScratchpadManageHook myScratchpads
     <+> composeAll
     [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
     , className =? "scrcpy"             --> viewShift (myWorkspaces !! 1)
@@ -444,14 +468,15 @@ myManageHook = (floats --> doF W.swapUp)
     , className =? "Subl"               --> viewShift (myWorkspaces !! 1)
     , className =? "Brave-browser"      --> viewShift (myWorkspaces !! 2)
     , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
+    , className =? "firefox"            --> viewShift (myWorkspaces !! 2)
+    , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
     , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
     , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
     , className =? "feh"                --> viewShift (myWorkspaces !! 4)
     , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
-    , className =? "Atril"              --> viewShift (myWorkspaces !! 4)
-    , className =? "Kodi"               --> viewShift (myWorkspaces !! 5)
+    , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
     , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
-    , className =? "DBeaver"            --> viewShift (myWorkspaces !! 8)
+    , className =? "DBeaver"            --> viewShift (myWorkspaces !! 9)
     , floats                            --> doCenterFloat
     ]
     where
@@ -501,9 +526,8 @@ windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- LogHook
-myLogHook xmproc = dynamicLogWithPP $ xmobarPP
+myLogHook xmproc = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
     { ppOutput = hPutStrLn xmproc
-    , ppSort = fmap (namedScratchpadFilterOutWorkspace.) (ppSort def)   -- Hide "NSP" from workspace list
     , ppCurrent = xmobarColor myFgColor "" . wsActions                  -- Focused
     , ppVisible = xmobarColor myFgColorUnfocused "" . wsActions         -- Unfocused
     , ppHidden = xmobarColor "#898989" "" . wsActions                   -- What the fuck is this?
@@ -532,8 +556,7 @@ myStartupHook = do
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
     spawnOnce "xdman -m"
-    spawnOnce "picom"
-    spawnOnce myTerminal
+    -- spawnOnce "picom"
     setWMName "LG3D"
 
 
@@ -544,12 +567,12 @@ main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ fullscreenSupport $ docks def {
       -- simple stuff
-        terminal           = myTerminal,
+        terminal           = myTerminalWithDaemon,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,
-        borderWidth        = myBorderWidth,
         modMask            = myModMask,
         workspaces         = myWorkspaces,
+        borderWidth        = myBorderWidth,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
