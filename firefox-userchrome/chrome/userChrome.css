@@ -1,0 +1,34 @@
+/* hides the native tabs */
+#TabsToolbar {
+    visibility: collapse;
+}
+
+/* */
+
+:root {
+    --toolbar-start-end-padding: 8px !important;
+    --toolbarbutton-outer-padding: 0px !important;
+    --toolbarbutton-inner-padding: 6px !important;
+}
+
+#reader-mode-button {
+    visibility: collapse;
+}
+
+/* */
+
+#sidebar-header {
+    font-size: 1.25em !important;
+    padding: 4px 8px !important;
+    border-bottom: 0px solid var(--sidebar-border-color) !important;
+}
+
+#sidebar-splitter {
+    width: 0px !important;
+}
+
+/* */
+
+#contentAreaContextMenu {
+    margin: 0px 0px 0px 8px !important;
+}
