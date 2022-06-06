@@ -48,6 +48,12 @@ Packages
 | zsh                              | Very advanced and programmable command interpreter (shell) for UNIX |
 
 
+Firefox userChrome.css
+----------------------
+
+    $ stow --verbose --no-folding -t ~/.mozila/firefox/firefox-profile-directory -R firefox-userchrome
+
+
 Multithreading Package Manager
 ------------------------------
 
@@ -90,4 +96,4 @@ or
 
     $ yay --pacman powerpill -S package-name
 
-or just use zsh dotfile from my dotfiles terminal [here](https://github.com/aztecrabbit/.dotfiles-terminal) :D
+or just use zsh dotfile from my dotfiles terminal [here](https://github.com/aztecrabbit/.dotfiles-terminal).
