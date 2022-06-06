@@ -1,9 +1,9 @@
           /\        aztecrabbit@home
          /  \       ----------------
         /\   \      OS: Arch Linux x86_64
-       /      \     WM: xmonad
-      /   ,,   \    Shell: zsh
-     /   |  |  -\   Terminal: alacritty
+       /      \     WM: XMonad
+      /   ,,   \    Shell: Zsh
+     /   |  |  -\   Terminal: Alacritty
     /_-''    ''-_\  
 
 
