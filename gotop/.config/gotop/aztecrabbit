@@ -1,0 +1,4 @@
+10:cpu/12
+4:disk/3 10:mem/9
+6:temp/3
+10:net/4 10:procs/8
