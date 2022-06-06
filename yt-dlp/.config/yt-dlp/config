@@ -1,4 +1,4 @@
---format "best[height=720]"
+--format "best[height<=720]"
 --output "%(title)s.%(ext)s"
 
 # --write-sub
