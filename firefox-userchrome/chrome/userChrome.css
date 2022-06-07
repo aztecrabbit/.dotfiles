@@ -1,6 +1,6 @@
 /* hides the native tabs */
 #TabsToolbar {
-    visibility: collapse;
+    visibility: collapse !important;
 }
 
 /* */
@@ -12,7 +12,7 @@
 }
 
 #reader-mode-button {
-    visibility: collapse;
+    visibility: collapse !important;
 }
 
 /* */
@@ -21,6 +21,7 @@
     font-size: 1.25em !important;
     padding: 4px 8px !important;
     border-bottom: 0px solid var(--sidebar-border-color) !important;
+    visibility: collapse !important;
 }
 
 #sidebar-splitter {
