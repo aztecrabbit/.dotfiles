@@ -18,6 +18,7 @@ import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (doCenterFloat)
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.StatusBar.PP
 
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.Fullscreen
@@ -462,23 +463,25 @@ myManageHook = (floats --> doF W.swapUp)
     <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchpads
     <+> composeAll
-    [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
-    , className =? "scrcpy"             --> viewShift (myWorkspaces !! 1)
-    , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
-    , className =? "Subl"               --> viewShift (myWorkspaces !! 1)
-    , className =? "Brave-browser"      --> viewShift (myWorkspaces !! 2)
-    , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
-    , className =? "firefox"            --> viewShift (myWorkspaces !! 2)
-    , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
-    , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
-    , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
-    , className =? "feh"                --> viewShift (myWorkspaces !! 4)
-    , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
-    , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
-    , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
-    , className =? "DBeaver"            --> viewShift (myWorkspaces !! 9)
-    , floats                            --> doCenterFloat
-    ]
+    (
+        [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
+        , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
+        , className =? "Brave-browser"      --> viewShift (myWorkspaces !! 2)
+        , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
+        , className =? "firefox"            --> viewShift (myWorkspaces !! 2)
+        , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
+        , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
+        , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
+        , className =? "feh"                --> viewShift (myWorkspaces !! 4)
+        , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
+        , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
+        , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
+        , className =? "DBeaver"            --> viewShift (myWorkspaces !! 9)
+        , floats                            --> doCenterFloat
+        ] ++
+        [ className =? "Thunar" <&&> title =? "File Operation Progress" --> doShift (myWorkspaces !! 5)
+        ]
+    )
     where
         viewShift = doF . liftM2 (.) W.greedyView W.shift
         floats = foldr1 (<||>)
@@ -492,6 +495,7 @@ myManageHook = (floats --> doF W.swapUp)
                 , "Java"
                 , "JDownloader"
                 , "org-jdownloader-update-launcher-JDLauncher"
+                , "Xdm-app"
                 , "Xmessage"
                 , "xdman-Main"
                 , "Zenmonitor"
@@ -526,7 +530,7 @@ windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- LogHook
-myLogHook xmproc = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
+myLogHook xmproc = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
     { ppOutput = hPutStrLn xmproc
     , ppCurrent = xmobarColor myFgColor "" . wsActions                  -- Focused
     , ppVisible = xmobarColor myFgColorUnfocused "" . wsActions         -- Unfocused
