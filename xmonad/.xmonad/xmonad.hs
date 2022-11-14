@@ -374,11 +374,10 @@ myLayout =
     $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces [" 1 "] (terminal ||| terminalTall)
-    $ onWorkspaces [" 2 "] (tabbed ||| wide)
-    $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed)
+    $ onWorkspaces [" 2 "] (tabbed ||| tall ||| wide)
+    $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
     $ onWorkspaces [" 5 "] (tall ||| grid)
     $ onWorkspaces [" 6 "] (tall ||| tabbed)
-    $ onWorkspaces [" 0"] (tall ||| grid)
     $ tall ||| wide ||| tabbed ||| grid
         where
             tallModified nmaster ratio =
@@ -476,7 +475,7 @@ myManageHook = (floats --> doF W.swapUp)
         , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
         , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
         , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
-        , className =? "DBeaver"            --> viewShift (myWorkspaces !! 9)
+        , className =? "DBeaver"            --> viewShift (myWorkspaces !! 7)
         , floats                            --> doCenterFloat
         ] ++
         [ className =? "Thunar" <&&> title =? "File Operation Progress" --> doShift (myWorkspaces !! 5)
@@ -489,7 +488,9 @@ myManageHook = (floats --> doF W.swapUp)
             , title =? "." <&&> ( className =? "" <||> appName =? "." )
             , title =? "win0" <&&> className =? "jetbrains-studio"
             , flip fmap title $ flip elem
-                [ "Picture in picture" ]
+                [ "Picture in picture"
+                , "Media viewer"
+                ]
             , flip fmap className $ flip elem
                 [ "GParted"
                 , "Java"
@@ -555,6 +556,8 @@ myLogHook xmproc = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
 
 myStartupHook = do
     spawn "~/.xmonad/autostart &"
+    spawnOnce "~/.fehbg"
+    spawnOnce "xsetroot -bg '#000000' -cursor_name left_ptr"
     spawnOnce "dunst"
     spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216"
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
