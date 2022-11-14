@@ -11,14 +11,16 @@ import Data.Maybe (fromJust)
 import Foreign.C.Types (CLong)
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.EasyMotion (selectWindow, EasyMotionConfig(..), textSize)
 import XMonad.Actions.Minimize
 
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (doCenterFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.WindowSwallowing
 
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 import XMonad.Layout.Fullscreen
@@ -38,7 +40,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.WindowNavigation
 
 import XMonad.Prompt
-import XMonad.Prompt.Shell
+import XMonad.Prompt.Shell (prompt)
 
 import XMonad.Util.EZConfig
 import XMonad.Util.Font
@@ -52,9 +54,6 @@ import XMonad.Util.SpawnOnce
 --
 myTerminal :: String
 myTerminal = "alacritty"
-
-myTerminalWithDaemon :: String
-myTerminalWithDaemon = "alacritty msg create-window || alacritty"
 
 
 -- Scratchpads
@@ -131,6 +130,12 @@ myXPConfig = def
     }
 
 
+-- EasyMotion
+--
+
+easymotionKillWindowConfig = def { txtCol="Red", cancelKey=xK_Escape, overlayF=textSize, emFont="xft: Dejavu Sans-16" }
+
+
 -- ScratchPads
 --
 
@@ -202,7 +207,7 @@ myKeysP =
     , ("M-S-<Pause>"    , spawn "notify-send -t 3000 'Restarting ...'; systemctl reboot")
 
     -- Xmonad
-    , ("M-S-r"          , spawn "notify-send -t 3000 'Restarting XMonad ...'; xmonad --recompile; xmonad --restart")
+    , ("M-S-r"          , spawn "notify-send -t 2000 'Restarting XMonad ...'; xmonad --recompile; xmonad --restart")
     , ("M-S-<Escape>"   , io (exitWith ExitSuccess))
 
     -- Change workspace
@@ -274,10 +279,10 @@ myKeysP =
     -- , ("M-n"            , refresh)
 
     -- Prompt
-    , ("M4-<Space>"     , prompt (myTerminalWithDaemon ++ " -e") myXPConfig)
+    , ("M4-<Space>"     , prompt (myTerminal ++ " -e") myXPConfig)
 
     -- Terminal
-    , ("M-<Return>"     , spawn myTerminalWithDaemon)
+    , ("M-<Return>"     , spawn myTerminal)
 
     -- Launcher
     , ("M-<Space>"      , spawn "rofi -show drun")
@@ -325,6 +330,9 @@ myKeysP =
     , ("M4-j"           , spawn "~/.scripts/launch-app.sh 'jdownloader' 'JDownloader'")
     , ("M4-t"           , spawn "~/.scripts/launch-app.sh 'telegram-desktop' 'Telegram'")
     , ("M4-x"           , spawn "~/.scripts/launch-app.sh 'xdman' 'Xtream Download Manager'")
+
+    -- EasyMotion
+    , ("M4-q"           , selectWindow easymotionKillWindowConfig >>= (`whenJust` killWindow))
     ]
 
 
@@ -476,9 +484,11 @@ myManageHook = (floats --> doF W.swapUp)
         , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
         , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
         , className =? "DBeaver"            --> viewShift (myWorkspaces !! 7)
-        , floats                            --> doCenterFloat
         ] ++
         [ className =? "Thunar" <&&> title =? "File Operation Progress" --> doShift (myWorkspaces !! 5)
+        ] ++
+        [ isFullscreen                      --> doFullFloat
+        , floats                            --> doCenterFloat
         ]
     )
     where
@@ -488,9 +498,7 @@ myManageHook = (floats --> doF W.swapUp)
             , title =? "." <&&> ( className =? "" <||> appName =? "." )
             , title =? "win0" <&&> className =? "jetbrains-studio"
             , flip fmap title $ flip elem
-                [ "Picture in picture"
-                , "Media viewer"
-                ]
+                [ "Picture in picture" ]
             , flip fmap className $ flip elem
                 [ "GParted"
                 , "Java"
@@ -513,7 +521,7 @@ myManageHook = (floats --> doF W.swapUp)
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
 
-myEventHook = fullscreenEventHook
+myEventHook = swallowEventHook (className =? "Alacritty" <||> className =? "Termite") (return True)
 
 
 ---- Status bars and logging
@@ -572,9 +580,9 @@ myStartupHook = do
 
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ fullscreenSupport $ docks def {
+    xmonad $ ewmh $ docks def {
       -- simple stuff
-        terminal           = myTerminalWithDaemon,
+        terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,
         modMask            = myModMask,
