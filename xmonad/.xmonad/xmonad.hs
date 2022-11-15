@@ -1,5 +1,4 @@
 import XMonad
-import Data.Monoid
 import System.Exit
 
 import qualified XMonad.StackSet as W
@@ -8,6 +7,7 @@ import qualified Data.Map        as M
 import Control.Monad (liftM2)
 import Data.Char (toUpper)
 import Data.Maybe (fromJust)
+import Data.Monoid
 import Foreign.C.Types (CLong)
 
 import XMonad.Actions.CycleWS
@@ -42,6 +42,7 @@ import XMonad.Layout.WindowNavigation
 import XMonad.Prompt
 import XMonad.Prompt.Shell (prompt)
 
+import XMonad.Util.Cursor (setDefaultCursor)
 import XMonad.Util.EZConfig
 import XMonad.Util.Font
 import XMonad.Util.NamedScratchpad
@@ -563,15 +564,15 @@ myLogHook xmproc = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
 -- By default, do nothing.
 
 myStartupHook = do
+    setDefaultCursor xC_left_ptr
     spawn "~/.xmonad/autostart &"
     spawnOnce "~/.fehbg"
-    spawnOnce "xsetroot -bg '#000000' -cursor_name left_ptr"
     spawnOnce "dunst"
     spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216"
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
     spawnOnce "xdman -m"
-    -- spawnOnce "picom"
+    -- spawnOnce "picom" -- crash when resizing
     setWMName "LG3D"
 
 
