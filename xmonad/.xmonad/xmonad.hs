@@ -429,7 +429,7 @@ myLayout =
                 $ wrapperTabbed
                 $ tabbedAlways shrinkText myTabTheme
 
-            spacing a b = spacingRaw False (Border a a 5 5) True (Border b b b b) True
+            spacing a b = spacingRaw False (Border a a 0 0) True (Border b b b b) True
             wrapper a = spacing 2 2 $ minimize $ a
             wrapperMirror a = spacing 2 2 $ minimize $ a
             wrapperTabbed a = spacing 4 0 $ minimize $ a
