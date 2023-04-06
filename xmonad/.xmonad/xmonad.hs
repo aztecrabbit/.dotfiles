@@ -323,7 +323,7 @@ myKeysP =
 
     -- Launch app
     , ("M4-a"           , spawn "~/.scripts/launch-app.sh 'android-studio-canary' 'Android Studio'")
-    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'firefox-nightly' 'Firefox Nightly'")
+    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'firefox' 'Firefox'")
     , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'brave' 'Brave'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
     , ("M4-d"           , spawn "~/.scripts/launch-app.sh 'dbeaver' 'DBeaver'")
@@ -474,10 +474,7 @@ myManageHook = (floats --> doF W.swapUp)
     (
         [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
         , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
-        , className =? "Brave-browser"      --> viewShift (myWorkspaces !! 2)
-        , className =? "Google-chrome"      --> viewShift (myWorkspaces !! 2)
         , className =? "firefox"            --> viewShift (myWorkspaces !! 2)
-        , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
         , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
         , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
         , className =? "feh"                --> viewShift (myWorkspaces !! 4)
