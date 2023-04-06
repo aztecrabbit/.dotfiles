@@ -51,7 +51,9 @@ Packages
 Firefox userChrome.css
 ----------------------
 
-    $ stow --verbose --no-folding -t ~/.mozila/firefox/firefox-profile-directory -R firefox-userchrome
+    $ stow --verbose --no-folding -t ~/.mozilla/firefox/firefox-profile-directory -R firefox-userchrome
+
+Open firefox, go to `about:config` and set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
 
 
 Multithreading Package Manager
