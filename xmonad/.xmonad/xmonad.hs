@@ -37,6 +37,7 @@ import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.Tabbed
+import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
 
 import XMonad.Prompt
@@ -207,9 +208,12 @@ myKeysP =
     [ ("<Pause> <Pause>", spawn "systemctl poweroff")
     , ("M-S-<Pause>"    , spawn "notify-send -t 3000 'Restarting ...'; systemctl reboot")
 
-    -- Xmonad
+    -- XMonad
     , ("M-S-r"          , spawn "notify-send -t 2000 'Restarting XMonad ...'; xmonad --recompile; xmonad --restart")
     , ("M-S-<Escape>"   , io (exitWith ExitSuccess))
+
+    -- XMobar
+    , ("M-b"            , spawn "killall xmobar || xmonad --restart")
 
     -- Change workspace
     , ("M4-<Left>"      , prevWS')
@@ -323,7 +327,7 @@ myKeysP =
 
     -- Launch app
     , ("M4-a"           , spawn "~/.scripts/launch-app.sh 'android-studio-canary' 'Android Studio'")
-    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'firefox' 'Firefox'")
+    , ("M4-b"           , spawn "~/.scripts/launch-app.sh 'firefox-nightly' 'Firefox Nightly'")
     , ("M4-S-b"         , spawn "~/.scripts/launch-app.sh 'brave' 'Brave'")
     , ("M4-c"           , spawn "~/.scripts/launch-app.sh 'code' 'VS Code'")
     , ("M4-d"           , spawn "~/.scripts/launch-app.sh 'dbeaver' 'DBeaver'")
@@ -385,7 +389,7 @@ myLayout =
     $ onWorkspaces [" 1 "] (terminal ||| terminalTall)
     $ onWorkspaces [" 2 "] (tabbed ||| tall ||| wide)
     $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
-    $ onWorkspaces [" 5 "] (tall ||| grid)
+    $ onWorkspaces [" 5 "] (tall ||| vertical ||| grid)
     $ onWorkspaces [" 6 "] (tall ||| tabbed)
     $ tall ||| wide ||| tabbed ||| grid
         where
@@ -400,6 +404,11 @@ myLayout =
                 $ subLayout [] Simplest
                 $ Mirror
                 $ ResizableTall nmaster (2/100) ratio []
+            threeColModified  =
+                addTabs shrinkText myTabTheme
+                $ wrapper
+                $ subLayout [] Simplest
+                $ ThreeCol 1 (3/100) (1/3)
 
             ratio = 50/100
             ratioWide = 65/100
@@ -413,6 +422,9 @@ myLayout =
             tall =
                 renamed [Replace "Tall"]
                 $ tallModified 1 ratio
+            vertical =
+                renamed [Replace "Vertical"]
+                $ threeColModified
             wide =
                 renamed [Replace "Wide"]
                 $ tallModified 1 ratioWide
@@ -474,7 +486,7 @@ myManageHook = (floats --> doF W.swapUp)
     (
         [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
         , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
-        , className =? "firefox"            --> viewShift (myWorkspaces !! 2)
+        , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
         , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
         , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
         , className =? "feh"                --> viewShift (myWorkspaces !! 4)
