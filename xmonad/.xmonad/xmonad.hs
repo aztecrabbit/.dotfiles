@@ -386,8 +386,8 @@ myLayout =
     $ fullscreenFull
     $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
-    $ onWorkspaces [" 1 "] (terminal ||| terminalTall)
-    $ onWorkspaces [" 2 "] (tabbed ||| tall ||| wide)
+    $ onWorkspaces [" 1 "] (terminal ||| terminalWide)
+    $ onWorkspaces [" 2 "] (tabbed ||| wide ||| tall)
     $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
     $ onWorkspaces [" 5 "] (tall ||| vertical ||| grid)
     $ onWorkspaces [" 6 "] (tall ||| tabbed)
@@ -411,26 +411,26 @@ myLayout =
                 $ ThreeCol 1 (3/100) (1/3)
 
             ratio = 50/100
-            ratioWide = 65/100
+            ratioWide = 70/100
 
             terminal =
                 renamed [Replace "Terminal"]
-                $ IfMax 3 (tallMirrorModified 1 ratio) grid
-            terminalTall =
-                renamed [Replace "Terminal Tall"]
                 $ grid
+            terminalWide =
+                renamed [Replace "Terminal Wide"]
+                $ IfMax 3 (tallMirrorModified 1 ratio) grid
             tall =
                 renamed [Replace "Tall"]
-                $ tallModified 1 ratio
+                $ IfMax 4 (tallModified 1 ratio) grid
             vertical =
                 renamed [Replace "Vertical"]
-                $ threeColModified
+                $ tallMirrorModified 4 ratio
             wide =
                 renamed [Replace "Wide"]
                 $ tallModified 1 ratioWide
             grid =
                 renamed [Replace "Grid"]
-                $ IfMax 2 tall (
+                $ IfMax 2 (tallModified 1 ratio) (
                     addTabs shrinkText myTabTheme
                     $ wrapper
                     $ subLayout [] Simplest
@@ -441,10 +441,10 @@ myLayout =
                 $ wrapperTabbed
                 $ tabbedAlways shrinkText myTabTheme
 
-            spacing a b = spacingRaw False (Border a a 0 0) True (Border b b b b) True
-            wrapper a = spacing 2 2 $ minimize $ a
-            wrapperMirror a = spacing 2 2 $ minimize $ a
-            wrapperTabbed a = spacing 4 0 $ minimize $ a
+            spacing a b = spacingRaw False (Border a a a a) True (Border b b b b) True
+            wrapper a = spacing 1 1 $ minimize $ a
+            wrapperMirror a = spacing 1 1 $ minimize $ a
+            wrapperTabbed a = spacing 2 0 $ minimize $ a
 
 
 ---- Window rules:
@@ -581,7 +581,7 @@ myStartupHook = do
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
     spawnOnce "xdman -m"
-    -- spawnOnce "picom" -- crash when resizing
+    spawnOnce "picom" -- crash when resizing
     setWMName "LG3D"
 
 
