@@ -28,8 +28,8 @@ Config
             , "-S", "S"
             ] 10
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
-        , Run Network "wlp7s0f3u2" ["-t","<rx>  <tx>","-S","True"] 10
-        , Run Wireless "wlp7s0f3u2" ["-t","<quality>%  <ssid>"] 10
+        , Run Network "wlp4s0" ["-t","<rx>  <tx>","-S","True"] 10
+        , Run Wireless "wlp4s0" ["-t","<quality>%  <ssid>"] 10
         , Run Com "bash" ["-c", "vnstat --oneline | cut -d ';' -f 4,5 --output-delimiter '  -  '"] "vnstat" 10
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
@@ -45,5 +45,5 @@ Config
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp7s0f3u2%  -  <action=`notify-send -t 3000 'Launching Network Manager ...' && sleep 0.200 && xdotool key alt+m n` button=1>%wlp7s0f3u2wi%</action>  -  %vnstat%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp4s0%  -  <action=`notify-send -t 3000 'Launching Network Manager ...' && sleep 0.200 && xdotool key alt+m n` button=1>%wlp4s0wi%</action>  -  %vnstat%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
     }
