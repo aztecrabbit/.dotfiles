@@ -389,7 +389,7 @@ myLayout =
     $ onWorkspaces [" 1 "] (terminal ||| terminalWide)
     $ onWorkspaces [" 2 "] (tabbed ||| wide ||| tall)
     $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
-    $ onWorkspaces [" 5 "] (tall ||| vertical ||| grid)
+    $ onWorkspaces [" 5 "] (tall ||| vertical ||| wide ||| grid)
     $ onWorkspaces [" 6 "] (tall ||| tabbed)
     $ tall ||| wide ||| tabbed ||| grid
         where
@@ -591,7 +591,6 @@ myStartupHook = do
 main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ ewmh $ docks def {
-      -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,
@@ -601,11 +600,9 @@ main = do
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
-      -- key bindings
         keys               = myKeys,
         mouseBindings      = myMouseBindings,
 
-      -- hooks, layouts
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
