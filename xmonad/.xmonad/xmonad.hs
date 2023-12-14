@@ -100,8 +100,10 @@ myFontSmall = "xft:DejaVu Sans-6"
 myBgColor = "#101216"
 myBgColorFocused = "#3f3f3f"
 myFgColor = "#eaeaea"
-myFgColorUnfocused = "#dadada"
-myFgColorDisabled = "#444444"
+myFgColorDisabled = "#343434"
+myFgColorHidden = "#747474"
+myFgColorVisible = "#cacaca"
+myFgColorFocused = "#ffffff"
 
 myBorderWidth = 2
 myNormalBorderColor = "#191919"
@@ -170,10 +172,10 @@ notNSP :: X (WindowSpace -> Bool)
 notNSP = return $ ("NSP" /=) . W.tag
 
 nextWS' :: X ()
-nextWS' = moveTo Next (WSIs notNSP)
+nextWS' = moveTo Next $ hiddenWS :&: WSIs notNSP
 
 prevWS' :: X ()
-prevWS' = moveTo Prev (WSIs notNSP)
+prevWS' = moveTo Prev $ hiddenWS :&: WSIs notNSP
 
 
 -- Key bindings
@@ -185,7 +187,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     [ ((m .|. mod4Mask, k), windows $ f i) |
         (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0]),
-        (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+        (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
     {--
@@ -389,9 +391,9 @@ myLayout =
     $ onWorkspaces [" 1 "] (terminal ||| terminalWide)
     $ onWorkspaces [" 2 "] (tabbed ||| wide ||| tall)
     $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
-    $ onWorkspaces [" 5 "] (tall ||| vertical ||| wide ||| grid)
-    $ onWorkspaces [" 6 "] (tall ||| tabbed)
-    $ tall ||| wide ||| tabbed ||| grid
+    $ onWorkspaces [" 5 "] (tall ||| vertical ||| horizontal ||| wide ||| grid)
+    $ onWorkspaces [" 6 "," 7 "] (tall ||| horizontal ||| wide ||| grid)
+    $ tall ||| vertical ||| horizontal ||| wide ||| tabbed ||| grid
         where
             tallModified nmaster ratio =
                 addTabs shrinkText myTabTheme
@@ -404,11 +406,6 @@ myLayout =
                 $ subLayout [] Simplest
                 $ Mirror
                 $ ResizableTall nmaster (2/100) ratio []
-            threeColModified  =
-                addTabs shrinkText myTabTheme
-                $ wrapper
-                $ subLayout [] Simplest
-                $ ThreeCol 1 (3/100) (1/3)
 
             ratio = 50/100
             ratioWide = 70/100
@@ -425,6 +422,9 @@ myLayout =
             vertical =
                 renamed [Replace "Vertical"]
                 $ tallMirrorModified 4 ratio
+            horizontal =
+                renamed [Replace "Horizontal"]
+                $ tallModified 4 ratioWide
             wide =
                 renamed [Replace "Wide"]
                 $ tallModified 1 ratioWide
@@ -549,11 +549,11 @@ windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 -- LogHook
-myLogHook xmproc = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
-    { ppOutput = hPutStrLn xmproc
-    , ppCurrent = xmobarColor myFgColor "" . wsActions                  -- Focused
-    , ppVisible = xmobarColor myFgColorUnfocused "" . wsActions         -- Unfocused
-    , ppHidden = xmobarColor "#898989" "" . wsActions                   -- What the fuck is this?
+myLogHook xmproc0 xmproc1 = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
+    { ppOutput = \x -> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
+    , ppCurrent = xmobarColor myFgColorFocused "" . wsActions           -- Focused
+    , ppVisible = xmobarColor myFgColorVisible "" . wsActions           -- Visible
+    , ppHidden = xmobarColor myFgColorHidden "" . wsActions             -- Unfocused
     , ppHiddenNoWindows = xmobarColor myFgColorDisabled "" . wsActions  -- No windows
     , ppUrgent = xmobarColor "#C45500" "" . wrap "*" "" . wsActions     -- Urgent workspace
     , ppLayout = xmobarColor myFgColor "" . wrap "<action=`xdotool key super+Shift+Tab` button=1>" "</action>"
@@ -589,7 +589,8 @@ myStartupHook = do
 --
 
 main = do
-    xmproc <- spawnPipe "xmobar"
+    xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
+    xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
     xmonad $ ewmh $ docks def {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -606,6 +607,6 @@ main = do
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook xmproc,
+        logHook            = myLogHook xmproc0 xmproc1,
         startupHook        = myStartupHook
     } `additionalKeysP` myKeysP
