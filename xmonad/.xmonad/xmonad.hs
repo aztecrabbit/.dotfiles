@@ -18,7 +18,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat, isDialog, transience')
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WindowSwallowing
 
@@ -49,6 +49,7 @@ import XMonad.Util.Font
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import XMonad.Actions.OnScreen
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -392,7 +393,7 @@ myLayout =
     $ onWorkspaces [" 2 "] (tabbed ||| wide ||| tall)
     $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
     $ onWorkspaces [" 5 "] (tall ||| vertical ||| horizontal ||| wide ||| grid)
-    $ onWorkspaces [" 6 "," 7 "] (tall ||| horizontal ||| wide ||| grid)
+    $ onWorkspaces [" 6 "," 7 "," 8 "] (horizontal ||| tall ||| wide ||| grid)
     $ tall ||| vertical ||| horizontal ||| wide ||| tabbed ||| grid
         where
             tallModified nmaster ratio =
@@ -467,23 +468,22 @@ getProp :: Atom -> Window -> X (Maybe [CLong])
 getProp a w = withDisplay $ \dpy -> io $ getWindowProperty32 dpy a w
 
 --
-checkDialog :: Query Bool
-checkDialog =
-    ask >>= \w -> liftX $ do
-        a <- getAtom "_NET_WM_WINDOW_TYPE"
-        dialog <- getAtom "_NET_WM_WINDOW_TYPE_DIALOG"
-        mbr <- getProp a w
-        case mbr of
-            Just [r] -> return $ elem (fromIntegral r) [dialog]
-            _ -> return False
+-- checkDialog :: Query Bool
+-- checkDialog =
+--     ask >>= \w -> liftX $ do
+--         a <- getAtom "_NET_WM_WINDOW_TYPE"
+--         dialog <- getAtom "_NET_WM_WINDOW_TYPE_DIALOG"
+--         mbr <- getProp a w
+--         case mbr of
+--             Just [r] -> return $ elem (fromIntegral r) [dialog]
+--             _ -> return False
 
 -- ManageHook
-myManageHook = (floats --> doF W.swapUp)
-    <+> insertPosition End Newer
+myManageHook = insertPosition End Newer
     <+> fullscreenManageHook
     <+> namedScratchpadManageHook myScratchpads
+    <+> transience'
     <+> composeAll
-    (
         [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
         , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
         , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
@@ -493,31 +493,32 @@ myManageHook = (floats --> doF W.swapUp)
         , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
         , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
         , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
-        , className =? "DBeaver"            --> viewShift (myWorkspaces !! 7)
-        ] ++
-        [ className =? "Thunar" <&&> title =? "File Operation Progress" --> doShift (myWorkspaces !! 5)
-        ] ++
-        [ isFullscreen                      --> doFullFloat
-        , floats                            --> doCenterFloat
+        , className =? "DBeaver"            --> viewShift (myWorkspaces !! 8)
+        , className =? "org-jdownloader-update-launcher-JDLauncher" <&&> title =? "JDownloader 2" --> doShift (myWorkspaces !! 7)
+        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 7)
+        , className =? "xdman-Main" <&&> title =? "XDM 2020"                                      --> doShift (myWorkspaces !! 7)
+        , floats                            --> do
+            -- doF W.swapUp
+            doFloat
+        , floatsCenter                      --> doCenterFloat
+        , isDialog                          --> ifM (className =? "firefox-nightly" <&&> appName =? "Navigator") (doShift (myWorkspaces !! 7)) doFloat
         ]
-    )
     where
         viewShift = doF . liftM2 (.) W.greedyView W.shift
         floats = foldr1 (<||>)
-            [ checkDialog
-            , title =? "." <&&> ( className =? "" <||> appName =? "." )
+            [ title =? "." <&&> ( className =? "" <||> appName =? "." )
             , title =? "win0" <&&> className =? "jetbrains-studio"
             , flip fmap title $ flip elem
-                [ "Picture in picture" ]
+                [ "Picture-in-Picture" ]
             , flip fmap className $ flip elem
                 [ "GParted"
-                , "Java"
-                , "JDownloader"
-                , "org-jdownloader-update-launcher-JDLauncher"
                 , "Xdm-app"
                 , "Xmessage"
-                , "xdman-Main"
-                , "Zenmonitor"
+                ]
+            ]
+        floatsCenter = foldr1 (<||>)
+            [ flip fmap title $ flip elem
+                [ "JDownloader"
                 ]
             ]
 
@@ -574,14 +575,14 @@ myLogHook xmproc0 xmproc1 = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
 
 myStartupHook = do
     setDefaultCursor xC_left_ptr
-    spawn "~/.xmonad/autostart &"
+    windows $ greedyViewOnScreen 1 " 8 "
     spawnOnce "~/.fehbg"
     spawnOnce "dunst"
     spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216"
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
     spawnOnce "xdman -m"
-    spawnOnce "picom" -- crash when resizing
+    -- spawnOnce "picom" -- crash when resizing
     setWMName "LG3D"
 
 
