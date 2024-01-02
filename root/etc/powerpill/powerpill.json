@@ -21,7 +21,7 @@
             "--protocol",
             "http",
             "--latest",
-            "50",
+            "20",
             "--sort",
             "age"
         ]
