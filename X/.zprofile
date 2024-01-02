@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if [ "$(tty)" = "/dev/tty1" ]; then
-    startx
+  startx
 
-    echo "Enter to continue"
-    read
+  echo "Enter to continue"
+  read
 
-    logout
+  logout
 fi
