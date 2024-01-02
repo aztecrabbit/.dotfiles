@@ -3,18 +3,22 @@
 <action>
 	<icon>Terminal</icon>
 	<name>Open Terminal Here</name>
-	<unique-id>1568739259295596-1</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069182-1</unique-id>
 	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
 	<description>Example for a custom action</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon>Terminal</icon>
 	<name>Open Terminal Here</name>
-	<unique-id>1568739259295682-2</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069212-2</unique-id>
 	<command>exo-open --working-directory %d --launch TerminalEmulator</command>
 	<description>Open terminal in containing directory</description>
+	<range></range>
 	<patterns>*</patterns>
 	<audio-files/>
 	<image-files/>
@@ -24,10 +28,12 @@
 </action>
 <action>
 	<icon>utilities-terminal</icon>
-	<name>Open Terminal Here (st)</name>
-	<unique-id>1600198055959881-3</unique-id>
-	<command>sh -c &quot;cd %d &amp;&amp; st&quot;</command>
+	<name>Open Terminal Here (alacritty)</name>
+	<submenu></submenu>
+	<unique-id>1617269010069232-3</unique-id>
+	<command>sh -c &quot;cd %d &amp;&amp; alacritty&quot;</command>
 	<description>File</description>
+	<range></range>
 	<patterns>*</patterns>
 	<audio-files/>
 	<image-files/>
@@ -37,37 +43,57 @@
 </action>
 <action>
 	<icon>utilities-terminal</icon>
-	<name>Open Terminal Here (st)</name>
-	<unique-id>1570301134527186-4</unique-id>
-	<command>sh -c &quot;cd %f &amp;&amp; st&quot;</command>
+	<name>Open Terminal Here (alacritty)</name>
+	<submenu></submenu>
+	<unique-id>1617269010069246-4</unique-id>
+	<command>sh -c &quot;cd %f &amp;&amp; alacritty&quot;</command>
 	<description>Directory</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon></icon>
 	<name>Play with MPV</name>
-	<unique-id>1600198436825171-4</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069259-5</unique-id>
 	<command>mpv --playlist=%f</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon></icon>
 	<name>Play with MPV (Shuffle)</name>
-	<unique-id>1600197812100274-2</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069273-6</unique-id>
 	<command>mpv --playlist=%f --shuffle</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon></icon>
+	<name>Slideshow Slow</name>
+	<submenu></submenu>
+	<unique-id>1682962982479990-1</unique-id>
+	<command>feh --theme slideshow-slow %d</command>
+	<description></description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+	<image-files/>
+</action>
+<action>
+	<icon></icon>
 	<name>Slideshow</name>
-	<unique-id>1582484772180892-1</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069287-7</unique-id>
 	<command>feh --theme slideshow %d</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<image-files/>
@@ -75,9 +101,11 @@
 <action>
 	<icon></icon>
 	<name>Slideshow Fast</name>
-	<unique-id>1613364414348622-1</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069301-8</unique-id>
 	<command>feh --theme slideshow-fast %d</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<image-files/>
@@ -85,9 +113,11 @@
 <action>
 	<icon></icon>
 	<name>Slideshow Very Fast</name>
-	<unique-id>1613368281384100-2</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069317-9</unique-id>
 	<command>feh --theme slideshow-very-fast %d</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<image-files/>
@@ -95,28 +125,57 @@
 <action>
 	<icon></icon>
 	<name>Slideshow (Random)</name>
-	<unique-id>1607246235423501-1</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069330-10</unique-id>
 	<command>feh --theme slideshow-random %d</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<image-files/>
 </action>
 <action>
+	<icon></icon>
+	<name>JADX GUI</name>
+	<submenu></submenu>
+	<unique-id>1666199023810950-1</unique-id>
+	<command>sh -c &quot;jadx-gui %f&quot;</command>
+	<description></description>
+	<range></range>
+	<patterns>*</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Safe Delete</name>
+	<submenu></submenu>
+	<unique-id>1700678423057616-1</unique-id>
+	<command>sh -c &quot;cat /dev/null &gt; %f&quot;</command>
+	<description></description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<image-files/>
+	<video-files/>
+</action>
+<action>
 	<icon>filefind</icon>
 	<name>Find in this folder</name>
-	<unique-id>1568739259295817-3</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069344-11</unique-id>
 	<command>catfish --path=%f</command>
 	<description>Search for files within this folder</description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon>document-print</icon>
 	<name>Print file/s</name>
-	<unique-id>1568739259295845-4</unique-id>
+	<submenu></submenu>
+	<unique-id>1617269010069362-12</unique-id>
 	<command>thunar-print %F</command>
 	<description>Send one or multiple files to the default printer</description>
+	<range></range>
 	<patterns>*.asc,*.brf,*.css,*.doc,*.docm,*.docx,*.dotm,*.dotx,*.fodg,*.fodp,*.fods,*.fodt,*.gif,*.htm,*.html,*.jpe,*.jpeg,*.jpg,*.odb,*.odf,*.odg,*.odm,*.odp,*.ods,*.odt,*.otg,*.oth,*.otp,*.ots,*.ott,*.pbm,*.pdf,*.pgm,*.png,*.pnm,*.pot,*.potm,*.potx,*.ppm,*.ppt,*.pptm,*.pptx,*.rtf,*.shtml,*.srt,*.text,*.tif,*.tiff,*.txt,*.xbm,*.xls,*.xlsb,*.xlsm,*.xlsx,*.xltm,*.xltx,*.xpm,*.xwd</patterns>
 	<directories/>
 </action>
