@@ -210,10 +210,11 @@ myKeysP =
     -- System
     [ ("<Pause> <Pause>", spawn "systemctl poweroff")
     , ("M-S-<Pause>"    , spawn "notify-send -t 3000 'Restarting ...'; systemctl reboot")
+    , ("M4-<Pause>"     , spawn "notify-send -t 3000 'Screen off ...'; sleep 1; xset dpms force off")
 
     -- XMonad
     , ("M-S-r"          , spawn "notify-send -t 2000 'Restarting XMonad ...'; xmonad --recompile; xmonad --restart")
-    , ("M-S-<Escape>"   , io (exitWith ExitSuccess))
+    , ("M-S-<Escape>"   , io exitSuccess)
 
     -- XMobar
     , ("M-b"            , spawn "killall xmobar || xmonad --restart")
@@ -485,7 +486,7 @@ myManageHook = insertPosition End Newer
     <+> transience'
     <+> composeAll
         [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
-        , className =? "code-oss"           --> viewShift (myWorkspaces !! 1)
+        , className =? "Code"               --> viewShift (myWorkspaces !! 1)
         , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
         , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
         , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
@@ -494,8 +495,8 @@ myManageHook = insertPosition End Newer
         , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
         , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
         , className =? "DBeaver"            --> viewShift (myWorkspaces !! 8)
+        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 5)
         , className =? "org-jdownloader-update-launcher-JDLauncher" <&&> title =? "JDownloader 2" --> doShift (myWorkspaces !! 7)
-        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 7)
         , className =? "xdman-Main" <&&> title =? "XDM 2020"                                      --> doShift (myWorkspaces !! 7)
         , floats                            --> do
             -- doF W.swapUp
@@ -575,9 +576,10 @@ myLogHook xmproc0 xmproc1 = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
 
 myStartupHook = do
     setDefaultCursor xC_left_ptr
-    windows $ greedyViewOnScreen 1 " 8 "
+    windows $ viewOnScreen 1 " 8 "
+    windows $ viewOnScreen 0 " 1 "
     spawnOnce "~/.fehbg"
-    spawnOnce "dunst"
+    spawnOnce "dunst &"
     spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216"
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
