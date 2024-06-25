@@ -391,11 +391,11 @@ myLayout =
     $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
     $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces [" 1 "] (terminal ||| terminalWide)
-    $ onWorkspaces [" 2 "] (tabbed ||| wide ||| tall)
-    $ onWorkspaces [" 3 "," 4 "] (wide ||| tabbed ||| tall)
-    $ onWorkspaces [" 5 "] (tall ||| vertical ||| horizontal ||| wide ||| grid)
-    $ onWorkspaces [" 6 "," 7 "," 8 "] (horizontal ||| tall ||| wide ||| grid)
-    $ tall ||| vertical ||| horizontal ||| wide ||| tabbed ||| grid
+    $ onWorkspaces [" 2 "] (tall ||| wide ||| rwide ||| tabbed)
+    $ onWorkspaces [" 3 "," 4 "] (wide ||| rwide ||| tabbed ||| tall)
+    $ onWorkspaces [" 5 "] (tall ||| vertical ||| horizontal ||| wide ||| rwide ||| grid)
+    $ onWorkspaces [" 6 "," 7 "," 8 "] (tall ||| vertical ||| wide ||| rwide ||| grid)
+    $ tall ||| vertical ||| horizontal ||| wide ||| rwide ||| tabbed ||| grid
         where
             tallModified nmaster ratio =
                 addTabs shrinkText myTabTheme
@@ -411,6 +411,7 @@ myLayout =
 
             ratio = 50/100
             ratioWide = 70/100
+            ratioRWide = 30/100
 
             terminal =
                 renamed [Replace "Terminal"]
@@ -423,13 +424,16 @@ myLayout =
                 $ IfMax 4 (tallModified 1 ratio) grid
             vertical =
                 renamed [Replace "Vertical"]
-                $ tallMirrorModified 4 ratio
+                $ tallMirrorModified 3 ratio
             horizontal =
                 renamed [Replace "Horizontal"]
                 $ tallModified 4 ratioWide
             wide =
                 renamed [Replace "Wide"]
                 $ tallModified 1 ratioWide
+            rwide =
+                renamed [Replace "R Wide"]
+                $ tallModified 1 ratioRWide
             grid =
                 renamed [Replace "Grid"]
                 $ IfMax 2 (tallModified 1 ratio) (
@@ -485,24 +489,31 @@ myManageHook = insertPosition End Newer
     <+> namedScratchpadManageHook myScratchpads
     <+> transience'
     <+> composeAll
-        [ className =? "jetbrains-studio"   --> viewShift (myWorkspaces !! 1)
-        , className =? "Code"               --> viewShift (myWorkspaces !! 1)
-        , className =? "firefox-nightly"    --> viewShift (myWorkspaces !! 2)
-        , className =? "Tor Browser"        --> viewShift (myWorkspaces !! 2)
-        , className =? "Thunar"             --> viewShift (myWorkspaces !! 3)
-        , className =? "feh"                --> viewShift (myWorkspaces !! 4)
-        , className =? "mpv"                --> viewShift (myWorkspaces !! 4)
-        , className =? "Atril"              --> viewShift (myWorkspaces !! 5)
-        , className =? "TelegramDesktop"    --> viewShift (myWorkspaces !! 6)
-        , className =? "DBeaver"            --> viewShift (myWorkspaces !! 8)
-        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 5)
-        , className =? "org-jdownloader-update-launcher-JDLauncher" <&&> title =? "JDownloader 2" --> doShift (myWorkspaces !! 7)
+        [ className =? "jetbrains-studio"       --> viewShift (myWorkspaces !! 1)
+        , className =? "Code"                   --> viewShift (myWorkspaces !! 1)
+        , className =? "firefox-nightly"        --> viewShift (myWorkspaces !! 2)
+        , className =? "Tor Browser"            --> viewShift (myWorkspaces !! 2)
+        , className =? "Thunar"                 --> viewShift (myWorkspaces !! 3)
+        , className =? "feh"                    --> viewShift (myWorkspaces !! 4)
+        , className =? "mpv"                    --> viewShift (myWorkspaces !! 4)
+        , className =? "Atril"                  --> viewShift (myWorkspaces !! 5)
+        , className =? "DBeaver"                --> viewShift (myWorkspaces !! 8)
+        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 7)
+        , className =? "TelegramDesktop"                                                          --> doShift (myWorkspaces !! 7)
+        , className =? "discord"                                                                  --> doShift (myWorkspaces !! 7)
         , className =? "xdman-Main" <&&> title =? "XDM 2020"                                      --> doShift (myWorkspaces !! 7)
-        , floats                            --> do
+        , className =? "org-jdownloader-update-launcher-JDLauncher" <&&> title =? "JDownloader 2" --> doShift (myWorkspaces !! 7)
+        , className =? "thunar-cmd"                                                               --> doShift (myWorkspaces !! 7)
+        , className =? "yt-dlp"                                                                   --> doShift (myWorkspaces !! 7)
+        , className =? "steam"                  --> viewShift (myWorkspaces !! 8)
+        , className =? "RimWorldLinux"          --> viewShift (myWorkspaces !! 9)
+        , className =? "Terraria.bin.x86_64"    --> viewShift (myWorkspaces !! 9)
+        , className =? "dotnet"                 --> viewShift (myWorkspaces !! 9) -- tModLoader
+        , floats                                --> do
             -- doF W.swapUp
             doFloat
-        , floatsCenter                      --> doCenterFloat
-        , isDialog                          --> ifM (className =? "firefox-nightly" <&&> appName =? "Navigator") (doShift (myWorkspaces !! 7)) doFloat
+        , floatsCenter                          --> doCenterFloat
+        , isDialog                              --> ifM (className =? "firefox-nightly" <&&> appName =? "Navigator") (doShift (myWorkspaces !! 7)) doFloat
         ]
     where
         viewShift = doF . liftM2 (.) W.greedyView W.shift
@@ -580,7 +591,7 @@ myStartupHook = do
     windows $ viewOnScreen 0 " 1 "
     spawnOnce "~/.fehbg"
     spawnOnce "dunst &"
-    spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216"
+    spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216 --monitor 1"
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
     spawnOnce "xdman -m"
