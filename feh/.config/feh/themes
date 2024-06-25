@@ -8,7 +8,8 @@
 
 feh                 -g 640x480 -B "#090909" -d -. -Z
 recursive           -g 640x480 -B "#090909" -d -. -Z -r
-slideshow           -g 640x480 -B "#090909" -d -. -Z -r -D 3
-slideshow-fast      -g 640x480 -B "#090909" -d -. -Z -r -D 2
-slideshow-very-fast -g 640x480 -B "#090909" -d -. -Z -r -D 1.75
+slideshow-slow      -g 640x480 -B "#090909" -d -. -Z -r -D 10
+slideshow           -g 640x480 -B "#090909" -d -. -Z -r -D 5
+slideshow-fast      -g 640x480 -B "#090909" -d -. -Z -r -D 3
+slideshow-very-fast -g 640x480 -B "#090909" -d -. -Z -r -D 2
 slideshow-random    -g 640x480 -B "#090909" -d -. -Z -r -D 2 -z
