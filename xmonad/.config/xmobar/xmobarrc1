@@ -7,7 +7,7 @@ Config
     , bgColor = "#101216"
     , fgColor = "#eaeaea"
     , alpha = 255
-    -- , position = Static { xpos = 0, ypos = 0, width = 2560, height = 24 }
+    , position = TopH 24
     , textOffset = -1
     , iconOffset = -1
     , lowerOnStart = True
@@ -18,19 +18,9 @@ Config
     , allDesktops = True
     , overrideRedirect = True
     , commands =
-        [ Run MPD
-            [ "-t", "<action=`mpc toggle` button=1><action=`mpc stop` button=3><action=`mpc clear && mpc load music && mpc random on && mpc play` button=4><action=`mpc clear && mpc load radio && mpc random on && mpc play` button=5><statei></action></action></action></action>  :  <action=`mpc vol +5` button=4><action=`mpc vol -5` button=5><volume>%</action></action>  <action=`mpc next` button=1><action=`mpc prev` button=3><lapsed>/<length></action></action>"
-            , "--"
-            , "-h", "127.0.0.1"
-            , "-p", "6600"
-            , "-P", "P"
-            , "-Z", "p"
-            , "-S", "S"
-            ] 10
-        , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
-        , Run Network "wlp4s0" ["-t","<rx>  <tx>","-S","True"] 10
+        [ Run Network "wlp4s0" ["-t","<rx>  <tx>","-S","True"] 10
         , Run Wireless "wlp4s0" ["-t","<quality>%  <ssid>"] 10
-        , Run Com "bash" ["-c", "vnstat --oneline | cut -d ';' -f 4,5 --output-delimiter '  -  '"] "vnstat" 10
+        , Run Network "enp6s0" ["-t","<rx>  <tx>","-S","True"] 10
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
@@ -45,5 +35,5 @@ Config
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %wlp4s0wi%  }{  %wlp4s0%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %wlp4s0wi%  }{  %wlp4s0%  %enp6s0%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
     }

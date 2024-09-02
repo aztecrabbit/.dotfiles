@@ -7,7 +7,7 @@ Config
     , bgColor = "#101216"
     , fgColor = "#eaeaea"
     , alpha = 255
-    , position = Static { xpos = 0, ypos = 0, width = 2560, height = 24 }
+    , position = TopH 24
     , textOffset = -1
     , iconOffset = -1
     , lowerOnStart = True
@@ -30,7 +30,8 @@ Config
         , Run CommandReader "~/.scripts/mpc-zscroll.sh" "mpc-zscroll"
         , Run Network "wlp4s0" ["-t","<rx>  <tx>","-S","True"] 10
         , Run Wireless "wlp4s0" ["-t","<quality>%  <ssid>"] 10
-        , Run Com "bash" ["-c", "vnstat --oneline | cut -d ';' -f 4,5 --output-delimiter '  -  '"] "vnstat" 10
+        , Run Network "enp6s0" ["-t","<rx>  <tx>","-S","True"] 10
+        , Run Com "bash" ["-c", "vnstat --oneline -i enp6s0 | cut -d ';' -f 4,5 --output-delimiter '  -  '"] "vnstat" 10
         , Run Cpu ["-t","<total>%","-L","3"] 10
         , Run Memory ["-t","<usedratio>%"] 10
         , Run Swap ["-t","<usedratio>%"] 10
@@ -45,5 +46,5 @@ Config
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp4s0%  -  <action=`notify-send -t 3000 'Launching Network Manager ...' && sleep 0.200 && xdotool key alt+m n` button=1>%wlp4s0wi%</action>  -  %vnstat%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
+    , template = "%UnsafeStdinReader%  :  %mpd%  %mpc-zscroll%  }{  %wlp4s0%  %enp6s0%  -  <action=`notify-send -t 3000 'Launching Network Manager ...' && sleep 0.200 && xdotool key alt+m n` button=1>%wlp4s0wi%</action>  -  %vnstat%  -  %cpu%  %memory%  %swap%  %default:Master%  %date%  "
     }
