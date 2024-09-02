@@ -4,10 +4,12 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-import Control.Monad (liftM2)
+import Control.Monad (liftM2, when)
 import Data.Char (toUpper)
+import Data.Foldable (find)
 import Data.Maybe (fromJust)
 import Data.Monoid
+import Foreign.C (CInt)
 import Foreign.C.Types (CLong)
 
 import XMonad.Actions.CycleWS
@@ -32,6 +34,7 @@ import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBO
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Reflect
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
@@ -50,6 +53,9 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 import XMonad.Actions.OnScreen
+
+import XMonad.Layout.LayoutScreens
+import XMonad.Layout.TwoPane
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -76,6 +82,34 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
+-- Whether focus follows the mouse pointer, multi screen support
+multiScreenFocusHook :: Event -> X All
+multiScreenFocusHook MotionEvent { ev_x = x, ev_y = y } = do
+  ms <- getScreenForPos x y
+  case ms of
+    Just cursorScreen -> do
+      let cursorScreenID = W.screen cursorScreen
+      focussedScreenID <- gets (W.screen . W.current . windowset)
+      when (cursorScreenID /= focussedScreenID) (focusWS $ W.tag $ W.workspace cursorScreen)
+      return (All True)
+    _ -> return (All True)
+  where getScreenForPos :: CInt -> CInt
+            -> X (Maybe (W.Screen WorkspaceId (Layout Window) Window ScreenId ScreenDetail))
+        getScreenForPos x y = do
+          ws <- windowset <$> get
+          let screens = W.current ws : W.visible ws
+              inRects = map (inRect x y . screenRect . W.screenDetail) screens
+          return $ fst <$> find snd (zip screens inRects)
+        inRect :: CInt -> CInt -> Rectangle -> Bool
+        inRect x y rect = let l = fromIntegral (rect_x rect)
+                              r = l + fromIntegral (rect_width rect)
+                              t = fromIntegral (rect_y rect)
+                              b = t + fromIntegral (rect_height rect)
+                           in x >= l && x < r && y >= t && y < b
+        focusWS :: WorkspaceId -> X ()
+        focusWS id = windows (W.view id)
+multiScreenFocusHook _ = return (All True)
+
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -91,6 +125,21 @@ myModMask = mod1Mask
 
 myWorkspaces = [" 1 "," 2 "," 3 "," 4 "," 5 "," 6 "," 7 "," 8 "," 9 "," 0"]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces ([1..9] ++ [0])
+
+
+-- Split Screen
+--
+
+mySplitScreen :: X ()
+mySplitScreen = do
+    rescreen
+    windows $ viewOnScreen 1 " 7 "
+    windows $ viewOnScreen 0 " 1 "
+    rescreen
+    windows $ W.view " 7 "
+    layoutSplitScreen 2 (TwoPane 0.5 0.5)
+    windows $ viewOnScreen 2 " 8 "
+    windows $ viewOnScreen 0 " 1 "
 
 
 -- Style
@@ -218,6 +267,10 @@ myKeysP =
 
     -- XMobar
     , ("M-b"            , spawn "killall xmobar || xmonad --restart")
+
+    -- Screen
+    , ("M-/"            , mySplitScreen)
+    , ("M-S-/"          , rescreen)
 
     -- Change workspace
     , ("M4-<Left>"      , prevWS')
@@ -392,14 +445,22 @@ myLayout =
     $ configurableNavigation (navigateColor myPreselectBorderColor)
     $ onWorkspaces [" 1 "] (terminal ||| terminalWide)
     $ onWorkspaces [" 2 "] (tall ||| wide ||| rwide ||| tabbed)
-    $ onWorkspaces [" 3 "," 4 "] (wide ||| rwide ||| tabbed ||| tall)
+    $ onWorkspaces [" 3 "] (rwide ||| wide ||| tabbed ||| tall)
+    $ onWorkspaces [" 4 "] (wide ||| rwide ||| tabbed ||| tall)
     $ onWorkspaces [" 5 "] (tall ||| vertical ||| horizontal ||| wide ||| rwide ||| grid)
-    $ onWorkspaces [" 6 "," 7 "," 8 "] (tall ||| vertical ||| wide ||| rwide ||| grid)
+    $ onWorkspaces [" 6 "] (vertical ||| tall ||| wide ||| rwide ||| grid)
+    $ onWorkspaces [" 7 "] (horizontal)
+    $ onWorkspaces [" 8 "] (horizontalLeftZero)
     $ tall ||| vertical ||| horizontal ||| wide ||| rwide ||| tabbed ||| grid
         where
             tallModified nmaster ratio =
                 addTabs shrinkText myTabTheme
                 $ wrapper
+                $ subLayout [] Simplest
+                $ ResizableTall nmaster (2/100) ratio []
+            tallModifiedLeftZero nmaster ratio =
+                addTabs shrinkText myTabTheme
+                $ wrapperLeftZero
                 $ subLayout [] Simplest
                 $ ResizableTall nmaster (2/100) ratio []
             tallMirrorModified nmaster ratio =
@@ -427,7 +488,10 @@ myLayout =
                 $ tallMirrorModified 3 ratio
             horizontal =
                 renamed [Replace "Horizontal"]
-                $ tallModified 4 ratioWide
+                $ tallModified 0 ratioWide
+            horizontalLeftZero =
+                renamed [Replace "Horizontal"]
+                $ tallModifiedLeftZero 0 ratioWide
             wide =
                 renamed [Replace "Wide"]
                 $ tallModified 1 ratioWide
@@ -449,6 +513,7 @@ myLayout =
 
             spacing a b = spacingRaw False (Border a a a a) True (Border b b b b) True
             wrapper a = spacing 1 1 $ minimize $ a
+            wrapperLeftZero a = spacingRaw False (Border 1 1 1 0) True (Border 1 1 1 1) True $ minimize $ a
             wrapperMirror a = spacing 1 1 $ minimize $ a
             wrapperTabbed a = spacing 2 0 $ minimize $ a
 
@@ -497,15 +562,20 @@ myManageHook = insertPosition End Newer
         , className =? "feh"                    --> viewShift (myWorkspaces !! 4)
         , className =? "mpv"                    --> viewShift (myWorkspaces !! 4)
         , className =? "Atril"                  --> viewShift (myWorkspaces !! 5)
-        , className =? "DBeaver"                --> viewShift (myWorkspaces !! 8)
-        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 7)
+        , className =? "alacritty-on-workspace-1"                                                 --> doShift (myWorkspaces !! 0)
+        , className =? "Thunar-on-workspace-4"                                                    --> doShift (myWorkspaces !! 3)
+        , className =? "Thunar" <&&> title =? "File Operation Progress"                           --> doShift (myWorkspaces !! 6)
+        , className =? "Engrampa" <&&> title =? "Extract archive"                                 --> doShift (myWorkspaces !! 6)
         , className =? "TelegramDesktop"                                                          --> doShift (myWorkspaces !! 7)
         , className =? "discord"                                                                  --> doShift (myWorkspaces !! 7)
         , className =? "xdman-Main" <&&> title =? "XDM 2020"                                      --> doShift (myWorkspaces !! 7)
         , className =? "org-jdownloader-update-launcher-JDLauncher" <&&> title =? "JDownloader 2" --> doShift (myWorkspaces !! 7)
         , className =? "thunar-cmd"                                                               --> doShift (myWorkspaces !! 7)
         , className =? "yt-dlp"                                                                   --> doShift (myWorkspaces !! 7)
+        , className =? "alacritty-on-workspace-8"                                                 --> doShift (myWorkspaces !! 7)
+        , className =? "DBeaver"                --> viewShift (myWorkspaces !! 8)
         , className =? "steam"                  --> viewShift (myWorkspaces !! 8)
+        , className =? "dota2"                  --> viewShift (myWorkspaces !! 9)
         , className =? "RimWorldLinux"          --> viewShift (myWorkspaces !! 9)
         , className =? "Terraria.bin.x86_64"    --> viewShift (myWorkspaces !! 9)
         , className =? "dotnet"                 --> viewShift (myWorkspaces !! 9) -- tModLoader
@@ -513,10 +583,10 @@ myManageHook = insertPosition End Newer
             -- doF W.swapUp
             doFloat
         , floatsCenter                          --> doCenterFloat
-        , isDialog                              --> ifM (className =? "firefox-nightly" <&&> appName =? "Navigator") (doShift (myWorkspaces !! 7)) doFloat
+        , isDialog                              --> ifM (className =? "firefox-nightly" <&&> appName =? "Navigator") (doShift (myWorkspaces !! 6)) doFloat
         ]
     where
-        viewShift = doF . liftM2 (.) W.greedyView W.shift
+        viewShift = doF . liftM2 (.) W.view W.shift
         floats = foldr1 (<||>)
             [ title =? "." <&&> ( className =? "" <||> appName =? "." )
             , title =? "win0" <&&> className =? "jetbrains-studio"
@@ -587,15 +657,18 @@ myLogHook xmproc0 xmproc1 = dynamicLogWithPP $ filterOutWsPP ["NSP"] $ xmobarPP
 
 myStartupHook = do
     setDefaultCursor xC_left_ptr
-    windows $ viewOnScreen 1 " 8 "
-    windows $ viewOnScreen 0 " 1 "
+    mySplitScreen
     spawnOnce "~/.fehbg"
-    spawnOnce "dunst &"
+    spawnOnce "dunst"
     spawnOnce "trayer --edge top --align center --widthtype request --height 22 --transparent true --alpha 0 --tint 0xff101216 --monitor 1"
     spawnOnce "mkdir -p ~/.local/share/mpd/playlists && mpd ~/.config/mpd/mpd.conf"
     spawnOnce "lxpolkit"
     spawnOnce "xdman -m"
-    -- spawnOnce "picom" -- crash when resizing
+    spawnOnce "kdeconnectd"
+    spawnOnce "alacritty --class alacritty-on-workspace-1"
+    spawnOnce "alacritty --class alacritty-on-workspace-8"
+    spawnOnce "thunar --class Thunar-on-workspace-4"
+    spawnOnce "firefox-nightly"
     setWMName "LG3D"
 
 
@@ -620,7 +693,8 @@ main = do
 
         layoutHook         = myLayout,
         manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
+        rootMask           = rootMask def .|. pointerMotionMask,
+        handleEventHook    = myEventHook <+> multiScreenFocusHook,
         logHook            = myLogHook xmproc0 xmproc1,
         startupHook        = myStartupHook
     } `additionalKeysP` myKeysP
