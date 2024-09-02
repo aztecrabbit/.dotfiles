@@ -449,8 +449,8 @@ myLayout =
     $ onWorkspaces [" 4 "] (wide ||| rwide ||| tabbed ||| tall)
     $ onWorkspaces [" 5 "] (tall ||| vertical ||| horizontal ||| wide ||| rwide ||| grid)
     $ onWorkspaces [" 6 "] (vertical ||| tall ||| wide ||| rwide ||| grid)
-    $ onWorkspaces [" 7 "] (horizontal)
-    $ onWorkspaces [" 8 "] (horizontalLeftZero)
+    $ onWorkspaces [" 7 "] (horizontalRightZero)
+    $ onWorkspaces [" 8 "] (horizontal)
     $ tall ||| vertical ||| horizontal ||| wide ||| rwide ||| tabbed ||| grid
         where
             tallModified nmaster ratio =
@@ -458,9 +458,9 @@ myLayout =
                 $ wrapper
                 $ subLayout [] Simplest
                 $ ResizableTall nmaster (2/100) ratio []
-            tallModifiedLeftZero nmaster ratio =
+            tallModifiedRightZero nmaster ratio =
                 addTabs shrinkText myTabTheme
-                $ wrapperLeftZero
+                $ wrapperRightZero
                 $ subLayout [] Simplest
                 $ ResizableTall nmaster (2/100) ratio []
             tallMirrorModified nmaster ratio =
@@ -489,9 +489,9 @@ myLayout =
             horizontal =
                 renamed [Replace "Horizontal"]
                 $ tallModified 0 ratioWide
-            horizontalLeftZero =
+            horizontalRightZero =
                 renamed [Replace "Horizontal"]
-                $ tallModifiedLeftZero 0 ratioWide
+                $ tallModifiedRightZero 0 ratioWide
             wide =
                 renamed [Replace "Wide"]
                 $ tallModified 1 ratioWide
@@ -513,7 +513,7 @@ myLayout =
 
             spacing a b = spacingRaw False (Border a a a a) True (Border b b b b) True
             wrapper a = spacing 1 1 $ minimize $ a
-            wrapperLeftZero a = spacingRaw False (Border 1 1 1 0) True (Border 1 1 1 1) True $ minimize $ a
+            wrapperRightZero a = spacingRaw False (Border 1 1 0 1) True (Border 1 1 1 1) True $ minimize $ a
             wrapperMirror a = spacing 1 1 $ minimize $ a
             wrapperTabbed a = spacing 2 0 $ minimize $ a
 
